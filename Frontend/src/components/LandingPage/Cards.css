@@ -1,0 +1,149 @@
+/* Restablecer márgenes y rellenos */
+
+/* Estilos del encabezado */
+h1 {
+  font-size: 2.5rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: normal;
+  color: #444;
+  text-align: center;
+  margin: 5rem 2rem 2rem 2rem;
+}
+
+/* Contenedor de las cartas */
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  /* Aumentar el ancho máximo para pantallas más grandes */
+}
+
+/* Contenedor de las columnas */
+.cols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  /* Espacio entre las cartas */
+  justify-content: center;
+  /* Centrar las cartas horizontalmente */
+}
+
+/* Estilo de las columnas (cartas) */
+.col {
+  flex: 1 1 calc(25% - 2rem);
+  /* Ajuste dinámico del ancho */
+  max-width: calc(25% - 2rem);
+  margin: 1rem;
+  position: relative;
+}
+
+/* Estilo del contenedor de las cartas */
+.container {
+  perspective: 1000px;
+  height: 280px;
+  /* Altura fija para la carta */
+  position: relative;
+}
+
+/* Estilo de la parte frontal y trasera de las cartas */
+.front,
+.back {
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.5rem;
+  height: 100%;
+  /* Asegura que la carta ocupe toda la altura del contenedor */
+  width: 100%;
+  /* Asegura que la carta ocupe todo el ancho del contenedor */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: absolute;
+  transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  backface-visibility: hidden;
+}
+
+/* Estilo de la parte trasera de las cartas */
+.back {
+  background: linear-gradient(45deg, #cedce7 0%, #596a72 100%);
+}
+
+/* Estilo del contenido interno de las cartas */
+.inner {
+  transform: translateY(-50%) translateZ(60px) scale(0.94);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+/* Estilos de la carta al ser volteada */
+.container:hover .front {
+  transform: rotateY(-180deg);
+}
+
+.container:hover .back {
+  transform: rotateY(0deg);
+}
+
+.container .back {
+  transform: rotateY(180deg);
+}
+
+/* Estilos específicos para la parte frontal de la carta */
+.front .inner p {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+  background-size: contain;
+}
+
+.front .inner p::after {
+  content: '';
+  width: 4rem;
+  height: 2px;
+  position: absolute;
+  background: #C6D4DF;
+  display: block;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: -0.75rem;
+}
+
+.front .inner span {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+
+/* Estilos para diferentes tamaños de pantalla */
+@media screen and (max-width: 64rem) {
+  .col {
+    flex: 1 1 calc(33.333333% - 2rem);
+    max-width: calc(33.333333% - 2rem);
+  }
+}
+
+@media screen and (max-width: 48rem) {
+  .col {
+    flex: 1 1 calc(50% - 2rem);
+    max-width: calc(50% - 2rem);
+  }
+}
+
+@media screen and (max-width: 32rem) {
+  .col {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin: 0 0 2rem 0;
+  }
+}
