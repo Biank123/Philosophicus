@@ -1,14 +1,14 @@
-const db = require('./db');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const db = require('./db'); // Asegúrate de que esta línea sea correcta
 
 // Crear nuevo usuario
-const createUser = async (username, email, password, role) => {
+const createUser = async (username, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const result = await db.query(
-        'INSERT INTO users (username, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING *',
-        [username, email, hashedPassword, role]
+        'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
+        [username, email, hashedPassword]
     );
+
     return result.rows[0];
 };
 
@@ -18,9 +18,9 @@ const getUserByEmail = async (email) => {
     return result.rows[0];
 };
 
-// Crear token JWT
+// Crear token (suponiendo que ya tienes una función para esto)
 const createToken = (user) => {
-    return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // Implementa tu lógica para crear un token JWT aquí
 };
 
 module.exports = {

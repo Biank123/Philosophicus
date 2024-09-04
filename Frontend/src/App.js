@@ -5,8 +5,9 @@ import './App.css';
 
 function App() {
   return (
+    
     <Landing />
-    // <EssayTemplate />
+    
   );
 }
 

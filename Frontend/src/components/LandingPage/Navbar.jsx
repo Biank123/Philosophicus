@@ -2,10 +2,12 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '@fortawesome/fontawesome-free/css/all.min.css'; // Importa los estilos de Font Awesome
-
+import { useAuth } from '../UserPage/AuthContext'; // Ajusta la ruta si es necesario
 import './Navbar.css';
 
 const Navbar = () => {
+  const { isAuthenticated, logout } = useAuth();
+
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
       <a className="navbar-brand" href="#">
@@ -21,7 +23,6 @@ const Navbar = () => {
               <i className="fas fa-home"></i> Inicio
             </a>
           </li>
-         
           <li className="nav-item">
             <a className="nav-link" href="#">
               <i className="fas fa-info-circle"></i> Quiénes somos
@@ -57,24 +58,34 @@ const Navbar = () => {
             <a
               className="nav-link dropdown-toggle"
               href="#"
-              id="navbarDropdown"
+              id="navbarDropdownAuth"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <i className="fas fa-user"></i> Perfil de Usuario
+              <i className="fas fa-user"></i> {isAuthenticated ? 'Perfil de Usuario' : 'Ingresar'}
             </a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <a className="dropdown-item" href="#">
-                  <i className="fas fa-user-edit"></i> Editar Perfil
-                </a>
-              </li>
-              <li>
-                <a className="dropdown-item" href="#">
-                  <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
-                </a>
-              </li>
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdownAuth">
+              {isAuthenticated ? (
+                <>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      <i className="fas fa-user-edit"></i> Editar Perfil
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#" onClick={logout}>
+                      <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <a className="dropdown-item" href="#">
+                    <i className="fas fa-sign-in-alt"></i> Iniciar sesión
+                  </a>
+                </li>
+              )}
             </ul>
           </li>
         </ul>

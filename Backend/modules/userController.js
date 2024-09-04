@@ -3,16 +3,11 @@ const bcrypt = require('bcrypt');
 
 // Registro de nuevo usuario
 const registerUser = async (req, res) => {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
 
     try {
-        // Validar rol
-        if (!['student', 'teacher'].includes(role)) {
-            return res.status(400).json({ error: 'Invalid role' });
-        }
-
         // Crear usuario
-        const newUser = await userModel.createUser(username, email, password, role);
+        const newUser = await userModel.createUser(username, email, password);
 
         // Crear token
         const token = userModel.createToken(newUser);
