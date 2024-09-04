@@ -1,0 +1,50 @@
+.navbar {
+    padding: 0.5rem 1rem; /* Ajusta el espaciado vertical */
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem; /* Tamaño de la fuente para el nombre de la barra de navegación */
+    
+  }
+  
+  .navbar-nav .nav-item .nav-link {
+    font-size: 1rem; /* Tamaño de la fuente para los enlaces de la barra de navegación */
+  }
+  
+  .navbar-toggler {
+    border: none; /* Elimina el borde del botón de colapso */
+  }
+  
+  
+  @media (max-width: 767.98px) {
+    .navbar-nav {
+      text-align: center; /* Centra los elementos de la lista en pantallas pequeñas */
+    }
+  
+    .navbar-nav .nav-item {
+      margin-left: 0; /* Elimina el margen en pantallas pequeñas */
+      margin-bottom: 0.5rem; /* Añade margen inferior en pantallas pequeñas */
+    }
+  }
+
+  .form-inline {
+    display: flex; /* Usa flexbox para alinear los elementos horizontalmente */
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+  }
+  
+  .form-inline .form-control {
+    width: auto; /* Ajusta el ancho del campo de búsqueda */
+    flex: 1; /* Permite que el campo de búsqueda ocupe el espacio disponible */
+  }
+  
+  .form-inline .btn {
+    margin-left: 0.5rem; /* Espaciado entre el campo de búsqueda y el botón */
+  }
+  .btn{
+    color: rgb(73, 72, 72);
+    border-color: rgb(76, 75, 75);
+  }
+  
+  .navbar-nav {
+    margin-left: auto; /* Alinea la lista de navegación a la derecha */
+  }
