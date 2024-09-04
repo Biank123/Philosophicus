@@ -1,8 +1,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import '@fortawesome/fontawesome-free/css/all.min.css'; // Importa los estilos de Font Awesome
-import { useAuth } from '../UserPage/AuthContext'; // Ajusta la ruta si es necesario
+import '@fortawesome/fontawesome-free/css/all.min.css'; 
+import { useAuth } from '../UserPage/AuthContext'; 
 import './Navbar.css';
 
 const Navbar = () => {
