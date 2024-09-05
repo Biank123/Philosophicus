@@ -1,13 +1,21 @@
 import Landing from './components/LandingPage/Landing';
-import './App.css';
-// import EssayTemplate from './components/BooksPage/EssayTemplate';
+import EssayTemplate from './components/BooksPage/EssayTemplate';
+import LoginRegister from './components/UserPage/LoginRegister';
+import Navbar from './components/LandingPage/Navbar';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
 function App() {
   return (
-    
-    <Landing />
-    
+    <Router>
+    <Navbar />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<LoginRegister />} />
+        {/* <Route path="/profile" element={<ProfilePage />} /> */}
+        <Route path="/write" element={<EssayTemplate/>} />
+      </Routes>
+  </Router>
   );
 }
 

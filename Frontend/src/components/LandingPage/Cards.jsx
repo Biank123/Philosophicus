@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import './Cards.css';
 
 const Cards = () => {
@@ -14,12 +14,11 @@ const Cards = () => {
           { id: 5, title: 'Foro', imageUrl: 'https://unsplash.it/504/504/' },
           { id: 6, title: 'Quiénes Somos', imageUrl: 'https://unsplash.it/505/505/' },
         ].map(card => (
-          <div key={card.id} className="col" onTouchStart={(e) => e.currentTarget.classList.toggle('hover')}>
+          <div key={card.id} className="col">
             <div className="container">
               <div className="front" style={{ backgroundImage: `url(${card.imageUrl})` }}>
                 <div className="inner">
                   <p>{card.title}</p>
-                  <span></span>
                 </div>
               </div>
               <div className="back">
@@ -33,6 +32,6 @@ const Cards = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Cards
+export default Cards;

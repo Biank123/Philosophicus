@@ -1,9 +1,11 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
-import '@fortawesome/fontawesome-free/css/all.min.css'; 
-import { useAuth } from '../UserPage/AuthContext'; 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { useAuth } from '../UserPage/AuthContext';
 import './Navbar.css';
+import { Link } from 'react-router-dom';
+
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
@@ -19,9 +21,9 @@ const Navbar = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <a className="nav-link" href="#">
+            <Link className="nav-link" to="/">
               <i className="fas fa-home"></i> Inicio
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#">
@@ -42,9 +44,9 @@ const Navbar = () => {
             </a>
             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="/write">
                   <i className="fas fa-pencil-alt"></i> Escribir
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="dropdown-item" href="#">
@@ -81,9 +83,9 @@ const Navbar = () => {
                 </>
               ) : (
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <Link className="nav-link" to="/login">
                     <i className="fas fa-sign-in-alt"></i> Iniciar sesión
-                  </a>
+                  </Link>
                 </li>
               )}
             </ul>
