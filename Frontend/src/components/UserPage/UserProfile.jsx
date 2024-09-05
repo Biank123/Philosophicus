@@ -1,10 +1,44 @@
 import React, { useState } from 'react';
 import './UserProfile.css';
 import ChangePasswordForm from './ChangePasswordForm';
+import DeleteAccountForm from './DeleteAccountForm';
 
 const ProfilePage = () => {
   const [activeSection, setActiveSection] = useState('config');
   const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [showDeleteForm, setShowDeleteForm] = useState(false);
+
+  const handleDeleteAccount = async ({ reason, password }) => {
+    try {
+      // Configura el cuerpo de la solicitud en formato JSON
+      const requestBody = JSON.stringify({
+        reason,
+        password,
+      });
+  
+      // Realiza la solicitud DELETE al endpoint `/profile`
+      const response = await fetch('http://localhost:3001/profile', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: requestBody,
+      });
+  
+      // Maneja la respuesta
+      if (!response.ok) {
+        // Lanza un error si la respuesta no es correcta
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      const result = await response.json();
+      console.log('Respuesta del servidor:', result);
+  
+    } catch (error) {
+      console.error('Error al eliminar la cuenta:', error);
+    }
+  };
 
   const renderSection = () => {
     switch (activeSection) {
@@ -13,16 +47,28 @@ const ProfilePage = () => {
           <div className="section-box">
             <h3>Configuración</h3>
             <p>Aquí irá la información de configuración del usuario.</p>
-            <button 
-              className="change-password-btn" 
+            <button
+              className="change-password-btn"
               onClick={() => setShowPasswordForm(!showPasswordForm)}
             >
               Cambiar Contraseña
             </button>
 
             {showPasswordForm && <ChangePasswordForm />}
-            
+            {/* Botón para eliminar cuenta */}
+            <button
+              className="delete-account-btn"
+              onClick={() => setShowDeleteForm(!showDeleteForm)}
+              style={{ marginTop: '10px' }}
+            >
+              Eliminar Cuenta
+            </button>
+
+            {showDeleteForm && (
+              <DeleteAccountForm onSubmit={handleDeleteAccount} />
+            )}
           </div>
+
         );
       case 'writings':
         return (
@@ -72,10 +118,10 @@ const ProfilePage = () => {
   return (
     <div className="profile-container">
       <div className="profile-header">
-        <img 
-          src="https://png.pngtree.com/thumb_back/fh260/background/20230611/pngtree-wolf-animals-images-wallpaper-for-pc-384x480-image_2916211.jpg" 
-          alt="Perfil" 
-          className="profile-image" 
+        <img
+          src="https://png.pngtree.com/thumb_back/fh260/background/20230611/pngtree-wolf-animals-images-wallpaper-for-pc-384x480-image_2916211.jpg"
+          alt="Perfil"
+          className="profile-image"
         />
         <h2 className="username">Nombre del Usuario</h2>
       </div>

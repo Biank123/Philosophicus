@@ -7,11 +7,13 @@ import { AuthProvider } from './components/UserPage/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  
     <AuthProvider>
+      <React.StrictMode>
       <App />
+      </React.StrictMode>
     </AuthProvider>
-  </React.StrictMode>
+  
 );
 
 reportWebVitals();

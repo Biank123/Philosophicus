@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
+// import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useAuth } from '../UserPage/AuthContext';
 import './Navbar.css';
@@ -16,8 +16,9 @@ const Navbar = () => {
       localStorage.removeItem('token');
       // Redirige al usuario a la página de inicio de sesión
       navigate('/login');
+      logout();
   };
-
+  console.log('Is Authenticated:', isAuthenticated);
 
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
@@ -86,7 +87,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <a className="dropdown-item" href="#" onClick={(e) => {
-                      e.preventDefault(); // Evita que el enlace realice una navegación
+                      e.preventDefault(); 
                       handleLogout();
                     }}>
                       <i className="fas fa-sign-out-alt"></i> Cerrar Sesión

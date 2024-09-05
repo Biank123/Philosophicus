@@ -6,6 +6,7 @@
     align-items: center;
     height: 100%;
     margin: 5vh;
+    margin-top: 15vh;
   }
   
   .profile-header {
@@ -34,12 +35,13 @@
   .username {
     font-size: 14px;
     font-weight: bold;
+    margin-top: 2vh;
   }
   
   .sidebar {
     width: 250px;
     background: #f4f4f4;
-    padding: 15px;
+    padding: 18px;
     position: fixed;
     height: 100%;
     top: 0;
@@ -78,9 +80,31 @@
   }
   
   .section-box h3 {
-    margin-top: 10vh;
+    margin-top: 2vh;
   }
   
   .section-box p {
-    margin: 10vh;
+    margin: 5vh;
+  }
+
+  .change-password-btn{
+    background-color: #d6933b;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+    border: none;
+  }
+  .change-password-btn:hover{
+    background-color: #3e2708;
+  }
+  .delete-account-btn{
+    background-color: #d6933b;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    margin-left: 10px;
+  }
+  .delete-account-btn:hover{
+    background-color: #3e2708;
   }

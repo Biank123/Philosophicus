@@ -18,6 +18,7 @@ function App() {
         <Route path="/write" element={<EssayTemplate/>} />
       </Routes>
   </Router>
+  
   );
 }
 
