@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import './LoginRegister.css'; // Asegúrate de que el archivo CSS esté en la misma carpeta o ajusta la ruta según corresponda.
-
+import './LoginRegister.css'; 
+import { useAuth } from './AuthContext';
 
 const Login = () => {
-  
+  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
@@ -24,10 +26,48 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    const endpoint = isSignup ? '/api/users/register' : '/api/users/login';
-  
+    const endpoint = 'http://localhost:3001/api/users/register';
+
+    try {
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
+        return;
+      }
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log(data); 
+      setSuccessMessage('Registration successful! You can now log in.');
+      alert('Usuario registrado con éxito.');
+      setError('');
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred, please try again.');
+      alert('Ocurrió un error, por favor intente nuevamente.');
+    }
+  };
+
+const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    const endpoint = 'http://localhost:3001/api/users/login';
+
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -35,32 +75,36 @@ const Login = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: e.target.username.value,
-          email: e.target.email.value,
-          password: e.target.password.value,
+          email: formData.email,
+          password: formData.password,
         }),
       });
-  
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       const data = await response.json();
       console.log(data); 
+      login(); // Llama a la función de login del contexto
+      localStorage.setItem('token', data.token);
+      setSuccessMessage('Login successful!');
+      alert('Ingreso realizado con éxito.');
+      window.location.href = '/profile'; 
+      setError('');
     } catch (error) {
       console.error('Error:', error);
+      setError('An error occurred, please try again.');
+      alert('Ocurrió un error, por favor intente nuevamente.');
     }
   };
-
-
-
-
+  
   return (
     <div className="main">
       <input className='input' type="checkbox" id="chk" aria-hidden="true" checked={isSignup} onChange={toggleForm} />
 
       <div className="signup">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleRegisterSubmit}>
           <label className='label' htmlFor="chk" aria-hidden="true">Registrarse</label>
           <input
             className='input'
@@ -103,7 +147,7 @@ const Login = () => {
       </div>
 
       <div className="login">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLoginSubmit}>
           <label className='label' htmlFor="chk" aria-hidden="true">Ingresar</label>
           <input
             className='input'
@@ -126,6 +170,8 @@ const Login = () => {
           <button className='button' type="submit">Ingresar</button>
         </form>
       </div>
+      {error && <p className="error">{error}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}
     </div>
   );
 };

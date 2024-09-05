@@ -1,11 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('./userController');
 const upload = require('./uploadMiddleware');
+const { registerUser, loginUser, getUserProfile, deleteUserAccount, changeUserPassword } = require('./userController');
+const authenticate = require('./authMiddleware');
 
+// Ruta de registro de usuario
+router.post('/register', registerUser); //Funciona
+// Ruta de login de usuario
+router.post('/login', loginUser); //Funciona
 
-router.post('/register', userController.registerUser);
-router.post('/login', userController.loginUser);
+// Obtener información del perfil del usuario autenticado
+router.get('/profile', authenticate, getUserProfile);
+
+// Eliminar la cuenta del usuario autenticado
+router.delete('/profile', authenticate, deleteUserAccount);
+
+// Cambiar la contraseña del usuario autenticado
+router.put('/profile/change-password', authenticate, changeUserPassword);
 
 
 // Ruta para subir un archivo
@@ -19,10 +30,6 @@ router.post('/upload', upload.single('file'), (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-module.exports = router;
-
-
 
 
 module.exports = router;

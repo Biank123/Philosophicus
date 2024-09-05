@@ -1,7 +1,6 @@
 const userModel = require('./userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET } = process.env;
 
 // Registro de nuevo usuario
 const registerUser = async (req, res) => {
@@ -40,8 +39,71 @@ const loginUser = async (req, res) => {
     }
 };
 
+// Obtener perfil del usuario
+const getUserProfile = async (req, res) => {
+    const userId = req.user.id; // Extraído del token JWT
+
+    try {
+        const user = await userModel.getUserById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({ username: user.username, email: user.email });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Eliminar cuenta del usuario
+const deleteUserAccount = async (req, res) => {
+    const userId = req.user.id; // Extraído del token JWT
+
+    try {
+        const deletedUser = await userModel.deleteUserById(userId);
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({ message: 'Account deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Cambiar la contraseña del usuario
+const changeUserPassword = async (req, res) => {
+    const userId = req.user.id; // Extraído del token JWT
+    const { currentPassword, newPassword } = req.body;
+
+    try {
+        const user = await userModel.getUserById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Verificar la contraseña actual
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ error: 'Current password is incorrect' });
+        }
+
+        // Actualizar la contraseña
+        await userModel.updateUserPassword(userId, newPassword);
+        res.json({ message: 'Password updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 
 module.exports = {
     registerUser,
     loginUser,
+    getUserProfile,
+    deleteUserAccount,
+    changeUserPassword
 };

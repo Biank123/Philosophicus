@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './UserProfile.css';
+import ChangePasswordForm from './ChangePasswordForm';
 
 const ProfilePage = () => {
   const [activeSection, setActiveSection] = useState('config');
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
 
   const renderSection = () => {
     switch (activeSection) {
@@ -11,6 +13,15 @@ const ProfilePage = () => {
           <div className="section-box">
             <h3>Configuración</h3>
             <p>Aquí irá la información de configuración del usuario.</p>
+            <button 
+              className="change-password-btn" 
+              onClick={() => setShowPasswordForm(!showPasswordForm)}
+            >
+              Cambiar Contraseña
+            </button>
+
+            {showPasswordForm && <ChangePasswordForm />}
+            
           </div>
         );
       case 'writings':
