@@ -1,5 +1,8 @@
-const db = require('./db'); // Asegúrate de que esta línea sea correcta
-
+const db = require('./db'); 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 // Crear nuevo usuario
 const createUser = async (username, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -18,10 +21,17 @@ const getUserByEmail = async (email) => {
     return result.rows[0];
 };
 
-// Crear token (suponiendo que ya tienes una función para esto)
+// Crear token
 const createToken = (user) => {
-    // Implementa tu lógica para crear un token JWT aquí
+    const payload = {
+        id: user.id,
+        username: user.username,
+        email: user.email
+    };
+
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 };
+
 
 module.exports = {
     createUser,

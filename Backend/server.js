@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-const userRoutes = require('./userRoutes'); 
+const userRoutes = require('./modules/userRoutes'); 
+const cors = require('cors');
+app.use(cors());
 
 app.use(express.json()); // Para parsear JSON en el cuerpo de las solicitudes
 

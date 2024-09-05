@@ -5,10 +5,19 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useAuth } from '../UserPage/AuthContext';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+      // Elimina el token del localStorage
+      localStorage.removeItem('token');
+      // Redirige al usuario a la página de inicio de sesión
+      navigate('/login');
+  };
+
 
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
@@ -76,7 +85,10 @@ const Navbar = () => {
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="#" onClick={logout}>
+                    <a className="dropdown-item" href="#" onClick={(e) => {
+                      e.preventDefault(); // Evita que el enlace realice una navegación
+                      handleLogout();
+                    }}>
                       <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
                     </a>
                   </li>
