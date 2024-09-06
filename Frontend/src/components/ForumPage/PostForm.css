@@ -1,0 +1,43 @@
+/* Estilos para el contenedor del formulario de publicación */
+.post-form-container {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  /* Estilos para los campos de entrada del formulario */
+  .post-form-container input[type="text"],
+  .post-form-container textarea,
+  .post-form-container select,
+  .post-form-container input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+  
+  /* Estilo para el campo de archivo */
+  .post-form-container input[type="file"] {
+    padding: 3px; /* Ajuste para el campo de archivo */
+  }
+  
+  /* Estilos para el botón de envío */
+  .post-form-container button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .post-form-container button:hover {
+    background-color: #0056b3;
+  }

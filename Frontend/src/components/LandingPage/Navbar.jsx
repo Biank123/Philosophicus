@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useAuth } from '../UserPage/AuthContext';
 import './Navbar.css';
@@ -36,9 +36,9 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
-              <i className="fas fa-info-circle"></i> Quiénes somos
-            </a>
+            <Link className="nav-link" to="/about">
+              <i className="fas fa-info-circle"></i> Saber más
+            </Link>
           </li>
 
           <li className="nav-item dropdown">

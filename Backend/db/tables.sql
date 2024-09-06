@@ -91,4 +91,37 @@ CREATE TABLE user_achievements (
     obtained_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE posts (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    file VARCHAR(255), -- Nombre del archivo subido, si existe
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
+CREATE TABLE files (
+    id SERIAL PRIMARY KEY,
+    post_id INTEGER REFERENCES posts(id) ON DELETE CASCADE,
+    filename VARCHAR(255) NOT NULL,
+    path VARCHAR(255) NOT NULL, -- Ruta donde se almacena el archivo en el servidor
+    size INTEGER, -- Tamaño del archivo en bytes
+    mimetype VARCHAR(50), -- Tipo MIME del archivo
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear la función para actualizar updated_at
+CREATE OR REPLACE FUNCTION update_posts_timestamp()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Crear el trigger que utiliza la función
+CREATE TRIGGER trg_update_posts
+BEFORE UPDATE ON posts
+FOR EACH ROW
+EXECUTE FUNCTION update_posts_timestamp();

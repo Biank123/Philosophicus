@@ -1,0 +1,58 @@
+/* Estilos para el contenedor de las publicaciones */
+.publication-list-container {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 20px auto;
+  }
+  
+  /* Estilos para el título de la sección de publicaciones */
+  .publication-list-container h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Estilos para cada publicación en la lista */
+  .publication-list-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .publication-list-container li {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .publication-list-container li h3 {
+    font-size: 1.2rem;
+    color: #007bff;
+    margin: 0 0 10px 0;
+  }
+  
+  .publication-list-container li p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0 0 10px 0;
+  }
+  
+  .publication-list-container li a {
+    display: inline-block;
+    background-color: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+  }
+  
+  .publication-list-container li a:hover {
+    background-color: #218838;
+  }

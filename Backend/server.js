@@ -1,9 +1,23 @@
 const express = require('express');
-const app = express();
-const userRoutes = require('./modules/userRoutes'); 
+const userRoutes = require('./modules/Routes/userRoutes'); 
 const cors = require('cors');
-app.use(cors());
+const multer = require('multer');
+const path = require('path');
+const postRoutes = require('./modules/Routes/postRoutes')
 
+
+// Configuración de Multer
+const upload = multer({ dest: 'uploads/' });
+
+// Rutas para el foro
+app.use('/api/posts', postRoutes);
+
+// Servir archivos estáticos
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+const app = express();
+app.use(cors());
 app.use(express.json()); // Para parsear JSON en el cuerpo de las solicitudes
 
 // Utiliza las rutas de usuario
