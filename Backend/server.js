@@ -3,7 +3,8 @@ const userRoutes = require('./modules/Routes/userRoutes');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
-const postRoutes = require('./modules/Routes/postRoutes')
+const postRoutes = require('./modules/Routes/postRoutes');
+const problemRoutes = require('./modules/Routes/PhiRoutes');
 
 
 // Configuración de Multer
@@ -14,6 +15,13 @@ app.use('/api/posts', postRoutes);
 
 // Servir archivos estáticos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+// Rutas
+app.use('/problems', problemRoutes);
 
 
 const app = express();

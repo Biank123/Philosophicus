@@ -125,3 +125,26 @@ CREATE TRIGGER trg_update_posts
 BEFORE UPDATE ON posts
 FOR EACH ROW
 EXECUTE FUNCTION update_posts_timestamp();
+
+-- Crear la tabla de problemas filosóficos
+CREATE TABLE problemas_filosoficos (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    preguntas_relacionadas TEXT NOT NULL,
+    descripcion TEXT NOT NULL
+);
+
+-- Crear la tabla de autores
+CREATE TABLE autores (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL
+);
+
+-- Tabla intermedia para la relación muchos a muchos
+CREATE TABLE autores_problemas (
+    autor_id INT,
+    problema_id INT,
+    FOREIGN KEY (autor_id) REFERENCES autores(id),
+    FOREIGN KEY (problema_id) REFERENCES problemas_filosoficos(id),
+    PRIMARY KEY (autor_id, problema_id)
+);
