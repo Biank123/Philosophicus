@@ -1,17 +1,23 @@
 const pool = require('../Models/db');
 
 const Problem = {
-  // Obtener todos los problemas con sus autores
+  // Obtener todos los problemas sin los autores
   async getProblems() {
     const result = await pool.query(`
-      SELECT p.id, p.titulo, p.preguntas_relacionadas, p.descripcion, 
-             json_agg(a.nombre) AS autores
-      FROM problemas_filosoficos p
-      LEFT JOIN problemas_autores pa ON p.id = pa.problema_id
-      LEFT JOIN autores a ON a.id = pa.autor_id
-      GROUP BY p.id
+      SELECT id, titulo, preguntas_relacionadas, descripcion
+      FROM problemas_filosoficos
     `);
     return result.rows;
+  },
+
+  // Obtener un problema por ID
+  async getProblemById(id) {
+    const result = await pool.query(`
+      SELECT id, titulo, preguntas_relacionadas, descripcion
+      FROM problemas_filosoficos
+      WHERE id = $1
+    `, [id]);
+    return result.rows[0];
   }
 };
 

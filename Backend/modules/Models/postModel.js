@@ -1,5 +1,5 @@
 // modules/postsModel.js
-const pool = require('../db'); 
+const pool = require('../Models/db'); 
 
 // Crear una nueva publicación
 const createPost = async (title, content, category, file) => {
@@ -43,6 +43,6 @@ const getCommentsByPostId = async (postId) => {
 module.exports = {
     createPost,
     getAllPosts,
-    getPostByIdC,
+    
     getCommentsByPostId
 };

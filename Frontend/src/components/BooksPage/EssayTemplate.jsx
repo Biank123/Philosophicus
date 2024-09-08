@@ -1,34 +1,64 @@
 import React, { useState } from 'react';
 import './EssayTemplate.css';
 
-
-const EssayTemplate = () => {
-  // Definición de las secciones del ensayo
+const EssayTemplate = ({ problem }) => {
+  // Definición de las secciones del ensayo (mover esto arriba)
   const sections = [
     {
       title: 'Introducción',
-      description: 'Escribe una introducción que presente el tema de tu ensayo y explique por qué es importante.',
+      description: 'Escribe una introducción breve que presente el problema filosófico seleccionado y explica qué deseas responder.',
       placeholder: 'Escribe tu introducción aquí...'
     },
     {
-      title: 'Desarrollo Parte 1',
-      description: 'Desarrolla tu primer argumento aquí.',
-      placeholder: 'Escribe la primera parte del desarrollo aquí...'
+      title: 'Argumento 1 - Premisa 1',
+      description: 'Escribe la primera premisa de tu primer argumento.',
+      placeholder: 'Escribe la primera premisa aquí...'
     },
     {
-      title: 'Desarrollo Parte 2',
-      description: 'Continúa desarrollando tu argumento principal aquí.',
-      placeholder: 'Escribe la segunda parte del desarrollo aquí...'
+      title: 'Argumento 1 - Premisa 2',
+      description: 'Escribe la segunda premisa de tu primer argumento.',
+      placeholder: 'Escribe la segunda premisa aquí...'
     },
     {
-      title: 'Conclusión',
-      description: 'Resume los puntos clave de tu ensayo y ofrece una conclusión final.',
-      placeholder: 'Escribe tu conclusión aquí...'
+      title: 'Argumento 1 - Conclusión',
+      description: 'Escribe la conclusión derivada de tus dos premisas del primer argumento.',
+      placeholder: 'Escribe la conclusión aquí...'
+    },
+    {
+      title: 'Argumento 2 - Premisa 1',
+      description: 'Escribe la primera premisa de tu segundo argumento.',
+      placeholder: 'Escribe la primera premisa aquí...'
+    },
+    {
+      title: 'Argumento 2 - Premisa 2',
+      description: 'Escribe la segunda premisa de tu segundo argumento.',
+      placeholder: 'Escribe la segunda premisa aquí...'
+    },
+    {
+      title: 'Argumento 2 - Conclusión',
+      description: 'Escribe la conclusión derivada de tus dos premisas del segundo argumento.',
+      placeholder: 'Escribe la conclusión aquí...'
+    },
+    {
+      title: 'Fuentes',
+      description: 'Cita las fuentes y referencias externas que has utilizado para respaldar tus argumentos.',
+      placeholder: 'Escribe tus fuentes aquí...'
+    },
+    {
+      title: 'Conclusión Final',
+      description: 'Resume los puntos clave del ensayo y ofrece una conclusión final que responda a la pregunta planteada.',
+      placeholder: 'Escribe la conclusión final aquí...'
     }
   ];
 
+  // Llamar a los hooks después de definir `sections`
   const [currentSection, setCurrentSection] = useState(0);
   const [sectionTexts, setSectionTexts] = useState(Array(sections.length).fill(''));
+
+  // Verificar si `problem` es `null` o `undefined` al inicio
+  if (!problem) {
+    return <div>No problem selected</div>;
+  }
 
   // Manejador para cambiar la sección
   const handleNext = () => {
@@ -59,6 +89,12 @@ const EssayTemplate = () => {
   return (
     <div className="essay-template">
       <h1>Escribe tu Ensayo</h1>
+      {/* Mostrar el problema seleccionado */}
+      <div className="problem-section">
+        <h2>Problema seleccionado: {problem.titulo}</h2>
+        <p>{problem.descripcion}</p>
+      </div>
+      {/* Sección de escritura */}
       <div className="section">
         <h2>{sections[currentSection].title}</h2>
         <p>{sections[currentSection].description}</p>
