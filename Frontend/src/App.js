@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Landing from './components/LandingPage/Landing';
 import LoginRegister from './components/UserPage/LoginRegister';
 import Navbar from './components/LandingPage/Navbar';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Route, Routes, useNavigate } from 'react-router-dom';
 import AboutPage from './components/AboutPage/AboutPage';
 import UserProfile from "./components/UserPage/UserProfile";
 import SelectProblem from './components/BooksPage/SelectProblem';
