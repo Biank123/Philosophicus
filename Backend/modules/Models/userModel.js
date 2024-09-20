@@ -33,6 +33,8 @@ const createToken = (user) => {
 // Obtener usuario por ID (para obtener el perfil)
 const getUserById = async (userId) => {
     const result = await db.query('SELECT * FROM users WHERE id = $1', [userId]);
+    console.log(userId);
+    console.log(result);
     return result.rows[0];
 };
 

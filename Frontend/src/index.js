@@ -10,10 +10,10 @@ root.render(
   <Router>
     <AuthProvider>
       <React.StrictMode>
-      <App />
+        <App />
       </React.StrictMode>
     </AuthProvider>
-    </Router>
+  </Router>
 );
 
 reportWebVitals();

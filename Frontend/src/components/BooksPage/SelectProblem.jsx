@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const SelectProblem = ({ onSelect }) => {
   const [problems, setProblems] = useState([]);
   const [selectedProblemId, setSelectedProblemId] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate();  // Obtenemos navigate para usarlo más tarde
 
   useEffect(() => {
     fetch('http://localhost:3001/problems')
@@ -18,12 +18,12 @@ const SelectProblem = ({ onSelect }) => {
   }, []);
 
   const handleSelect = (event) => {
-    setSelectedProblemId(event.target.value);
+    setSelectedProblemId(event.target.value); // Guardamos el ID seleccionado
   };
 
   const handleConfirm = () => {
     if (selectedProblemId) {
-      onSelect(selectedProblemId); // Pasar el ID del problema al componente padre
+      onSelect(selectedProblemId, navigate);  // Pasamos navigate también
     } else {
       alert('Por favor, selecciona un problema.');
     }

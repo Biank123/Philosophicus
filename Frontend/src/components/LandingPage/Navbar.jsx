@@ -12,11 +12,11 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-      // Elimina el token del localStorage
-      localStorage.removeItem('token');
-      // Redirige al usuario a la página de inicio de sesión
-      navigate('/login');
-      logout();
+    // Elimina el token del localStorage
+    localStorage.removeItem('token');
+    // Redirige al usuario a la página de inicio de sesión
+    navigate('/login');
+    logout();
   };
   console.log('Is Authenticated:', isAuthenticated);
 
@@ -59,9 +59,9 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  <i className="fas fa-book"></i> Publicar
-                </a>
+                <Link className="dropdown-item" to="/essays/published">
+                  <i className="fas fa-book"></i> Publicaciones
+                </Link>
               </li>
             </ul>
           </li>
@@ -87,7 +87,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <a className="dropdown-item" href="#" onClick={(e) => {
-                      e.preventDefault(); 
+                      e.preventDefault();
                       handleLogout();
                     }}>
                       <i className="fas fa-sign-out-alt"></i> Cerrar Sesión

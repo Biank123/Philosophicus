@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './EssayTemplate.css';
 
 const EssayTemplate = ({ problem }) => {
-  // Definición de las secciones del ensayo (mover esto arriba)
+  // Definición de las secciones del ensayo
   const sections = [
     {
       title: 'Introducción',
@@ -54,6 +54,8 @@ const EssayTemplate = ({ problem }) => {
   // Llamar a los hooks después de definir `sections`
   const [currentSection, setCurrentSection] = useState(0);
   const [sectionTexts, setSectionTexts] = useState(Array(sections.length).fill(''));
+  const [reviewResult, setReviewResult] = useState(null);
+  const [draftTitle, setDraftTitle] = useState('');
 
   // Verificar si `problem` es `null` o `undefined` al inicio
   if (!problem) {
@@ -86,6 +88,81 @@ const EssayTemplate = ({ problem }) => {
     setSectionTexts(newTexts);
   };
 
+  const handleSubmit = async () => {
+    const combinedText = sectionTexts.join('\n\n'); // Unir todas las secciones del ensayo
+    console.log('Texto enviado al backend:', combinedText);
+
+    try {
+      const response = await fetch('http://localhost:3001/revisar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ texto: combinedText }), // Enviar todo el texto junto
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Respuesta del backend:', data);
+      setReviewResult(data.revision); // Guardar la revisión para mostrarla
+    } catch (error) {
+      console.error('Error enviando el texto:', error);
+      setReviewResult('Error al enviar el texto para revisión.');
+    }
+  };
+
+  const handlePublish = async () => {
+    const combinedText = sectionTexts.join('\n\n');
+    try {
+      const response = await fetch('http://localhost:3001/essays/publish', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ texto: combinedText }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al publicar el ensayo.');
+      }
+
+      alert('Ensayo publicado con éxito.');
+    } catch (error) {
+      console.error('Error publicando el ensayo:', error);
+      alert('Error al publicar el ensayo.');
+    }
+  };
+
+  const handleSaveDraft = async () => {
+    const combinedText = sectionTexts.join('\n\n');
+
+    try {
+      const response = await fetch('http://localhost:3001/essays/save-draft', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ title: draftTitle, texto: combinedText }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al guardar el borrador.');
+      }
+
+      alert('Borrador guardado con éxito.');
+      setDraftTitle(''); // Limpiar el campo de título después de guardar
+    } catch (error) {
+      console.error('Error guardando el borrador:', error);
+      alert('Error al guardar el borrador.');
+    }
+  };
+
   return (
     <div className="essay-template">
       <h1>Escribe tu Ensayo</h1>
@@ -93,6 +170,16 @@ const EssayTemplate = ({ problem }) => {
       <div className="problem-section">
         <h2>Problema seleccionado: {problem.titulo}</h2>
         <p>{problem.descripcion}</p>
+      </div>
+      <div className="title-section">
+        <label htmlFor="draft-title">Título del borrador:</label>
+        <input
+          type="text"
+          id="draft-title"
+          value={draftTitle}
+          onChange={(e) => setDraftTitle(e.target.value)}
+          placeholder="Escribe el título aquí..."
+        />
       </div>
       {/* Sección de escritura */}
       <div className="section">
@@ -110,10 +197,23 @@ const EssayTemplate = ({ problem }) => {
           {currentSection < sections.length - 1 ? (
             <button onClick={handleNext}>Siguiente</button>
           ) : (
-            <button onClick={() => alert('Ensayo enviado!')}>Enviar</button>
+            <>
+              <button onClick={handleSaveDraft}>Guardar en borradores</button>
+              <button onClick={handlePublish}>Publicar</button>
+              <button onClick={handleSubmit}>Enviar para revisión</button>
+            </>
           )}
         </div>
       </div>
+
+      {/* Mostrar el resultado de la revisión */}
+      {reviewResult && (
+        <div className="review-section">
+          <h2>Resultado de la revisión:</h2>
+          <p>{reviewResult}</p>
+        </div>
+      )}
+
     </div>
   );
 };

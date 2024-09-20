@@ -11,6 +11,7 @@ CREATE TABLE essays (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -148,3 +149,16 @@ CREATE TABLE autores_problemas (
     FOREIGN KEY (problema_id) REFERENCES problemas_filosoficos(id),
     PRIMARY KEY (autor_id, problema_id)
 );
+
+-- Tabla de borradores
+CREATE TABLE drafts (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE essays
+ADD COLUMN is_published BOOLEAN DEFAULT FALSE;

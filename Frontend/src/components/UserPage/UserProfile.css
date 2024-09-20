@@ -33,9 +33,16 @@
   }
   
   .username {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
     margin-top: 2vh;
+  }
+
+  .email{
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 8vh;
+    margin-left: -12vh;
   }
   
   .sidebar {

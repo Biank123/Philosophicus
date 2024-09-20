@@ -90,15 +90,15 @@ const changeUserPassword = async (req, res) => {
             return res.status(400).json({ error: 'Current password is incorrect' });
         }
 
-        // Actualizar la contraseña
-        await userModel.updateUserPassword(userId, newPassword);
+        // Hashear la nueva contraseña
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await userModel.updateUserPassword(userId, hashedPassword);
         res.json({ message: 'Password updated successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
 
 module.exports = {
     registerUser,

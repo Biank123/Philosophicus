@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import Landing from './components/LandingPage/Landing';
 import LoginRegister from './components/UserPage/LoginRegister';
 import Navbar from './components/LandingPage/Navbar';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';  
 import AboutPage from './components/AboutPage/AboutPage';
-import UserProfile from "./components/UserPage/UserProfile";
+import UserProfile from './components/UserPage/UserProfile';
 import SelectProblem from './components/BooksPage/SelectProblem';
 import SelectedProblemPage from './components/BooksPage/SelectProblemPage';
+import PublishedEssays from './components/BooksPage/PublishEssays';
 
 function App() {
   const [selectedProblem, setSelectedProblem] = useState(null);
-  const navigate = useNavigate();
 
-  const handleSelectProblem = (problemId) => {
+  const handleSelectProblem = (problemId, navigate) => {
     fetch(`http://localhost:3001/problems/${problemId}`)
       .then(response => response.json())
       .then(data => {
         setSelectedProblem(data);
-        navigate('/write'); 
+        navigate('/write');  // Navegación se maneja en SelectProblem
       })
       .catch(error => console.error('Error fetching problem:', error));
   };
@@ -38,6 +38,7 @@ function App() {
           path="/write" 
           element={<SelectedProblemPage problem={selectedProblem} />} 
         />
+        <Route path="/essays/published" element={<PublishedEssays />} />
       </Routes>
     </>
   );

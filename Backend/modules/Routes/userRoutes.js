@@ -10,7 +10,7 @@ router.post('/register', registerUser); //Funciona
 router.post('/login', loginUser); //Funciona
 
 // Obtener información del perfil del usuario autenticado
-router.get('/profile', authenticate, getUserProfile);
+router.get('/profile/user', authenticate, getUserProfile);
 
 // Eliminar la cuenta del usuario autenticado
 router.delete('/profile', authenticate, deleteUserAccount);
