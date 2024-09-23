@@ -1,14 +1,33 @@
 const { saveDraft, publishEssay, getPublishedEssays, getDraftsByUser } = require('../Models/publishModel');
 
+const { pool } = require('../Models/db');
+
 // Controlador para guardar borradores
 const saveDraftController = async (req, res) => {
   const userId = req.user?.id; // Usar encadenamiento opcional para evitar errores
+
+  // Verificar que se proporciona el userId
   if (!userId) {
     return res.status(401).json({ error: 'Usuario no autenticado' });
   }
 
   const { title, texto } = req.body;
 
+  // Verificar que se proporcionen los datos necesarios
+  if (!title || !texto) {
+    return res.status(400).json({ error: 'Título y texto son obligatorios' });
+  }
+
+  // Probar la conexión
+  try {
+    const testConnection = await pool.query('SELECT NOW()');
+    console.log('Conexión exitosa:', testConnection.rows);
+  } catch (err) {
+    console.error('Error de conexión:', err);
+    return res.status(500).json({ error: 'Error de conexión a la base de datos.', details: err.message });
+  }
+
+  // Guardar el borrador
   try {
     const result = await saveDraft(userId, title, texto);
     res.status(200).json({ message: 'Borrador guardado con éxito.', data: result });
@@ -17,6 +36,8 @@ const saveDraftController = async (req, res) => {
     res.status(500).json({ error: 'Error al guardar el borrador.', details: error.message });
   }
 };
+
+
 
 // Controlador para publicar el ensayo
 const publishEssayController = async (req, res) => {

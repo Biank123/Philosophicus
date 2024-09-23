@@ -4,15 +4,15 @@ const { saveDraftController, publishEssayController, fetchPublishedEssays, fetch
 const authenticateToken = require('../Middlewares/authMiddleware');
 
 // Ruta para guardar borradores
-router.post('/save-draft', saveDraftController);
+router.post('/save-draft', authenticateToken, saveDraftController); //Funciona
 
 // Ruta para publicar el ensayo
-router.post('/publish', publishEssayController);
+router.post('/publish', authenticateToken, publishEssayController);
 
 // Ruta para mostrar ensayos publicados
 router.get('/published', authenticateToken, fetchPublishedEssays);
 
 // Ruta para mostrar los borradores guardados
-router.get('/drafts', authenticateToken, fetchDraftsByUser);
+router.get('/drafts', authenticateToken, fetchDraftsByUser); //Funciona
 
 module.exports = router;

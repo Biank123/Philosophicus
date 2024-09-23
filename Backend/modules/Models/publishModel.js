@@ -1,5 +1,4 @@
-const { Pool } = require('pg');
-const pool = new Pool(); // Configura la conexión con tu base de datos
+const { pool } = require('../Models/db');
 
 // Función para guardar un borrador
 const saveDraft = async (userId, title, texto) => {
@@ -7,8 +6,10 @@ const saveDraft = async (userId, title, texto) => {
     'INSERT INTO drafts (user_id, title, content) VALUES ($1, $2, $3) RETURNING *',
     [userId, title, texto]
   );
-  return result.rows[0];
+  return result.rows[0]; // Devuelve el primer resultado
 };
+
+
 
 // Función para publicar un ensayo
 const publishEssay = async (title, content) => {
