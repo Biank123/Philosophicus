@@ -108,7 +108,7 @@ const EssayTemplate = ({ problem }) => {
 
       const data = await response.json();
       console.log('Respuesta del backend:', data);
-      setReviewResult(data.revision); // Guardar la revisión para mostrarla
+      setReviewResult(data.correcciones); // Guardar la revisión para mostrarla
     } catch (error) {
       console.error('Error enviando el texto:', error);
       setReviewResult('Error al enviar el texto para revisión.');
@@ -207,13 +207,18 @@ const EssayTemplate = ({ problem }) => {
       </div>
 
       {/* Mostrar el resultado de la revisión */}
-      {reviewResult && (
+      {reviewResult && reviewResult.length > 0 && (
         <div className="review-section">
-          <h2>Resultado de la revisión:</h2>
-          <p>{reviewResult}</p>
-        </div>
-      )}
-
+        <h2>Resultado de la revisión:</h2>
+        {reviewResult.map((correccion, index) => (
+          <div key={index}>
+            <p><strong>Mensaje:</strong> {correccion.mensaje}</p>
+            <p><strong>Sugerencias:</strong> {correccion.sugerencias.join(', ')}</p>
+            <p><strong>Contexto:</strong> {correccion.contexto}</p>
+          </div>
+          ))}
+          </div>
+        )}
     </div>
   );
 };
