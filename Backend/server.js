@@ -7,6 +7,7 @@ const postRoutes = require('./modules/Routes/postRoutes');
 const problemRoutes = require('./modules/Routes/PhiRoutes');
 const TextReview = require('./modules/Controllers/TextReview');
 const essayRoutes = require('./modules/Routes/essayRoutes');
+const contentRoutes = require('./modules/Routes/contentRoutes');
 
 // Crea la aplicación de Express
 const app = express();
@@ -35,6 +36,9 @@ app.post('/revisar', TextReview);
 
 // Rutas para publicar o guardar ensayos
 app.use('/essays', essayRoutes);
+
+// Rutas para mostrar contenido filtrado de estudio
+app.use('/api/filter', contentRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT;

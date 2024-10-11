@@ -8,6 +8,9 @@ import UserProfile from './components/UserPage/UserProfile';
 import SelectProblem from './components/BooksPage/SelectProblem';
 import SelectedProblemPage from './components/BooksPage/SelectProblemPage';
 import PublishedEssays from './components/BooksPage/PublishEssays';
+import FilterPage from './components/StudyPage/FilterPage';
+import SpecificFilter from './components/StudyPage/SpecificFilter';
+import ContentPage from './components/StudyPage/ContentPage';
 
 function App() {
   const [selectedProblem, setSelectedProblem] = useState(null);
@@ -30,6 +33,9 @@ function App() {
         <Route path="/login" element={<LoginRegister />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route exact path="/filter" element={<FilterPage />} />
+        <Route exact path="/filter/:tipo" element={<SpecificFilter />} />
+        <Route exact path="/content/:tipo/:valor" element={<ContentPage />} />
         <Route 
           path="/select-problem" 
           element={<SelectProblem onSelect={handleSelectProblem} />} 

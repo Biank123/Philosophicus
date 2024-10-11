@@ -141,15 +141,6 @@ CREATE TABLE autores (
     nombre VARCHAR(255) NOT NULL
 );
 
--- Tabla intermedia para la relación muchos a muchos
-CREATE TABLE autores_problemas (
-    autor_id INT,
-    problema_id INT,
-    FOREIGN KEY (autor_id) REFERENCES autores(id),
-    FOREIGN KEY (problema_id) REFERENCES problemas_filosoficos(id),
-    PRIMARY KEY (autor_id, problema_id)
-);
-
 -- Tabla de borradores
 CREATE TABLE drafts (
     id SERIAL PRIMARY KEY,
@@ -162,3 +153,44 @@ CREATE TABLE drafts (
 
 ALTER TABLE essays
 ADD COLUMN is_published BOOLEAN DEFAULT FALSE;
+
+-- -----------------------------------------------------------------
+
+CREATE TABLE temas (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    descripcion TEXT  
+);
+
+
+CREATE TABLE epocas (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE temas_problemas (
+    tema_id INT,
+    problema_id INT,
+    FOREIGN KEY (tema_id) REFERENCES temas(id),
+    FOREIGN KEY (problema_id) REFERENCES problemas_filosoficos(id),
+    PRIMARY KEY (tema_id, problema_id)
+);
+
+CREATE TABLE epocas_problemas (
+    epoca_id INT,
+    problema_id INT,
+    FOREIGN KEY (epoca_id) REFERENCES epocas(id),
+    FOREIGN KEY (problema_id) REFERENCES problemas_filosoficos(id),
+    PRIMARY KEY (epoca_id, problema_id)
+);
+
+ALTER TABLE autores
+ADD COLUMN descripcion TEXT;
+
+CREATE TABLE autores_problemas (
+    autor_id INT NOT NULL,
+    problema_id INT NOT NULL,
+    PRIMARY KEY (autor_id, problema_id),
+    FOREIGN KEY (autor_id) REFERENCES autores(id),
+    FOREIGN KEY (problema_id) REFERENCES problemas_filosoficos(id)
+);
