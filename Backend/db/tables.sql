@@ -194,3 +194,5 @@ CREATE TABLE autores_problemas (
     FOREIGN KEY (autor_id) REFERENCES autores(id),
     FOREIGN KEY (problema_id) REFERENCES problemas_filosoficos(id)
 );
+
+ALTER TABLE epocas ADD COLUMN descripcion TEXT;

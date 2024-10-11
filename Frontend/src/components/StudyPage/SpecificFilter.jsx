@@ -10,11 +10,11 @@ function SpecificFilter() {
     const fetchOpciones = async () => {
       let url = '';
       if (tipo === 'autor') {
-        url = '/api/filter/autores'; // Ruta del backend para obtener autores
+        url = 'http://localhost:3001/api/filter/api/filter/autores'; // Ruta del backend para obtener autores
       } else if (tipo === 'tema') {
-        url = '/api/filter/temas'; // Ruta del backend para obtener temas
+        url = 'http://localhost:3001/api/filter/api/filter/temas'; // Ruta del backend para obtener temas
       } else if (tipo === 'epoca') {
-        url = '/api/filter/epocas'; // Ruta del backend para obtener épocas
+        url = 'http://localhost:3001/api/filter/api/filter/epocas'; // Ruta del backend para obtener épocas
       }
 
       try {

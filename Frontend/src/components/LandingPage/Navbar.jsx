@@ -63,6 +63,11 @@ const Navbar = () => {
                   <i className="fas fa-book"></i> Publicaciones
                 </Link>
               </li>
+              <li>
+                <Link className="dropdown-item" to="/filter">
+                  <i className="fas fa-scroll"></i> Estudiar
+                </Link>
+              </li>
             </ul>
           </li>
 

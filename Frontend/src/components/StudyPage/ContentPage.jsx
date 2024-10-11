@@ -12,13 +12,13 @@ function ContentPage() {
       // Definir la URL adecuada según el tipo de filtro
       if (tipo === 'autor') {
         // Obtener la descripción del autor
-        url = `/api/filter/autores/${valor}/descripcion`;
+        url = `http://localhost:3001/api/filter/autores/${valor}/descripcion`;
       } else if (tipo === 'tema') {
         // Obtener problemas asociados al tema
-        url = `/api/filter/temas/${valor}/problemas`;
+        url = `http://localhost:3001/api/filter/temas/${valor}/problemas`;
       } else if (tipo === 'epoca') {
         // Obtener los temas y autores relacionados a la época
-        url = `/api/filter/epocas/${valor}/temas`; // También podrías hacer otra solicitud para los autores relacionados
+        url = `http://localhost:3001/api/filter/epocas/${valor}/temas`; // También podrías hacer otra solicitud para los autores relacionados
       }
 
       try {

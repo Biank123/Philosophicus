@@ -16,6 +16,26 @@ INSERT INTO epocas (nombre) VALUES
 ('Modernidad'),
 ('Contemporaneidad');
 
+UPDATE epocas 
+SET descripcion = 'La Antigüedad abarca desde la invención de la escritura hasta la caída del Imperio Romano, destacándose el desarrollo de civilizaciones y el pensamiento filosófico de figuras como Platón y Aristóteles.'
+WHERE nombre = 'Antigüedad';
+
+UPDATE epocas 
+SET descripcion = 'La Edad Media, que se extiende desde la caída del Imperio Romano hasta el Renacimiento, es notable por su fuerte influencia religiosa y el surgimiento del pensamiento escolástico.'
+WHERE nombre = 'Edad Media';
+
+UPDATE epocas 
+SET descripcion = 'El Renacimiento, que tuvo lugar entre los siglos XIV y XVII, marcó el redescubrimiento de la literatura, el arte y la filosofía clásicas, y promovió el humanismo.'
+WHERE nombre = 'Renacimiento';
+
+UPDATE epocas 
+SET descripcion = 'La Modernidad, que se desarrolló entre los siglos XVII y XVIII, se caracteriza por el auge de la razón y la ciencia, y la aparición de nuevas corrientes filosóficas como el empirismo y el racionalismo.'
+WHERE nombre = 'Modernidad';
+
+UPDATE epocas 
+SET descripcion = 'La Contemporaneidad abarca desde finales del siglo XVIII hasta la actualidad, marcada por grandes cambios políticos, sociales y tecnológicos, así como el surgimiento de nuevas corrientes filosóficas como el existencialismo.'
+WHERE nombre = 'Contemporaneidad';
+
 -- Relacionar Problemas con Temas
 
 -- ÉTICA
