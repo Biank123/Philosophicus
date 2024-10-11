@@ -22,7 +22,7 @@ const publishEssay = async (title, content) => {
 
 // Función para obtener ensayos publicados
 const getPublishedEssays = async () => {
-  const result = await pool.query('SELECT * FROM essays WHERE published = true');
+  const result = await pool.query('SELECT * FROM essays WHERE is_published = true');
   return result.rows;
 };
 

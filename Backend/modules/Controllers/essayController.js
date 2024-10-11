@@ -42,8 +42,8 @@ const saveDraftController = async (req, res) => {
 // Controlador para publicar el ensayo
 const publishEssayController = async (req, res) => {
   try {
-    const { texto } = req.body;
-    const result = await publishEssay(texto);
+    const { title, content } = req.body; // O usa 'texto' si prefieres ese nombre
+    const result = await publishEssay(title, content); // Asegúrate de que publishEssay acepte ambos parámetros
     res.status(200).json({ message: 'Ensayo publicado con éxito.', data: result });
   } catch (error) {
     console.error('Error al publicar el ensayo:', error);
@@ -55,6 +55,7 @@ const publishEssayController = async (req, res) => {
 const fetchPublishedEssays = async (req, res) => {
   try {
     const essays = await getPublishedEssays();
+    console.log(essays); 
     res.json(essays);
   } catch (error) {
     console.error('Error fetching published essays:', error);
