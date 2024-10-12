@@ -141,6 +141,8 @@ CREATE TABLE autores (
     nombre VARCHAR(255) NOT NULL
 );
 
+ALTER TABLE autores ADD COLUMN epoca_id INTEGER REFERENCES epocas(id);
+
 -- Tabla de borradores
 CREATE TABLE drafts (
     id SERIAL PRIMARY KEY,
@@ -196,3 +198,10 @@ CREATE TABLE autores_problemas (
 );
 
 ALTER TABLE epocas ADD COLUMN descripcion TEXT;
+
+ALTER TABLE problemas_filosoficos
+ADD COLUMN tema_id INT REFERENCES temas(id);
+
+ALTER TABLE temas
+ADD COLUMN epoca_id INT REFERENCES epocas(id);
+

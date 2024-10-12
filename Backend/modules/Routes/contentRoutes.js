@@ -7,7 +7,10 @@ const {
     getProblemasPorTema, 
     getDescripcionAutor, 
     getTemasPorEpoca, 
-    getAutoresPorEpoca 
+    getAutoresPorEpoca,
+    getEpocaPorNombre,
+    getAutorByNombre,
+    getTemaController
 } = require('../Controllers/contentController');
 
 // Ruta para obtener todos los temas
@@ -30,5 +33,12 @@ router.get('/epocas/:epocaId/temas', getTemasPorEpoca);
 
 // Ruta para obtener los autores relacionados a una época
 router.get('/epocas/:epocaId/autores', getAutoresPorEpoca);
+
+// Rutas que reciben el nombre y devuelven el ID
+router.get('/epocas/nombre/:nombre', getEpocaPorNombre);
+
+router.get('/autores/nombre/:nombre', getAutorByNombre);
+
+router.get('/temas/nombre/:nombre', getTemaController);
 
 module.exports = router;
