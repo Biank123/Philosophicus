@@ -23,7 +23,11 @@ Philosophicus es una aplicación web diseñada para ayudar a estudiantes de ense
 ![image](https://github.com/user-attachments/assets/dfe997b8-29aa-45d9-b990-10e96f97ee25)
 ![image](https://github.com/user-attachments/assets/8eeac7a2-9ea2-4e56-8c5c-fa8281e2cd05)
 
-
+## Proximamente (en desarrollo):
+-Página que muestra información detallada de diferentes problemas filosóficos con su descripción, autores, temáticas y épocas para poder estudiar.
+-Desarrollo de un Foro para consultas relacionadas con la página y su contenido.
+-Capacidad de subir archivos a la página y descargar los ensayos escritos.
+-IA que revisa los ensayos para mejorarlos gramaticalmente.
 
 ## Instalación
 
