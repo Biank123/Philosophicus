@@ -11,6 +11,7 @@ import PublishedEssays from './components/BooksPage/PublishEssays';
 import FilterPage from './components/StudyPage/FilterPage';
 import SpecificFilter from './components/StudyPage/SpecificFilter';
 import ContentPage from './components/StudyPage/ContentPage';
+import AlterPage from './components/StudyPage/AlterPage';
 
 function App() {
   const [selectedProblem, setSelectedProblem] = useState(null);
@@ -33,9 +34,10 @@ function App() {
         <Route path="/login" element={<LoginRegister />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route exact path="/filter" element={<FilterPage />} />
-        <Route exact path="/filter/:tipo" element={<SpecificFilter />} />
-        <Route exact path="/content/:tipo/:valor" element={<ContentPage />} />
+        <Route path="/filter" element={<FilterPage />} />
+        <Route path="/filter/:tipo" element={<SpecificFilter />} />
+        <Route path="/content/:tipo/:valor" element={<ContentPage />} />
+        <Route path="/filosofia" element={<AlterPage />} />
         <Route 
           path="/select-problem" 
           element={<SelectProblem onSelect={handleSelectProblem} />} 

@@ -11,60 +11,62 @@ const Footer = () => {
             <div className="col-md-3 col-sm-6">
               {/* Column1 */}
               <div className="footer-pad">
-                <h4>Heading 1</h4>
+                <h4>Recursos</h4>
                 <ul className="list-unstyled">
-                  <li><a href="#">Payment Center</a></li>
-                  <li><a href="#">Contact Directory</a></li>
-                  <li><a href="#">Forms</a></li>
-                  <li><a href="#">News and Updates</a></li>
-                  <li><a href="#">FAQs</a></li>
+                  <li><a href="#">Biblioteca de Textos Filosóficos</a></li>
+                  <li><a href="#">Directorio de Contacto de Filósofos</a></li>
+                  <li><a href="#">Formularios de Inscripción</a></li>
+                  <li><a href="#">Noticias y Actualizaciones</a></li>
+                  <li><a href="#">Preguntas Frecuentes</a></li>
                 </ul>
               </div>
             </div>
             <div className="col-md-3 col-sm-6">
               {/* Column2 */}
               <div className="footer-pad">
-                <h4>Heading 2</h4>
+                <h4>Información</h4>
                 <ul className="list-unstyled">
-                  <li><a href="#">Website Tutorial</a></li>
-                  <li><a href="#">Accessibility</a></li>
-                  <li><a href="#">Disclaimer</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">FAQs</a></li>
-                  <li><a href="#">Webmaster</a></li>
+                  <li><a href="#">Tutorial del Sitio Web</a></li>
+                  <li><a href="#">Accesibilidad</a></li>
+                  <li><a href="#">Descargo de Responsabilidad</a></li>
+                  <li><a href="#">Política de Privacidad</a></li>
+                  <li><a href="#">Términos de Uso</a></li>
+                  <li><a href="#">Contacto con el Administrador</a></li>
                 </ul>
               </div>
             </div>
             <div className="col-md-3 col-sm-6">
               {/* Column3 */}
               <div className="footer-pad">
-                <h4>Heading 3</h4>
+                <h4>Explora</h4>
                 <ul className="list-unstyled">
-                  <li><a href="#">Parks and Recreation</a></li>
-                  <li><a href="#">Public Works</a></li>
-                  <li><a href="#">Police Department</a></li>
-                  <li><a href="#">Fire</a></li>
-                  <li><a href="#">Mayor and City Council</a></li>
+                  <li><a href="#">Talleres Filosóficos</a></li>
+                  <li><a href="#">Parques y Naturaleza</a></li>
+                  <li><a href="#">Eventos Académicos</a></li>
+                  <li><a href="#">Cultura y Arte</a></li>
+                  <li><a href="#">Comunidad Filosófica</a></li>
                 </ul>
               </div>
             </div>
             <div className="col-md-3">
-              <h4>Follow Us</h4>
+              <h4>Conéctate con Nosotros</h4>
               <ul className="social-network social-circle">
                 <li><a href="#" className="icoFacebook" title="Facebook"><i className="fa fa-facebook"></i></a></li>
                 <li><a href="#" className="icoLinkedin" title="Linkedin"><i className="fa fa-linkedin"></i></a></li>
+                <li><a href="#" className="icoTwitter" title="Twitter"><i className="fa fa-twitter"></i></a></li>
+                <li><a href="#" className="icoInstagram" title="Instagram"><i className="fa fa-instagram"></i></a></li>
               </ul>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12 copy">
-              <p className="text-center">&copy; Copyright 2018 - Company Name. All rights reserved.</p>
+              <p className="text-center">&copy; {new Date().getFullYear()} Philosophicus. Todos los derechos reservados.</p>
             </div>
           </div>
         </div>
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

@@ -31,7 +31,7 @@
   /* Alinear el radio button a la derecha dentro del contenedor */
   .delete-account-form input[type="radio"] {
     position: absolute;
-    left: 3vh;
+    left: -1vh;
     right: 0;
     margin: 0;
     width: 100vh;

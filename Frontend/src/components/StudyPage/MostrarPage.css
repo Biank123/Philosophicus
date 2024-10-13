@@ -1,0 +1,33 @@
+/* Estilo para el contenedor del problema filosófico */
+.problema-filosofico {
+    background-color: #ffffff; /* Fondo blanco para el contenedor */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-bottom: 20px; /* Espaciado inferior */
+  }
+  
+  /* Estilo para el título del problema */
+  .problema-filosofico h3 {
+    color: #007bff; /* Color azul para el título */
+    font-size: 1.5rem; /* Tamaño de fuente */
+    margin-bottom: 10px; /* Espaciado inferior */
+  }
+  
+  /* Estilo para los párrafos */
+  .problema-filosofico p {
+    color: #333; /* Color de texto oscuro */
+    line-height: 1.6; /* Espaciado entre líneas */
+    margin-bottom: 10px; /* Espaciado inferior */
+  }
+  
+  /* Estilo para los elementos fuertes (strong) */
+  .problema-filosofico strong {
+    color: #007bff; /* Color azul para el texto fuerte */
+  }
+  
+  /* Estilo para la lista de autores */
+  .problema-filosofico .autores {
+    font-style: italic; /* Cursiva para los autores */
+    color: #555; /* Color gris para el texto de autores */
+  }

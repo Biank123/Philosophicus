@@ -64,7 +64,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link className="dropdown-item" to="/filter">
+                <Link className="dropdown-item" to="/filosofia">
                   <i className="fas fa-scroll"></i> Estudiar
                 </Link>
               </li>

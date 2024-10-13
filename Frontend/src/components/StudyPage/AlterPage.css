@@ -1,0 +1,68 @@
+/* Estilos para el contenedor principal */
+.filosofia-page {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-top: 10vh;
+  }
+  
+  /* Estilo para el encabezado */
+  .filosofia-page h1 {
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Estilo para el input de búsqueda */
+  .filosofia-page .search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  /* Estilos para la lista de problemas */
+  .filosofia-page .problem-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .filosofia-page .problem-list li {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .filosofia-page .problem-list li:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Estilos para los detalles del problema */
+  .filosofia-page .problem-details {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filosofia-page .problem-details p {
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .filosofia-page .problem-details strong {
+    color: #007bff;
+  }
+  
+  /* Estilo para el mensaje cuando no hay problema seleccionado */
+  .filosofia-page .no-problem-message {
+    font-style: italic;
+    color: #777;
+  }
