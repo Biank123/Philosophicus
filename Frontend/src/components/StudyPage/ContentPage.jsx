@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 function ContentPage() {
-  const { tipo, valor: nombre } = useParams(); // Ejemplo: tipo='tema', valor='Ética'
+  const { tipo, valor: nombre } = useParams(); 
   const [contenido, setContenido] = useState(null);
   const [epocaId, setEpocaId] = useState(null);
 
@@ -46,7 +46,6 @@ function ContentPage() {
         const detailsData = await detailsResponse.json();
         console.log('Datos obtenidos:', detailsData);
         
-        // Asegúrate de que `detailsData` sea un arreglo, de lo contrario, ajusta la lógica
         setContenido(detailsData);
         
       } catch (error) {
@@ -68,7 +67,7 @@ function ContentPage() {
           }
           const data = await response.json();
           console.log('Temas obtenidos:', data); 
-          setContenido(data); // Asegúrate de que `data` sea un arreglo
+          setContenido(data); 
         } catch (error) {
           console.error('Error:', error);
         }

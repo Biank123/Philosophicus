@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PostForm from './PostForm'; // Importa el formulario para crear publicaciones
-import PostList from './PostList'; // Importa la lista de publicaciones
+import PostList from './Publications'; // Importa la lista de publicaciones
 import './ForumPage.css'; 
 
 const ForumPage = () => {
@@ -26,9 +26,9 @@ const ForumPage = () => {
     fetchPosts();
   }, []);
 
-  const handlePostClick = async (postId) => {
+  const handlePostClick = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/posts/${postId}/comments`);
+      const response = await fetch(`http://localhost:3001/api/posts/${id}/comments`);
       if (response.ok) {
         const data = await response.json();
         setSelectedPost(data);

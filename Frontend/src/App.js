@@ -12,6 +12,7 @@ import FilterPage from './components/StudyPage/FilterPage';
 import SpecificFilter from './components/StudyPage/SpecificFilter';
 import ContentPage from './components/StudyPage/ContentPage';
 import AlterPage from './components/StudyPage/AlterPage';
+import ForumPage from './components/ForumPage/ForumPage';
 
 function App() {
   const [selectedProblem, setSelectedProblem] = useState(null);
@@ -47,6 +48,7 @@ function App() {
           element={<SelectedProblemPage problem={selectedProblem} />} 
         />
         <Route path="/essays/published" element={<PublishedEssays />} />
+        <Route path="/forum" element={<ForumPage />} />
       </Routes>
     </>
   );

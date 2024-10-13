@@ -1,5 +1,6 @@
 import React from 'react';
 import './Cards.css';
+import { Link } from 'react-router-dom';
 
 const Cards = () => {
   return (
@@ -7,14 +8,15 @@ const Cards = () => {
       <h1>Secciones de la página</h1>
       <div className="cols">
         {[
-          { id: 1, title: 'Comienza a Escribir', imageUrl: 'https://unsplash.it/500/500/' },
-          { id: 2, title: 'Publicados', imageUrl: 'https://unsplash.it/511/511/' },
-          { id: 3, title: 'Aprender', imageUrl: 'https://unsplash.it/502/502/' },
-          { id: 4, title: 'Jugar', imageUrl: 'https://unsplash.it/503/503/' },
-          { id: 5, title: 'Foro', imageUrl: 'https://unsplash.it/504/504/' },
-          { id: 6, title: 'Quiénes Somos', imageUrl: 'https://unsplash.it/505/505/' },
+          { id: 1, title: 'Comienza a Escribir', imageUrl: 'https://unsplash.it/500/500/', link: '/select-problem' },
+          { id: 2, title: 'Ensayos Publicados', imageUrl: 'https://unsplash.it/511/511/', link: '/essays/published' },
+          { id: 3, title: 'Problemas Filosóficos', imageUrl: 'https://unsplash.it/502/502/', link: '/filosofia' },
+          { id: 4, title: 'Jugar (en desarrollo)', imageUrl: 'https://unsplash.it/503/503/', link: '/' },
+          { id: 5, title: 'Foro', imageUrl: 'https://unsplash.it/504/504/', link: '/forum' },
+          { id: 6, title: 'Sobre mí', imageUrl: 'https://unsplash.it/505/505/', link: '/about' },
         ].map(card => (
-          <div key={card.id} className="col">
+          <Link key={card.id} to={card.link} className="col">
+          <div key={card.id} >
             <div className="container">
               <div className="front" style={{ backgroundImage: `url(${card.imageUrl})` }}>
                 <div className="inner">
@@ -23,11 +25,12 @@ const Cards = () => {
               </div>
               <div className="back">
                 <div>
-                  <p>lorem</p>
+                  <p>Explorar</p>
                 </div>
               </div>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </div>

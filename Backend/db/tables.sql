@@ -205,3 +205,9 @@ ADD COLUMN tema_id INT REFERENCES temas(id);
 ALTER TABLE temas
 ADD COLUMN epoca_id INT REFERENCES epocas(id);
 
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    post_id INT REFERENCES posts(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

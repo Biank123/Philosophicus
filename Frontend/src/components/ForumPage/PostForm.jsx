@@ -49,6 +49,7 @@ const PostForm = () => {
   return (
     <div className="post-form-container">
       <form onSubmit={handleSubmit}>
+        <h1><strong>Publicar en el Foro</strong></h1>
         <input
           type="text"
           value={title}

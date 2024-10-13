@@ -14,7 +14,6 @@ const Footer = () => {
                 <h4>Recursos</h4>
                 <ul className="list-unstyled">
                   <li><a href="#">Biblioteca de Textos Filosóficos</a></li>
-                  <li><a href="#">Directorio de Contacto de Filósofos</a></li>
                   <li><a href="#">Formularios de Inscripción</a></li>
                   <li><a href="#">Noticias y Actualizaciones</a></li>
                   <li><a href="#">Preguntas Frecuentes</a></li>
@@ -28,9 +27,6 @@ const Footer = () => {
                 <ul className="list-unstyled">
                   <li><a href="#">Tutorial del Sitio Web</a></li>
                   <li><a href="#">Accesibilidad</a></li>
-                  <li><a href="#">Descargo de Responsabilidad</a></li>
-                  <li><a href="#">Política de Privacidad</a></li>
-                  <li><a href="#">Términos de Uso</a></li>
                   <li><a href="#">Contacto con el Administrador</a></li>
                 </ul>
               </div>
@@ -40,11 +36,10 @@ const Footer = () => {
               <div className="footer-pad">
                 <h4>Explora</h4>
                 <ul className="list-unstyled">
-                  <li><a href="#">Talleres Filosóficos</a></li>
-                  <li><a href="#">Parques y Naturaleza</a></li>
-                  <li><a href="#">Eventos Académicos</a></li>
-                  <li><a href="#">Cultura y Arte</a></li>
-                  <li><a href="#">Comunidad Filosófica</a></li>
+                  <li><a href="#">Pregúntale a la IA</a></li>
+                  <li><a href="#">Revistas Filosóficas</a></li>
+                  <li><a href="#">Repositorios Académicos</a></li>
+                  <li><a href="#">Páginas de Filosofía</a></li>
                 </ul>
               </div>
             </div>
@@ -60,7 +55,7 @@ const Footer = () => {
           </div>
           <div className="row">
             <div className="col-md-12 copy">
-              <p className="text-center">&copy; {new Date().getFullYear()} Philosophicus. Todos los derechos reservados.</p>
+              <p className="text-center">&copy; {new Date().getFullYear()} Philosophicus.</p>
             </div>
           </div>
         </div>

@@ -1,20 +1,19 @@
 const multer = require('multer');
 const path = require('path');
 
-// Configura el almacenamiento de archivos
+// Configuración del almacenamiento
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'uploads/'); // Carpeta donde se guardarán los archivos
   },
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
+    const ext = path.extname(file.originalname); // Extensión del archivo
     cb(null, `${Date.now()}${ext}`); // Nombre del archivo
   },
 });
 
-// Filtros de archivo
+// Filtros y límites se mantienen igual
 const fileFilter = (req, file, cb) => {
-  // Acepta solo imágenes, PDFs y documentos Word
   const allowedTypes = /jpeg|jpg|png|pdf|doc|docx/;
   const extName = allowedTypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = allowedTypes.test(file.mimetype);
@@ -28,7 +27,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 } // Tamaño máximo de archivo: 5MB
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
 
 module.exports = upload;

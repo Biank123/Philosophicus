@@ -68,6 +68,11 @@ const Navbar = () => {
                   <i className="fas fa-scroll"></i> Estudiar
                 </Link>
               </li>
+              <li>
+                <Link className="dropdown-item" to="/forum">
+                  <i className="fas fa-pencil-alt"></i> Foro
+                </Link>
+              </li>
             </ul>
           </li>
 

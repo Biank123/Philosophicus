@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const multer = require('multer');
+
 const path = require('path');
 const userRoutes = require('./modules/Routes/userRoutes'); 
 const postRoutes = require('./modules/Routes/postRoutes');
@@ -11,9 +11,6 @@ const contentRoutes = require('./modules/Routes/contentRoutes');
 
 // Crea la aplicación de Express
 const app = express();
-
-// Configuración de Multer para subir archivos
-const upload = multer({ dest: 'uploads/' });
 
 // Middleware para CORS y parsear JSON
 app.use(cors());
