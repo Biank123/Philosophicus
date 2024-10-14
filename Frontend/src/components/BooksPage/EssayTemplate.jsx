@@ -93,7 +93,7 @@ const EssayTemplate = ({ problem }) => {
     console.log('Texto enviado al backend:', combinedText);
 
     try {
-      const response = await fetch('http://localhost:3001/revisar', {
+      const response = await fetch('http://localhost:3001/essays/revisar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +116,9 @@ const EssayTemplate = ({ problem }) => {
   };
 
   const handlePublish = async () => {
-    const combinedText = sectionTexts.join('\n\n');
+    const combinedText = sectionTexts.join('\n\n'); // Combinar todas las secciones del ensayo
+    const title = draftTitle; // Título que se obtiene del estado
+  
     try {
       const response = await fetch('http://localhost:3001/essays/publish', {
         method: 'POST',
@@ -124,13 +126,13 @@ const EssayTemplate = ({ problem }) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({ texto: combinedText }),
+        body: JSON.stringify({ title, content: combinedText }), // Cambiar 'texto' a 'content'
       });
-
+  
       if (!response.ok) {
         throw new Error('Error al publicar el ensayo.');
       }
-
+  
       alert('Ensayo publicado con éxito.');
     } catch (error) {
       console.error('Error publicando el ensayo:', error);
@@ -205,15 +207,16 @@ const EssayTemplate = ({ problem }) => {
           )}
         </div>
       </div>
-
-      {/* Mostrar el resultado de la revisión */}
-      {reviewResult && (
-        <div className="review-section">
-          <h2>Resultado de la revisión:</h2>
-          <p>{reviewResult}</p>
-        </div>
-      )}
-
+      <div>
+        <h3>IA para revisión gramatical</h3>
+        {/* Mostrar el resultado de la revisión */}
+        {reviewResult && (
+          <div className="review-section">
+            <h2>Resultado de la revisión:</h2>
+            <p>{reviewResult}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

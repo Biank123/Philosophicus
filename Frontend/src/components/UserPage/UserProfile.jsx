@@ -3,6 +3,8 @@ import './UserProfile.css';
 import ChangePasswordForm from './ChangePasswordForm';
 import DeleteAccountForm from './DeleteAccountForm';
 
+
+
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState('config');
     const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -11,86 +13,106 @@ const ProfilePage = () => {
     const [drafts, setDrafts] = useState([]);
     const [posts, setPosts] = useState([]); // Para almacenar las publicaciones del usuario
     const [comments, setComments] = useState([]); // Para almacenar los comentarios del usuario
+    const [essays, setEssays] = useState([]);
+
+
+    const fetchUserData = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/api/users/profile/user', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setUserData(data);
+            console.log('User data set:', data);
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+
+    const fetchDrafts = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/essays/drafts', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setDrafts(data);
+        } catch (error) {
+            console.error('Error fetching drafts:', error);
+        }
+    };
+
+    const fetchPosts = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No hay token de autenticación disponible');
+            return; // Detener la ejecución si no hay token
+        }
+
+        try {
+            // Solicitar publicaciones
+            const postsResponse = await fetch('http://localhost:3001/api/posts/user/posts', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!postsResponse.ok) {
+                throw new Error(`HTTP error! status: ${postsResponse.status}`);
+            }
+            const postsData = await postsResponse.json();
+            console.log('Publicaciones recibidas:', postsData);
+            setPosts(postsData);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
+
+    const fetchComments = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No hay token de autenticación disponible');
+            return; // Detener la ejecución si no hay token
+        }
+
+        try {
+
+            // Solicitar comentarios
+            const commentsResponse = await fetch(`http://localhost:3001/api/posts/user/comments`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!commentsResponse.ok) {
+                const errorBody = await commentsResponse.text(); // Para obtener el mensaje de error del servidor
+                console.error('Error en la respuesta:', errorBody);
+                throw new Error(`HTTP error! status: ${commentsResponse.status}`);
+            }
+            const commentsData = await commentsResponse.json();
+            console.log('Comentarios recibidos:', commentsData);
+            setComments(commentsData); // Asegúrate de que commentsData es el formato esperado para setComments
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await fetch('http://localhost:3001/api/users/profile/user', {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setUserData(data);
-                console.log('User data set:', data);
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-
-        const fetchDrafts = async () => {
-            try {
-                const response = await fetch('http://localhost:3001/essays/drafts', {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setDrafts(data);
-            } catch (error) {
-                console.error('Error fetching drafts:', error);
-            }
-        };
-
-        const fetchPostsAndComments = async () => {
-            // Obtener el token de localStorage
-            const token = localStorage.getItem('token');
-            // Verificar si el token existe
-            if (!token) {
-                console.error('No hay token de autenticación disponible');
-                return; // Detener la ejecución si no hay token
-            }
-
-            try {
-                // Solicitar publicaciones
-                const postsResponse = await fetch('http://localhost:3001/api/posts/user/posts', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                if (!postsResponse.ok) {
-                    throw new Error(`HTTP error! status: ${postsResponse.status}`);
-                }
-                const postsData = await postsResponse.json();
-                console.log('Publicaciones recibidas:', postsData);
-                setPosts(postsData);
-
-                // Solicitar comentarios
-                const commentsResponse = await fetch('http://localhost:3001/api/posts/user/comments', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                if (!commentsResponse.ok) {
-                    throw new Error(`HTTP error! status: ${commentsResponse.status}`);
-                }
-                const commentsData = await commentsResponse.json();
-                console.log('Comentarios recibidos:', commentsData);
-                setComments(commentsData);
-            } catch (error) {
-                console.error('Error fetching posts or comments:', error);
-            }
-        };
-
         fetchUserData();
         fetchDrafts();
-        fetchPostsAndComments(); // Llama a la función para obtener publicaciones y comentarios
+        fetchComments();
+        fetchPosts();
+        fetchEssays();
     }, []);
 
     const handleDeleteAccount = async ({ reason, password }) => {
@@ -123,13 +145,35 @@ const ProfilePage = () => {
         }
     };
 
+    const fetchEssays = async () => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await fetch('http://localhost:3001/essays/published', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+
+            // Verifica que `data` sea un arreglo
+            if (Array.isArray(data)) {
+                setEssays(data);
+            } else {
+                console.error('La respuesta no es un arreglo:', data);
+            }
+        } catch (error) {
+            console.error('Error al obtener los ensayos:', error);
+        }
+    };
+
     const renderSection = () => {
         switch (activeSection) {
             case 'config':
                 return (
                     <div className="section-box">
                         <h3>Configuración</h3>
-                        <p>Aquí irá la información de configuración del usuario.</p>
+                        <p>Aquí está la información de configuración del usuario. Seleccione una acción a realizar:</p>
                         <button
                             className="change-password-btn"
                             onClick={() => setShowPasswordForm(!showPasswordForm)}
@@ -155,7 +199,7 @@ const ProfilePage = () => {
             case 'writings':
                 return (
                     <div className="section-box">
-                        <h3>Borradores</h3>
+                        <h3>Borradores de ensayos</h3>
                         {drafts.length > 0 ? (
                             <ul>
                                 {drafts.map(draft => (
@@ -170,7 +214,7 @@ const ProfilePage = () => {
             case 'posts':
                 return (
                     <div className="section-box">
-                        <h3>Publicaciones</h3>
+                        <h3>Publicaciones del foro</h3>
                         {posts.length > 0 ? (
                             <ul>
                                 {posts.map(post => (
@@ -180,12 +224,28 @@ const ProfilePage = () => {
                         ) : (
                             <p>No hay publicaciones.</p>
                         )}
+                        <div className="section-box">
+                            <h3>Publicaciones de ensayos</h3>
+                            <ul>
+                                {essays.length > 0 ? (
+                                    essays.map(essay => (
+                                        <div>
+                                            <li key={essay.id}>{essay.title}</li>
+                                            <p>{essay.content}</p>
+                                            <p>{essay.created_at}</p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <li>No has publicado ensayos.</li>
+                                )}
+                            </ul>
+                        </div>
                     </div>
                 );
             case 'comments':
                 return (
                     <div className="section-box">
-                        <h3>Comentarios</h3>
+                        <h3>Comentarios del Foro</h3>
                         {comments.length > 0 ? (
                             <ul>
                                 {comments.map(comment => (
@@ -231,12 +291,6 @@ const ProfilePage = () => {
                     </li>
                     <li>
                         <a href="#comments" onClick={() => setActiveSection('comments')}>Comentarios</a>
-                    </li>
-                    <li>
-                        <a href="#scores" onClick={() => setActiveSection('scores')}>Puntajes</a>
-                    </li>
-                    <li>
-                        <a href="#reviews" onClick={() => setActiveSection('reviews')}>Revisiones</a>
                     </li>
                 </ul>
             </div>
