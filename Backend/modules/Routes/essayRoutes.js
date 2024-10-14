@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { saveDraftController, publishEssayController, fetchPublishedEssays, fetchDraftsByUser } = require('../Controllers/essayController');
+const { saveDraftController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser } = require('../Controllers/essayController');
 const authenticateToken = require('../Middlewares/authMiddleware');
 const TextReview = require('../Controllers/TextReview');
 
@@ -12,6 +12,8 @@ router.post('/publish', authenticateToken, publishEssayController); //Funciona
 
 // Ruta para mostrar ensayos publicados
 router.get('/published', authenticateToken, fetchPublishedEssays); //Funciona
+
+router.get('/published/:userId', authenticateToken, fetchPublishedEssaysByUser);
 
 // Ruta para mostrar los borradores guardados
 router.get('/drafts', authenticateToken, fetchDraftsByUser); //Funciona

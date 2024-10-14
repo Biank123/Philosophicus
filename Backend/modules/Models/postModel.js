@@ -93,7 +93,7 @@ const getCommentsByUserId = async (userId) => {
   const values = [userId];
 
   try {
-      const result = await db.query(query, values);
+      const result = await pool.query(query, values);
       return result.rows; // Devuelve los comentarios
   } catch (error) {
       console.error('Error al obtener los comentarios:', error);

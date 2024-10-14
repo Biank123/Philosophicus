@@ -2,35 +2,68 @@ import React, { useState, useEffect } from 'react';
 import './UserProfile.css';
 import ChangePasswordForm from './ChangePasswordForm';
 import DeleteAccountForm from './DeleteAccountForm';
-
+import { useAuth } from './AuthContext';
 
 
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState('config');
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
-    const [userData, setUserData] = useState(null);
+    const [userData, setUserData] = useState({}); 
     const [drafts, setDrafts] = useState([]);
     const [posts, setPosts] = useState([]); // Para almacenar las publicaciones del usuario
     const [comments, setComments] = useState([]); // Para almacenar los comentarios del usuario
     const [essays, setEssays] = useState([]);
+    const { isAuthenticated } = useAuth();
 
+    // const fetchUserData = async () => {
+    //     try {
+    //         const response = await fetch('http://localhost:3001/api/users/profile/user', {
+    //             headers: {
+    //                 'Authorization': `Bearer ${localStorage.getItem('token')}`
+    //             }
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! status: ${response.status}`);
+    //         }
+    //         const data = await response.json();
+    //         setUserData(data);
+    //         console.log('User data set:', data);
+    //     } catch (error) {
+    //         console.error('Error fetching user data:', error);
+    //     }
+    // };
 
     const fetchUserData = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No hay token de autenticación disponible');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:3001/api/users/profile/user', {
+                method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
             });
+            console.log(localStorage.getItem('token'));
+
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`Error HTTP: ${response.status}`);
             }
+
             const data = await response.json();
-            setUserData(data);
-            console.log('User data set:', data);
+
+            // Asegúrate de convertir el id a número
+            const userId = Number(data.id);
+            setUserData({ ...data, id: userId }); // Guarda los datos del usuario con id convertido
+            
         } catch (error) {
-            console.error('Error fetching user data:', error);
+            console.error('Error al obtener los datos del usuario:', error);
+            
         }
     };
 
@@ -107,13 +140,6 @@ const ProfilePage = () => {
         }
     };
 
-    useEffect(() => {
-        fetchUserData();
-        fetchDrafts();
-        fetchComments();
-        fetchPosts();
-        fetchEssays();
-    }, []);
 
     const handleDeleteAccount = async ({ reason, password }) => {
         try {
@@ -145,17 +171,31 @@ const ProfilePage = () => {
         }
     };
 
-    const fetchEssays = async () => {
+    const fetchEssays = async (userId) => {
         const token = localStorage.getItem('token');
+        console.log(localStorage.getItem('token'));
+        
+
+        if (!token) {
+            console.error('No hay token de autenticación disponible');
+            return; // Detener la ejecución si no hay token
+        }
+    
         try {
-            const response = await fetch('http://localhost:3001/essays/published', {
+            const response = await fetch(`http://localhost:3001/essays/published/${userId}`, { // Asegúrate de que la ruta sea correcta
                 method: 'GET',
                 headers: {
+                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             });
+    
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+    
             const data = await response.json();
-
+    
             // Verifica que `data` sea un arreglo
             if (Array.isArray(data)) {
                 setEssays(data);
@@ -266,6 +306,41 @@ const ProfilePage = () => {
                 );
         }
     };
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            const fetchUserDataAndEssays = async () => {
+                try {
+                    await fetchUserData();
+                } catch (error) {
+                    console.error('Error al obtener los datos del usuario:', error);
+                }
+            };
+            fetchUserDataAndEssays();
+        }
+    }, [isAuthenticated]);
+    
+    // Efecto separado para las otras solicitudes
+    useEffect(() => {
+        if (userData) { // Asegúrate de que userData esté cargado antes de hacer otras peticiones
+            console.log("userData:", userData); // Verifica el contenido de userData
+            const fetchData = async () => {
+                try {
+                    await fetchDrafts();
+                    await fetchComments();
+                    await fetchPosts();
+                    if (!userData.id) {
+                        console.error('userData.id no está definido');
+                        return; // Detener si no hay ID de usuario
+                    }
+                    await fetchEssays(userData.id); // Usa el ID del usuario desde userData
+                } catch (error) {
+                    console.error('Error al obtener los demás datos:', error);
+                }
+            };
+            fetchData();
+        }
+    }, [userData]);
 
     return (
         <div className="profile-container">

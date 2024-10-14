@@ -1,5 +1,5 @@
-const { saveDraft, publishEssay, getPublishedEssays, getDraftsByUser } = require('../Models/publishModel');
-
+const { saveDraft, publishEssay, getPublishedEssays, getDraftsByUser, getPublishedUserEssays } = require('../Models/publishModel');
+const jwt = require('jsonwebtoken'); // Asegúrate de tener jwt importado para decodificar el token
 const { pool } = require('../Models/db');
 
 // Controlador para guardar borradores
@@ -37,13 +37,13 @@ const saveDraftController = async (req, res) => {
   }
 };
 
-
-
-// Controlador para publicar el ensayo
 const publishEssayController = async (req, res) => {
   try {
-    const { title, content } = req.body; // O usa 'texto' si prefieres ese nombre
-    const result = await publishEssay(title, content); // Asegúrate de que publishEssay acepte ambos parámetros
+    const { title, content } = req.body;
+    const userId = req.user.id; 
+    const createdAt = new Date();
+
+    const result = await publishEssay(title, content, userId, createdAt); // Pasa el userId a la función de publicación
     res.status(200).json({ message: 'Ensayo publicado con éxito.', data: result });
   } catch (error) {
     console.error('Error al publicar el ensayo:', error);
@@ -65,7 +65,7 @@ const fetchPublishedEssays = async (req, res) => {
 
 // Controlador para obtener borradores del usuario
 const fetchDraftsByUser = async (req, res) => {
-  const userId = req.user.id; // Asumiendo que tienes la información del usuario en req.user
+  const userId = req.user.id; 
   try {
     const drafts = await getDraftsByUser(userId);
     res.json(drafts);
@@ -74,5 +74,25 @@ const fetchDraftsByUser = async (req, res) => {
     res.status(500).json({ error: 'Error fetching drafts.' });
   }
 };
+const fetchPublishedEssaysByUser = async (req, res) => {
+  const { userId } = req.params;
+  console.log('ID del usuario:', userId); // Verifica si el userId llega correctamente
 
-module.exports = { saveDraftController, publishEssayController, fetchPublishedEssays, fetchDraftsByUser };
+  try {
+      // Obtén los ensayos utilizando la función del modelo
+      const essays = await getPublishedUserEssays(userId);
+      
+      // Verifica si se encontraron ensayos
+      if (essays.length === 0) {
+          return res.status(404).json({ message: 'No se encontraron ensayos publicados para este usuario.' });
+      }
+
+      // Devuelve los ensayos encontrados
+      res.status(200).json(essays);
+  } catch (error) {
+      console.error('Error al obtener los ensayos publicados:', error);
+      res.status(500).json({ message: 'Error al obtener los ensayos publicados' });
+  }
+};
+
+module.exports = { saveDraftController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser };
