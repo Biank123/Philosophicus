@@ -15,19 +15,28 @@ Philosophicus es una aplicación web diseñada para ayudar a estudiantes de ense
 ## Funcionalidades
 
 - **Redacción guiada:** La aplicación divide el proceso de escritura en secciones pequeñas y manejables, asegurando que cada parte del ensayo sea completada de manera efectiva.
-- **Sistema de puntuación:** Los estudiantes reciben puntajes a medida que completan cada sección, lo que agrega un elemento de gamificación al proceso de escritura.
 - **Soporte para varios tipos de ensayo:** Los usuarios pueden elegir entre diferentes plantillas de ensayo, como ensayos filosóficos o argumentativos.
 - **Interfaz amigable y responsiva:** Diseñada para ser fácil de usar en dispositivos de escritorio y móviles.
 - **Retroalimentación automatizada:** Integración con herramientas de IA para revisar y mejorar los ensayos.
+- **Estudiar desde la página:** Es posible buscar entre una serie de temáticas para estudiar desde la página.
 
+![image](https://github.com/user-attachments/assets/9c8242ba-af64-4001-85c5-a7ab1f18d310)
+![image](https://github.com/user-attachments/assets/59d65ff8-f6af-4cde-ab66-7032534ca351)
 ![image](https://github.com/user-attachments/assets/dfe997b8-29aa-45d9-b990-10e96f97ee25)
 ![image](https://github.com/user-attachments/assets/8eeac7a2-9ea2-4e56-8c5c-fa8281e2cd05)
 
+-**Foro:** En la página hay un foro que permite publicar por categorías como "general", "dudas" o "filosofía", permite título, descripción y subir un archivo (de imagen o de texto) y también permite descargarlo en caso de textos word o pdf. Se pueden añadir comentarios, borrar la publicación así como cada comentario. Luego en el perfil del usuario se muestran sus publicaciones del foro.
+
+![image](https://github.com/user-attachments/assets/716c4350-c906-4a86-adcb-3ebf2e971ba6)
+![image](https://github.com/user-attachments/assets/53b3a9fb-1265-4c4c-a5af-fc15337150e0)
+![image](https://github.com/user-attachments/assets/720021c5-72ad-4aad-a002-7fb49d17fbd0)
+![image](https://github.com/user-attachments/assets/abcb2658-4f1a-4e08-9404-9d847872e418)
+![image](https://github.com/user-attachments/assets/a6f8e406-95fa-4bfc-920f-3e92e968c599)
+
 ## Proximamente (en desarrollo):
--Página que muestra información detallada de diferentes problemas filosóficos con su descripción, autores, temáticas y épocas para poder estudiar.
--Desarrollo de un Foro para consultas relacionadas con la página y su contenido.
--Capacidad de subir archivos a la página y descargar los ensayos escritos.
--IA que revisa los ensayos para mejorarlos gramaticalmente.
+-**Página que muestra información detallada de diferentes problemas filosóficos** con su descripción, autores, temáticas y épocas para poder estudiar.
+-**IA que revisa los ensayos** para mejorarlos gramaticalmente.
+- **Sistema de puntuación:** Los estudiantes reciben puntajes a medida que completan cada sección, lo que agrega un elemento de gamificación al proceso de escritura.
 
 ## Instalación
 
@@ -39,4 +48,3 @@ Para clonar y ejecutar esta aplicación en tu máquina local, sigue estos pasos:
 2. cd Philosophicus
 3. npm install
 4. npm start
-

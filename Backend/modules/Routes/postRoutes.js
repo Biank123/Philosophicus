@@ -17,6 +17,11 @@ router.post('/', upload.single('file'), authenticate, createPostController);
 // Ruta para obtener todas las publicaciones
 router.get('/', authenticate, getAllPostsController);
 
+ // Ruta para obtener publicaciones de un usuario específico
+ router.get('/user/posts', authenticate, getPostsByUserIdController);
+
+ router.get('/user/comments', authenticate, getCommentsByUserIdController);
+
 // Ruta para obtener una publicación por ID
 router.get('/:id', authenticate, getPostByIdController);
 
@@ -51,9 +56,6 @@ router.get('/download/:filename', (req, res) => {
     });
   }, authenticate);
 
- // Ruta para obtener publicaciones de un usuario específico
-router.get('/user/posts', authenticate, getPostsByUserIdController);
 
-router.get('/user/comments', authenticate, getCommentsByUserIdController);
 
 module.exports = router;

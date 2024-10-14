@@ -163,27 +163,28 @@ const getPostsByUserIdController = async (req, res) => {
     }
   };
 
+ 
   // Controlador para obtener comentarios por ID de usuario
-  const getCommentsByUserIdController = async (req, res) => {
-    if (!req.user || !req.user.id) {
-        return res.status(401).json({ error: 'Usuario no autorizado' });
-    }
-
+const getCommentsByUserIdController = async (req, res) => {
     const userId = req.user.id;
-    console.log('User ID:', userId);
 
     try {
-        const comments = await getCommentsByUserId(userId);
-        console.log('Comments fetched:', comments);
-
-        if (comments && comments.length > 0) {
-            return res.status(200).json(comments);
-        } else {
-            return res.status(404).json({ message: 'No se encontraron comentarios para este usuario.' });
+        // Validar el ID de usuario antes de consultar la base de datos
+        if (!userId) {
+            return res.status(400).json({ error: 'ID de usuario es requerido.' });
         }
+
+        // Obtener los comentarios basados en userId
+        const comments = await postModel.getCommentsByUserId(userId); 
+
+        if (!comments || comments.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron comentarios para este usuario.' });
+        }
+
+        res.status(200).json(comments);
     } catch (error) {
-        console.error('Error al obtener los comentarios:', error);
-        return res.status(500).json({ error: 'Error al obtener los comentarios' });
+        console.error('Error al obtener comentarios:', error);
+        res.status(500).json({ error: 'Error al obtener comentarios.' });
     }
 };
 

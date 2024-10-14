@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { saveDraftController, publishEssayController, fetchPublishedEssays, fetchDraftsByUser } = require('../Controllers/essayController');
 const authenticateToken = require('../Middlewares/authMiddleware');
+const TextReview = require('../Controllers/TextReview');
 
 // Ruta para guardar borradores
 router.post('/save-draft', authenticateToken, saveDraftController); //Funciona
@@ -14,5 +15,7 @@ router.get('/published', authenticateToken, fetchPublishedEssays); //Funciona
 
 // Ruta para mostrar los borradores guardados
 router.get('/drafts', authenticateToken, fetchDraftsByUser); //Funciona
+
+router.post('/revisar', authenticateToken, TextReview)
 
 module.exports = router;

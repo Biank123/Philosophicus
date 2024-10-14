@@ -5,7 +5,7 @@ const path = require('path');
 const userRoutes = require('./modules/Routes/userRoutes'); 
 const postRoutes = require('./modules/Routes/postRoutes');
 const problemRoutes = require('./modules/Routes/PhiRoutes');
-const TextReview = require('./modules/Controllers/TextReview');
+
 const essayRoutes = require('./modules/Routes/essayRoutes');
 const contentRoutes = require('./modules/Routes/contentRoutes');
 
@@ -27,9 +27,6 @@ app.use('/api/users', userRoutes);
 
 // Rutas para los problemas filosóficos
 app.use('/problems', problemRoutes);
-
-// Rutas para revisar el texto escrito por el usuario
-app.post('/revisar', TextReview);
 
 // Rutas para publicar o guardar ensayos
 app.use('/essays', essayRoutes);

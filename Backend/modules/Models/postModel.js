@@ -85,18 +85,19 @@ const getPostsByUserId = async (userId) => {
 
 // Función para obtener comentarios por ID de usuario
 const getCommentsByUserId = async (userId) => {
-  const query = 'SELECT * FROM comments WHERE user_id = $1';
-  const values = [userId];
   if (!userId) {
-    throw new Error('El ID de usuario no es válido');
+      throw new Error('El ID de usuario es requerido');
   }
 
+  const query = 'SELECT * FROM comments WHERE user_id = $1';
+  const values = [userId];
+
   try {
-    const result = await db.query(query, values);
-    return result.rows; // Devuelve los comentarios
+      const result = await db.query(query, values);
+      return result.rows; // Devuelve los comentarios
   } catch (error) {
-    console.error('Error al obtener los comentarios:', error);
-    throw new Error('Error al acceder a la base de datos'); // Lanza un error para manejarlo en el controlador
+      console.error('Error al obtener los comentarios:', error);
+      throw new Error('Error al acceder a la base de datos'); // Lanza un error para manejarlo en el controlador
   }
 };
 
