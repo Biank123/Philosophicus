@@ -29,6 +29,9 @@ const PostForm = () => {
       const response = await fetch('http://localhost:3001/api/posts', {
         method: 'POST',
         body: formData,
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
       });
 
       if (response.ok) {
@@ -65,7 +68,7 @@ const PostForm = () => {
         />
         <select value={category} onChange={(e) => setCategory(e.target.value)}>
           <option value="General">General</option>
-          <option value="Lenguaje">Lenguaje</option>
+          <option value="Lenguaje">Dudas</option>
           <option value="Filosofía">Filosofía</option>
         </select>
         <input type="file" onChange={handleFileChange} />

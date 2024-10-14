@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 // Servir archivos estáticos
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'modules/uploads')));
 
 // Rutas para el foro
 app.use('/api/posts', postRoutes);

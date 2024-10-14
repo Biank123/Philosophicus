@@ -2,15 +2,15 @@
 const pool = require('../Models/db'); 
 
 // Crear una nueva publicación
-const createPost = async (title, content, category, file) => {
-    const query = `
-        INSERT INTO posts (title, content, category, file)
-        VALUES ($1, $2, $3, $4)
-        RETURNING *;
-    `;
-    const values = [title, content, category, file];
-    const result = await pool.query(query, values);
-    return result.rows[0];
+const createPost = async (title, content, category, file, userId) => { // Agrega userId como argumento
+  const query = `
+      INSERT INTO posts (title, content, category, file, user_id) 
+      VALUES ($1, $2, $3, $4, $5) 
+      RETURNING *;
+  `;
+  const values = [title, content, category, file, userId]; // Agrega userId a values
+  const result = await pool.query(query, values);
+  return result.rows[0];
 };
 
 // Obtener todas las publicaciones
@@ -29,14 +29,10 @@ const getPostById = async (id) => {
 };
 
 // Obtener comentarios por ID de publicación
-const getCommentsByPostId = async (id) => { 
-    const query = `
-      SELECT * FROM comments
-      WHERE post_id = $1
-      ORDER BY created_at DESC
-    `;
-    const { rows } = await pool.query(query, [id]); 
-    return rows;
+const getCommentsByPostId = async (id) => {
+  const query = 'SELECT * FROM comments WHERE post_id = $1'; // Usa el ID como parámetro
+  const { rows } = await pool.query(query, [id]); // Asegúrate de pasar un número
+  return rows;
 };
 
 // Función para eliminar un comentario
@@ -67,13 +63,41 @@ const deletePost = async (id) => {
     }
   };
   
-  const addComment = async (postId, content) => {
+  const addComment = async (postId, content, userId) => {
     // Inserta el nuevo comentario en la base de datos
     const result = await pool.query(
-        'INSERT INTO comments (post_id, content) VALUES ($1, $2) RETURNING *',
-        [postId, content]
+        'INSERT INTO comments (post_id, content, user_id) VALUES ($1, $2, $3) RETURNING *',
+        [postId, content, userId]
     );
     return result.rows[0]; // Devuelve el comentario agregado
+};
+
+// Función para obtener publicaciones por ID de usuario
+const getPostsByUserId = async (userId) => {
+  const query = `
+    SELECT * FROM posts WHERE user_id = $1
+    ORDER BY created_at DESC;
+  `;
+  const values = [userId];
+  const res = await pool.query(query, values);
+  return res.rows;
+};
+
+// Función para obtener comentarios por ID de usuario
+const getCommentsByUserId = async (userId) => {
+  const query = 'SELECT * FROM comments WHERE user_id = $1';
+  const values = [userId];
+  if (!userId) {
+    throw new Error('El ID de usuario no es válido');
+  }
+
+  try {
+    const result = await db.query(query, values);
+    return result.rows; // Devuelve los comentarios
+  } catch (error) {
+    console.error('Error al obtener los comentarios:', error);
+    throw new Error('Error al acceder a la base de datos'); // Lanza un error para manejarlo en el controlador
+  }
 };
 
 module.exports = {
@@ -83,5 +107,7 @@ module.exports = {
     getCommentsByPostId,
     deleteComment,
     deletePost,
-    addComment
+    addComment,
+    getPostsByUserId,
+    getCommentsByUserId
 };

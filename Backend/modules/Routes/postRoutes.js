@@ -3,7 +3,8 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const {createPostController, deletePostController, addCommentController, deleteCommentController, getAllPostsController, getPostByIdController, getCommentsByPostIdController } = require('../Controllers/postController');
+const {createPostController, getPostsByUserIdController, getCommentsByUserIdController, deletePostController, addCommentController, deleteCommentController, getAllPostsController, getPostByIdController, getCommentsByPostIdController } = require('../Controllers/postController');
+const authenticate = require('../Middlewares/authMiddleware');
 
 const router = express.Router();
 
@@ -11,22 +12,22 @@ const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
 
 // Ruta para crear una nueva publicación
-router.post('/', upload.single('file'), createPostController);
+router.post('/', upload.single('file'), authenticate, createPostController);
 
 // Ruta para obtener todas las publicaciones
-router.get('/', getAllPostsController);
+router.get('/', authenticate, getAllPostsController);
 
 // Ruta para obtener una publicación por ID
-router.get('/:id', getPostByIdController);
+router.get('/:id', authenticate, getPostByIdController);
 
-router.delete('/:id', deletePostController);
+router.delete('/:id', authenticate, deletePostController);
 
 // Ruta para obtener comentarios de una publicación específica
-router.get('/:id/comments', getCommentsByPostIdController);
+router.get('/:id/comments', authenticate, getCommentsByPostIdController);
 
-router.delete('/:id/comments/:commentId', deleteCommentController);
+router.delete('/:id/comments/:commentId', authenticate, deleteCommentController);
 
-router.post('/:id/comments', addCommentController);
+router.post('/:id/comments', authenticate, addCommentController);
 
 // Ruta para descargar archivos
 router.get('/download/:filename', (req, res) => {
@@ -48,7 +49,11 @@ router.get('/download/:filename', (req, res) => {
         }
       });
     });
-  });
+  }, authenticate);
 
+ // Ruta para obtener publicaciones de un usuario específico
+router.get('/user/posts', authenticate, getPostsByUserIdController);
+
+router.get('/user/comments', authenticate, getCommentsByUserIdController);
 
 module.exports = router;
