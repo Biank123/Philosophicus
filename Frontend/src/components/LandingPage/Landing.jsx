@@ -1,5 +1,4 @@
 import React from 'react';
-import './Landing.css'; // Asegúrate de que este archivo tenga los estilos necesarios
 import BookProject from './Book';
 
 import Cards from './Cards';

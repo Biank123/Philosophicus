@@ -1,0 +1,44 @@
+/* Estilo para la página */
+.directory-page {
+    max-width: 800px;
+    margin: 0 auto 100px;
+    padding: 20px;
+    background-color: #f7f7f7; /* Color de fondo de la página */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Títulos */
+h1, h2 {
+    color: #333;
+}
+
+/* Estilo para las secciones */
+section {
+    background-color: #fff; /* Color de fondo de cada sección */
+    border: 1px solid #ddd; /* Borde suave */
+    border-radius: 8px; /* Bordes redondeados para las secciones */
+    padding: 20px;
+    margin-bottom: 20px; /* Espacio entre secciones */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra leve para secciones */
+}
+
+/* Listas */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+/* Links */
+ul li a {
+    color: #058c9d;
+    text-decoration: none;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}

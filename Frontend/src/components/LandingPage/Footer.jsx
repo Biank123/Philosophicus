@@ -11,12 +11,12 @@ const Footer = () => {
             <div className="col-md-3 col-sm-6">
               {/* Column1 */}
               <div className="footer-pad">
-                <h4>Recursos</h4>
+                <h4>Recursos y otros</h4>
                 <ul className="list-unstyled">
-                  <li><a href="#">Biblioteca de Textos Filosóficos</a></li>
-                  <li><a href="#">Formularios de Inscripción</a></li>
-                  <li><a href="#">Noticias y Actualizaciones</a></li>
-                  <li><a href="#">Preguntas Frecuentes</a></li>
+                  <li>Consulta contenidos en la base de datos</li>
+                  <li>Comparte links y documentos relevantes</li>
+                  <li>Página en constante actualización</li>
+                  
                 </ul>
               </div>
             </div>
@@ -25,31 +25,30 @@ const Footer = () => {
               <div className="footer-pad">
                 <h4>Información</h4>
                 <ul className="list-unstyled">
-                  <li><a href="#">Tutorial del Sitio Web</a></li>
-                  <li><a href="#">Accesibilidad</a></li>
-                  <li><a href="#">Contacto con el Administrador</a></li>
+                  <li>Resuelve tus dudas:</li>
+                  <li>Escríbeme a biancadepetris1998@gmail.com</li>
+                  <li>Santiago, Chile</li>
                 </ul>
               </div>
             </div>
             <div className="col-md-3 col-sm-6">
               {/* Column3 */}
               <div className="footer-pad">
-                <h4>Explora</h4>
+                <h4>Explora la página</h4>
                 <ul className="list-unstyled">
-                  <li><a href="#">Pregúntale a la IA</a></li>
-                  <li><a href="#">Revistas Filosóficas</a></li>
-                  <li><a href="#">Repositorios Académicos</a></li>
-                  <li><a href="#">Páginas de Filosofía</a></li>
+                  <li>Escribe y publica tus ensayos</li>
+                  <li>Accede a links relevantes</li>
+                  <li>Consulta tus dudas en el Foro</li>
+                  <li>Estudia buscando problemas filosóficos</li>
                 </ul>
               </div>
             </div>
             <div className="col-md-3">
-              <h4>Conéctate con Nosotros</h4>
+              <h4>Conéctate conmigo</h4>
               <ul className="social-network social-circle">
-                <li><a href="#" className="icoFacebook" title="Facebook"><i className="fa fa-facebook"></i></a></li>
-                <li><a href="#" className="icoLinkedin" title="Linkedin"><i className="fa fa-linkedin"></i></a></li>
-                <li><a href="#" className="icoTwitter" title="Twitter"><i className="fa fa-twitter"></i></a></li>
-                <li><a href="#" className="icoInstagram" title="Instagram"><i className="fa fa-instagram"></i></a></li>
+                <li><a href="https://github.com/Biank123" className="icoFacebook" title="Facebook"><i className="fa fa-facebook"></i></a></li>
+                <li><a href="https://www.linkedin.com/in/bianca-de-petris/" className="icoLinkedin" title="Linkedin"><i className="fa fa-linkedin"></i></a></li>
+                <li><a href="https://web.facebook.com/bianca.depetris.5" className="icoTwitter" title="Twitter"><i className="fa fa-twitter"></i></a></li>
               </ul>
             </div>
           </div>

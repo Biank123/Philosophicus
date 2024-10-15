@@ -34,11 +34,12 @@ const getPublishedEssays = async () => {
 
 const getPublishedUserEssays = async (userId) => {
   const { rows } = await pool.query(
-      'SELECT id, title, content, created_at FROM essays WHERE user_id = $1 AND is_published = true',
-      [userId]
+    'SELECT * FROM essays WHERE user_id = $1 AND is_published = true',
+    [userId]
   );
-  return rows; // Devuelve solo el arreglo de ensayos
+  return rows;
 };
+
 
 // Función para obtener borradores de un usuario
 const getDraftsByUser = async (userId) => {

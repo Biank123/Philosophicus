@@ -9,7 +9,7 @@ const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState('config');
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [showDeleteForm, setShowDeleteForm] = useState(false);
-    const [userData, setUserData] = useState({}); 
+    const [userData, setUserData] = useState({});
     const [drafts, setDrafts] = useState([]);
     const [posts, setPosts] = useState([]); // Para almacenar las publicaciones del usuario
     const [comments, setComments] = useState([]); // Para almacenar los comentarios del usuario
@@ -49,7 +49,6 @@ const ProfilePage = () => {
                     'Content-Type': 'application/json'
                 },
             });
-            console.log(localStorage.getItem('token'));
 
             if (!response.ok) {
                 throw new Error(`Error HTTP: ${response.status}`);
@@ -57,13 +56,13 @@ const ProfilePage = () => {
 
             const data = await response.json();
 
-            // Asegúrate de convertir el id a número
+
             const userId = Number(data.id);
-            setUserData({ ...data, id: userId }); // Guarda los datos del usuario con id convertido
-            
+            setUserData({ ...data, id: userId });
+
         } catch (error) {
             console.error('Error al obtener los datos del usuario:', error);
-            
+
         }
     };
 
@@ -171,31 +170,29 @@ const ProfilePage = () => {
         }
     };
 
-    const fetchEssays = async (userId) => {
+    const fetchEssays = async () => {
         const token = localStorage.getItem('token');
-        console.log(localStorage.getItem('token'));
         
-
         if (!token) {
             console.error('No hay token de autenticación disponible');
             return; // Detener la ejecución si no hay token
         }
-    
+
         try {
-            const response = await fetch(`http://localhost:3001/essays/published/${userId}`, { // Asegúrate de que la ruta sea correcta
+            const response = await fetch(`http://localhost:3001/essays/published/user`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 }
             });
-    
+
             if (!response.ok) {
                 throw new Error(`Error HTTP: ${response.status}`);
             }
-    
+
             const data = await response.json();
-    
+
             // Verifica que `data` sea un arreglo
             if (Array.isArray(data)) {
                 setEssays(data);
@@ -320,24 +317,18 @@ const ProfilePage = () => {
         }
     }, [isAuthenticated]);
     
-    // Efecto separado para las otras solicitudes
     useEffect(() => {
-        if (userData) { // Asegúrate de que userData esté cargado antes de hacer otras peticiones
-            console.log("userData:", userData); // Verifica el contenido de userData
+        if (userData) { 
+            console.log("userData:", userData); 
+            
             const fetchData = async () => {
                 try {
-                    await fetchDrafts();
-                    await fetchComments();
-                    await fetchPosts();
-                    if (!userData.id) {
-                        console.error('userData.id no está definido');
-                        return; // Detener si no hay ID de usuario
-                    }
-                    await fetchEssays(userData.id); // Usa el ID del usuario desde userData
+                    await Promise.all([fetchDrafts(), fetchComments(), fetchPosts(), fetchEssays()]);
                 } catch (error) {
                     console.error('Error al obtener los demás datos:', error);
                 }
             };
+            
             fetchData();
         }
     }, [userData]);

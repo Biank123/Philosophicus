@@ -30,7 +30,7 @@ const SelectProblem = ({ onSelect }) => {
   };
 
   return (
-    <div>
+    <div className='select-problem-container'>
       <h1>Selecciona un Problema Filosófico</h1>
       <select onChange={handleSelect} value={selectedProblemId}>
         <option value="">Seleccione un problema</option>

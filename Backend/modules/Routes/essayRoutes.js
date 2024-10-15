@@ -13,7 +13,7 @@ router.post('/publish', authenticateToken, publishEssayController); //Funciona
 // Ruta para mostrar ensayos publicados
 router.get('/published', authenticateToken, fetchPublishedEssays); //Funciona
 
-router.get('/published/:userId', authenticateToken, fetchPublishedEssaysByUser);
+router.get('/published/user', authenticateToken, fetchPublishedEssaysByUser);
 
 // Ruta para mostrar los borradores guardados
 router.get('/drafts', authenticateToken, fetchDraftsByUser); //Funciona

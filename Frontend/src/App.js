@@ -13,6 +13,7 @@ import SpecificFilter from './components/StudyPage/SpecificFilter';
 import ContentPage from './components/StudyPage/ContentPage';
 import AlterPage from './components/StudyPage/AlterPage';
 import ForumPage from './components/ForumPage/ForumPage';
+import DirectoryPage from './components/DirectoryPage/DirectoryPage';
 
 function App() {
   const [selectedProblem, setSelectedProblem] = useState(null);
@@ -39,6 +40,7 @@ function App() {
         <Route path="/filter/:tipo" element={<SpecificFilter />} />
         <Route path="/content/:tipo/:valor" element={<ContentPage />} />
         <Route path="/filosofia" element={<AlterPage />} />
+        <Route path="/directory" element={<DirectoryPage />} />
         <Route 
           path="/select-problem" 
           element={<SelectProblem onSelect={handleSelectProblem} />} 

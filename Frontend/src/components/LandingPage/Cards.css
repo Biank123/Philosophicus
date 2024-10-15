@@ -11,7 +11,7 @@ h1 {
 /* Contenedor de las cartas */
 .wrapper {
   width: 100%;
-  margin: 5rem auto;
+  margin: 8rem auto;
   max-width: 1200px;
   /* Aumentar el ancho máximo para pantallas más grandes */
 }

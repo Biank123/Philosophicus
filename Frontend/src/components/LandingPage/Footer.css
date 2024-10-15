@@ -7,12 +7,15 @@ footer {
     background: linear-gradient(59deg, #73583a, #2a2216);
     color: white;
     margin-top:100px;
+    
   }
   
-  footer a {
-    color: #fff;
+  footer li {
+    color: #fff !important;
     font-size: 14px;
     transition-duration: 0.2s;
+    text-decoration: none;
+    
   }
   
   footer a:hover {
@@ -24,11 +27,14 @@ footer {
     font-size: 12px;
     padding: 10px;
     border-top: 1px solid #FFFFFF;
+    
   }
   
   .footer-middle {
-    padding-top: 2em;
+    padding-top: 3em;
+    padding-bottom: 0rem;
     color: white;
+    
   }
   
   

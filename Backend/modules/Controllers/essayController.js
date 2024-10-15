@@ -74,25 +74,31 @@ const fetchDraftsByUser = async (req, res) => {
     res.status(500).json({ error: 'Error fetching drafts.' });
   }
 };
+
 const fetchPublishedEssaysByUser = async (req, res) => {
-  const { userId } = req.params;
-  console.log('ID del usuario:', userId); // Verifica si el userId llega correctamente
+  const userId = req.user.id;
+  console.log('ID del usuario:', userId);
 
   try {
-      // Obtén los ensayos utilizando la función del modelo
-      const essays = await getPublishedUserEssays(userId);
-      
-      // Verifica si se encontraron ensayos
-      if (essays.length === 0) {
-          return res.status(404).json({ message: 'No se encontraron ensayos publicados para este usuario.' });
-      }
-
-      // Devuelve los ensayos encontrados
-      res.status(200).json(essays);
+    const numericUserId = parseInt(req.user.id, 10);
+    if (isNaN(numericUserId)) {
+        return res.status(400).json({ message: 'ID de usuario no válido.' });
+    }
+    
+    // Obtén los ensayos utilizando la función del modelo
+    const essays = await getPublishedUserEssays(numericUserId);
+    
+    // Verifica si se encontraron ensayos
+    if (essays.length === 0) {
+        return res.status(404).json({ message: 'No se encontraron ensayos publicados para este usuario.' });
+    }
+  
+    // Devuelve los ensayos encontrados
+    res.status(200).json(essays);
   } catch (error) {
       console.error('Error al obtener los ensayos publicados:', error);
       res.status(500).json({ message: 'Error al obtener los ensayos publicados' });
   }
-};
+}
 
 module.exports = { saveDraftController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser };
