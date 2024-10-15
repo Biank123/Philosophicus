@@ -9,20 +9,12 @@ const saveDraft = async (userId, title, texto) => {
   return result.rows[0]; // Devuelve el primer resultado
 };
 
-// const publishEssay = async (title, content, userId) => {
-//   const result = await pool.query(
-//     'INSERT INTO essays (title, content, user_id, is_published) VALUES ($1, $2, $3, true) RETURNING *',
-//     [title, content, userId]
-//   );
-//   return result.rows[0]; // Devuelve el ensayo publicado
-// };
-
 const publishEssay = async (title, content, userId, createdAt) => {
   // Aquí va tu lógica para insertar el ensayo en la base de datos
-  const query = 'INSERT INTO essays (title, content, user_id, created_at) VALUES ($1, $2, $3, $4) RETURNING *';
-  const values = [title, content, userId, createdAt]; // Asegúrate de incluir createdAt en los valores
+  const query = 'INSERT INTO essays (title, content, user_id, created_at, is_published) VALUES ($1, $2, $3, $4, true) RETURNING *';
+  const values = [title, content, userId, createdAt]; 
 
-  const { rows } = await db.query(query, values);
+  const { rows } = await pool.query(query, values);
   return rows[0]; // Retorna el ensayo recién creado
 };
 
