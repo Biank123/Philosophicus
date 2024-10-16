@@ -7,13 +7,39 @@
 .section {
   margin-bottom: 2rem;
 }
-
+/* 
 textarea {
   width: 100%;
   height: 150px;
   padding: 0.5rem;
   margin-top: 0.5rem;
   box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+
+
+/* Ajustar el contenedor principal de Quill */
+.ql-container {
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  height: 150px; /* La altura que tenías definida para el textarea */
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+  margin-top: 0.5rem;
+  border: 1px solid #ccc; /* Puedes ajustar el borde si lo deseas */
+  border-radius: 4px; /* Esquinas redondeadas */
+  padding: 0.5rem;
+}
+
+/* Ajustar el área de edición (donde se escribe el contenido) */
+.ql-editor {
+  height: 100%; /* Asegura que el área editable ocupe toda la altura disponible */
+  padding: 0.5rem; /* Espaciado interno para que el texto no quede pegado al borde */
+  font-size: 16px; /* Tamaño de fuente */
+  line-height: 1.5; /* Espaciado entre líneas */
+}
+
+/* Opcional: Ajustar los botones de la barra de herramientas de Quill (si la usas) */
+.ql-toolbar {
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .navigation {

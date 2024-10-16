@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import './Publications.css';
 import { useAuth } from '../UserPage/AuthContext';
@@ -174,6 +172,8 @@ const PostList = () => {
       <ul>
         {posts.map((post) => (
           <li key={post.id}>
+            <p><strong>{post.username}</strong><br/>
+            <em>{new Date(post.created_at).toLocaleString()}</em></p>
             <h3>{post.title}</h3>
             <p>{post.content}</p>
 
@@ -217,7 +217,9 @@ const PostList = () => {
                 <ul>
                   {(Array.isArray(comments[post.id]) ? comments[post.id] : []).map((comment) => (
                     <li key={comment.id}>
-                      {comment.content}
+                      <p><strong>{comment.username}</strong> <br/>
+                      <em>{new Date(comment.created_at).toLocaleString()}</em></p>
+                      <p>{comment.content}</p>
                       <button onClick={() => handleDeleteComment(post.id, comment.id)}>Eliminar</button>
                     </li>
                   )) || <li>No hay comentarios.</li>}

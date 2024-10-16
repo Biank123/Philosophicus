@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './EssayTemplate.css';
+import ReactQuill from 'react-quill';  // Importa el componente Quill
+import 'react-quill/dist/quill.snow.css';  // Importa los estilos de Quill
 
 const EssayTemplate = ({ problem }) => {
   // Definición de las secciones del ensayo
@@ -54,9 +56,21 @@ const EssayTemplate = ({ problem }) => {
   // Llamar a los hooks después de definir `sections`
   const [currentSection, setCurrentSection] = useState(0);
   const [sectionTexts, setSectionTexts] = useState(Array(sections.length).fill(''));
-  const [reviewResult, setReviewResult] = useState(null);
+  const [reviewData, setReviewData] = useState({});
   const [draftTitle, setDraftTitle] = useState('');
 
+  const handleChange = (value) => {
+    const newTexts = [...sectionTexts];
+    newTexts[currentSection] = value; // Actualiza el texto en la sección actual
+    console.log('Texto actualizado:', value); // Verifica el texto que se está escribiendo
+    setSectionTexts(newTexts);
+  };
+
+  useEffect(() => {
+    // Solo actualizar si se ha escrito algo
+    const savedText = sectionTexts[currentSection];
+    handleChange(savedText); // Guarda el texto actual al cambiar de sección
+  }, [currentSection]);
   // Verificar si `problem` es `null` o `undefined` al inicio
   if (!problem) {
     return <div>No problem selected</div>;
@@ -80,45 +94,64 @@ const EssayTemplate = ({ problem }) => {
       setCurrentSection(currentSection - 1);
     }
   };
+  const stripHtml = (html) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || '';
+};
 
-  // Manejador para actualizar el texto de la sección
-  const handleChange = (e) => {
-    const newTexts = [...sectionTexts];
-    newTexts[currentSection] = e.target.value;
-    setSectionTexts(newTexts);
-  };
+const handleSubmit = async () => {
+    const combinedText = sectionTexts.join('\n\n').trim();
 
-  const handleSubmit = async () => {
-    const combinedText = sectionTexts.join('\n\n'); // Unir todas las secciones del ensayo
-    console.log('Texto enviado al backend:', combinedText);
+    if (combinedText.length === 0) {
+        console.error('No hay contenido para enviar al backend');
+        return;
+    }
 
     try {
-      const response = await fetch('http://localhost:3001/essays/revisar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({ texto: combinedText }), // Enviar todo el texto junto
-      });
+        const response = await fetch('http://localhost:3001/essays/revisar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ texto: combinedText }),
+        });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
 
-      const data = await response.json();
-      console.log('Respuesta del backend:', data);
-      setReviewResult(data.revision); // Guardar la revisión para mostrarla
+        const data = await response.json();
+        console.log('Respuesta del backend:', data);
+
+        // Ajusta cómo asignas reviewData según la respuesta del backend
+        setReviewData({
+            mensaje: data.mensaje,
+            correcciones: data.correcciones.map(correccion => ({
+                mensaje: correccion.mensaje,
+                sugerencias: correccion.sugerencias,
+                contexto: stripHtml(correccion.contexto) // Limpia el contexto
+            })),
+        });
     } catch (error) {
-      console.error('Error enviando el texto:', error);
-      setReviewResult('Error al enviar el texto para revisión.');
+        console.error('Error enviando el texto:', error);
+        setReviewData({
+            mensaje: 'Error al enviar el texto para revisión.',
+            correcciones: []
+        });
     }
-  };
+};
 
   const handlePublish = async () => {
-    const combinedText = sectionTexts.join('\n\n'); // Combinar todas las secciones del ensayo
+    const cleanedTexts = sectionTexts.map(cleanText).map(text => text.trim()).filter(text => text.length > 0); // Limpiar espacios vacíos y etiquetas
+    const combinedText = cleanedTexts.join('\n\n'); // Combinar todas las secciones del ensayo
     const title = draftTitle; // Título que se obtiene del estado
-  
+    if (combinedText.length === 0) {
+      console.error('No hay contenido para enviar al backend');
+      return; // Detener la ejecución si el contenido está vacío
+    }
+    console.log('Texto enviado al backend:', combinedText);
     try {
       const response = await fetch('http://localhost:3001/essays/publish', {
         method: 'POST',
@@ -126,13 +159,13 @@ const EssayTemplate = ({ problem }) => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({ title, content: combinedText }), // Cambiar 'texto' a 'content'
+        body: JSON.stringify({ title, content: combinedText }), // Asegúrate de enviar el contenido limpio
       });
-  
+
       if (!response.ok) {
         throw new Error('Error al publicar el ensayo.');
       }
-  
+
       alert('Ensayo publicado con éxito.');
     } catch (error) {
       console.error('Error publicando el ensayo:', error);
@@ -165,6 +198,11 @@ const EssayTemplate = ({ problem }) => {
     }
   };
 
+  const cleanText = (text) => {
+    // Elimina todas las etiquetas HTML
+    return text.replace(/<\/?[^>]+(>|$)/g, "");
+  };
+
   return (
     <div className="essay-template">
       <h1>Escribe tu Ensayo</h1>
@@ -187,11 +225,19 @@ const EssayTemplate = ({ problem }) => {
       <div className="section">
         <h2>{sections[currentSection].title}</h2>
         <p>{sections[currentSection].description}</p>
-        <textarea
-          placeholder={sections[currentSection].placeholder}
-          value={sectionTexts[currentSection]}
-          onChange={handleChange}
-        ></textarea>
+        <ReactQuill
+          value={sectionTexts[currentSection]} // Pasa el valor de la sección actual
+          onChange={handleChange} // Usa el manejador de cambios ajustado
+          placeholder={sections[currentSection].placeholder} // Placeholder
+        />
+        <div>
+          <h3>Vista previa del contenido:</h3>
+          <h2>Vista previa:</h2>
+          <div>
+            <p>Sección {currentSection + 1}:</p>
+            <div dangerouslySetInnerHTML={{ __html: sectionTexts[currentSection] }}></div>
+          </div>
+        </div>
         <div className="buttons">
           {currentSection > 0 && (
             <button onClick={handlePrevious}>Anterior</button>
@@ -207,16 +253,43 @@ const EssayTemplate = ({ problem }) => {
           )}
         </div>
       </div>
+
       <div>
-        <h3>IA para revisión gramatical</h3>
-        {/* Mostrar el resultado de la revisión */}
-        {reviewResult && (
-          <div className="review-section">
-            <h2>Resultado de la revisión:</h2>
-            <p>{reviewResult}</p>
-          </div>
-        )}
-      </div>
+    <h3>IA para revisión gramatical</h3>
+    {reviewData && (
+        <div className="review-section">
+            <h2>Resultados de la revisión:</h2>
+            <p>{reviewData.mensaje}</p>
+
+            {/* Verificar si hay correcciones */}
+            {reviewData.correcciones && reviewData.correcciones.length > 0 ? (
+                reviewData.correcciones.map((correccion, index) => (
+                    <div key={index}>
+                        <p><strong>Mensaje:</strong> {correccion.mensaje}</p>
+                        <p><strong>Contexto:</strong> {correccion.contexto}</p>
+
+                        {/* Mostrar sugerencias, si existen */}
+                        {correccion.sugerencias && correccion.sugerencias.length > 0 ? (
+                            <div>
+                                <h4>Sugerencias:</h4>
+                                <ul>
+                                    {correccion.sugerencias.map((sugerencia, index) => (
+                                        <li key={index}>{sugerencia}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ) : (
+                            <p>No hay sugerencias disponibles.</p>
+                        )}
+                    </div>
+                ))
+            ) : (
+                <p>No se encontraron correcciones.</p>
+            )}
+        </div>
+    )}
+</div>
+
     </div>
   );
 };

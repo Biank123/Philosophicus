@@ -13,11 +13,16 @@ const createPost = async (title, content, category, file, userId) => { // Agrega
   return result.rows[0];
 };
 
-// Obtener todas las publicaciones
+
 const getAllPosts = async () => {
-    const query = 'SELECT * FROM posts;';
-    const result = await pool.query(query);
-    return result.rows;
+  const query = `
+    SELECT p.*, u.username, p.created_at 
+    FROM posts p
+    JOIN users u ON p.user_id = u.id
+    ORDER BY p.created_at DESC;
+  `;
+  const result = await pool.query(query);
+  return result.rows;
 };
 
 // Obtener una publicación por ID
@@ -28,10 +33,16 @@ const getPostById = async (id) => {
     return result.rows[0];
 };
 
-// Obtener comentarios por ID de publicación
+
 const getCommentsByPostId = async (id) => {
-  const query = 'SELECT * FROM comments WHERE post_id = $1'; // Usa el ID como parámetro
-  const { rows } = await pool.query(query, [id]); // Asegúrate de pasar un número
+  const query = `
+    SELECT c.*, u.username, c.created_at 
+    FROM comments c
+    JOIN users u ON c.user_id = u.id
+    WHERE c.post_id = $1
+    ORDER BY c.created_at ASC;
+  `;
+  const { rows } = await pool.query(query, [id]);
   return rows;
 };
 

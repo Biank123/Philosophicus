@@ -16,24 +16,6 @@ const ProfilePage = () => {
     const [essays, setEssays] = useState([]);
     const { isAuthenticated } = useAuth();
 
-    // const fetchUserData = async () => {
-    //     try {
-    //         const response = await fetch('http://localhost:3001/api/users/profile/user', {
-    //             headers: {
-    //                 'Authorization': `Bearer ${localStorage.getItem('token')}`
-    //             }
-    //         });
-    //         if (!response.ok) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-    //         const data = await response.json();
-    //         setUserData(data);
-    //         console.log('User data set:', data);
-    //     } catch (error) {
-    //         console.error('Error fetching user data:', error);
-    //     }
-    // };
-
     const fetchUserData = async () => {
         const token = localStorage.getItem('token');
         if (!token) {
