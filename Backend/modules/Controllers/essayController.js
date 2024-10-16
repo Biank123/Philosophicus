@@ -1,4 +1,4 @@
-const { saveDraft, deleteEssay, publishEssay, getPublishedEssays, getDraftsByUser, getPublishedUserEssays } = require('../Models/publishModel');
+const { saveDraft, deleteEssay, publishEssay, editDraft, deleteDraft, publishDraft, getPublishedEssays, getDraftsByUser, getPublishedUserEssays } = require('../Models/publishModel');
 const jwt = require('jsonwebtoken'); // Asegúrate de tener jwt importado para decodificar el token
 const { pool } = require('../Models/db');
 
@@ -120,4 +120,48 @@ const deleteEssayController = async (req, res) => {
   }
 };
 
-module.exports = { deleteEssayController, saveDraftController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser };
+const publishDraftController = async (req, res) => {
+  const { id } = req.params; // Obtener el ID del ensayo a partir de los parámetros de la ruta
+  try {
+      // Actualiza el ensayo en la base de datos
+      const newEssay = await publishDraft(id); 
+
+      res.status(201).json({ message: 'Borrador publicado con éxito.', essay: newEssay });
+    } catch (error) {
+        console.error('Error al publicar el ensayo:', error);
+        res.status(500).json({ error: 'Error al publicar el ensayo' });
+    }
+};
+
+const deleteDraftController = async (req, res) => {
+  const { id } = req.params; // Obtener el ID del borrador a partir de los parámetros de la ruta
+  try {
+      // Eliminar el borrador usando el ID
+      const result = await deleteDraft(id); 
+
+      if (result) {
+          res.status(204).send(); // No content, significa que se eliminó con éxito
+      } else {
+          res.status(404).json({ error: 'Borrador no encontrado' });
+      }
+  } catch (error) {
+      console.error('Error al eliminar el borrador:', error);
+      res.status(500).json({ error: 'Error al eliminar el borrador' });
+  }
+};
+
+// Controlador para editar un borrador
+const editDraftController = async (req, res) => {
+  const { id } = req.params; // Obtener el ID del borrador
+  const { title, content } = req.body; // Obtener los nuevos valores del cuerpo de la solicitud
+
+  try {
+      const updatedDraft = await editDraft(id, title, content); // Llamar a la función del modelo
+      res.status(200).json(updatedDraft); // Enviar el borrador actualizado como respuesta
+  } catch (error) {
+      console.error('Error al editar el borrador:', error.message);
+      res.status(error.message === 'Borrador no encontrado' ? 404 : 500).json({ error: error.message });
+  }
+};
+
+module.exports = { deleteEssayController, editDraftController, deleteDraftController, publishDraftController, saveDraftController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser };

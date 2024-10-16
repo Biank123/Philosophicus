@@ -46,4 +46,65 @@ const deleteEssay = async (id) => {
   return result.rowCount > 0; // Retorna true si se eliminó al menos un registro
 };
 
-module.exports = { deleteEssay, saveDraft, publishEssay, getPublishedEssays, getDraftsByUser, getPublishedUserEssays };
+
+const publishDraft = async (draftId) => {
+  try {
+      // Primero, obtenemos el borrador
+      const draftResult = await pool.query('SELECT * FROM drafts WHERE id = $1', [draftId]);
+      const draft = draftResult.rows[0];
+
+      if (!draft) {
+          throw new Error('Borrador no encontrado');
+      }
+
+      // Insertar el borrador en la tabla de ensayos
+      const insertResult = await pool.query(
+          'INSERT INTO essays (title, user_id, content, is_published) VALUES ($1, $2, $3, true) RETURNING *',
+          [draft.title, draft.user_id, draft.content]
+      );
+
+      const newEssay = insertResult.rows[0];
+
+      // Eliminar el borrador
+      await pool.query('DELETE FROM drafts WHERE id = $1', [draftId]);
+
+      return newEssay; // Retorna el ensayo publicado
+  } catch (error) {
+      console.error('Error al publicar el ensayo:', error);
+      throw error; // Lanza el error para manejarlo en el controlador
+  }
+};
+
+const deleteDraft = async (draftId) => {
+  try {
+      // Eliminar el borrador de la tabla drafts
+      const result = await pool.query('DELETE FROM drafts WHERE id = $1 RETURNING *', [draftId]);
+      
+      // Retorna verdadero si se eliminó un borrador
+      return result.rowCount > 0; 
+  } catch (error) {
+      console.error('Error al eliminar el borrador:', error);
+      throw error; // Lanza el error para manejarlo en el controlador
+  }
+};
+
+// Función para editar un borrador
+const editDraft = async (id, title, content) => {
+  // Verificar si el borrador existe
+  const draftResult = await pool.query('SELECT * FROM drafts WHERE id = $1', [id]);
+  
+  if (draftResult.rows.length === 0) {
+      throw new Error('Borrador no encontrado');
+  }
+
+  // Actualizar el borrador en la base de datos
+  const updateResult = await pool.query(
+      'UPDATE drafts SET title = $1, content = $2, updated_at = CURRENT_TIMESTAMP WHERE id = $3 RETURNING *',
+      [title, content, id]
+  );
+
+  return updateResult.rows[0]; // Retornar el borrador actualizado
+};
+
+
+module.exports = { deleteEssay, editDraft, publishDraft, deleteDraft, saveDraft, publishEssay, getPublishedEssays, getDraftsByUser, getPublishedUserEssays };

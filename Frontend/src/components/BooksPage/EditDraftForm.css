@@ -1,0 +1,57 @@
+.edit-draft-form {
+    max-width: 600px; /* Ancho máximo del formulario */
+    margin: 20px auto; /* Centrar el formulario en la página */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde ligero */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    background-color: #fff; /* Fondo blanco */
+}
+
+.edit-draft-form h2 {
+    text-align: center; /* Título centrado */
+    color: #333; /* Color del texto del título */
+}
+
+.edit-draft-form label {
+    display: block; /* Hacer que las etiquetas ocupen toda la línea */
+    margin-bottom: 8px; /* Espaciado entre etiqueta y campo */
+    font-weight: bold; /* Negrita para etiquetas */
+}
+
+.edit-draft-form input[type="text"] {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 16px; /* Espacio debajo del campo de texto */
+    border: 1px solid #ccc; /* Borde ligero */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+.edit-draft-form .react-quill {
+    margin-bottom: 16px; /* Espacio debajo del editor */
+    height: 200px; /* Altura fija para el editor */
+}
+
+.edit-draft-form button {
+    padding: 10px 15px; /* Espaciado interno de los botones */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+.edit-draft-form button[type="submit"] {
+    background-color: #28a745; /* Color de fondo para el botón de guardar */
+    color: white; /* Color del texto en el botón */
+}
+
+.edit-draft-form button[type="button"] {
+    background-color: #dc3545; /* Color de fondo para el botón de cancelar */
+    color: white; /* Color del texto en el botón */
+    margin-left: 10px; /* Espaciado entre botones */
+}
+
+.edit-draft-form button:hover {
+    opacity: 0.9; /* Efecto al pasar el cursor */
+}

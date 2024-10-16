@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { saveDraftController, deleteEssayController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser } = require('../Controllers/essayController');
+const { saveDraftController, publishDraftController, deleteDraftController, editDraftController, deleteEssayController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser } = require('../Controllers/essayController');
 const authenticateToken = require('../Middlewares/authMiddleware');
 const TextReview = require('../Controllers/TextReview');
 
@@ -22,6 +22,15 @@ router.get('/drafts', authenticateToken, fetchDraftsByUser); //Funciona
 router.post('/revisar', authenticateToken, TextReview) //Funciona
 
 // Ruta para eliminar un ensayo
-router.delete('/delete/:id', authenticateToken, deleteEssayController);
+router.delete('/delete/:id', authenticateToken, deleteEssayController); //Funciona
+
+// Ruta para publicar un borrador
+router.put('/publishdraft/:id', publishDraftController);
+
+// Ruta para eliminar un borrador
+router.delete('/deletedraft/:id', deleteDraftController);
+
+// Ruta para editar un borrador
+router.put('/editdraft/:id', editDraftController);
 
 module.exports = router;

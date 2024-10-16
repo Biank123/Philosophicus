@@ -30,24 +30,43 @@ const PublishedEssays = () => {
     fetchEssays();
   }, []);
 
-  return (
-    <div className="published-essays">
-      <h1>Ensayos Publicados en la página</h1>
-      <ul>
-        {essays.length > 0 ? (
-          essays.map(essay => (
-            <div>
-            <li key={essay.id}>{essay.title}</li>
-            <p>{essay.content}</p>
-            <p>{essay.created_at}</p>
-            </div>
-          ))
-        ) : (
-          <li>No hay ensayos publicados.</li>
-        )}
-      </ul>
-    </div>
-  );
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Formato: YYYY-MM-DD
+  };
+
+const cleanContent = (html) => {
+  // Elimina etiquetas HTML
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  let text = doc.body.textContent || "";
+
+  // Reemplaza múltiples espacios con un solo espacio
+  text = text.replace(/\s+/g, ' ');
+
+  // Elimina espacios en blanco al inicio y al final
+  text = text.trim();
+
+  return text;
+};
+
+return (
+  <div className="published-essays">
+    <h1>Ensayos Publicados en la página</h1>
+    <ul>
+      {essays.length > 0 ? (
+        essays.map(essay => (
+          <div key={essay.id}>
+            <li>{essay.title}</li>
+            <p>{cleanContent(essay.content)}</p> 
+            <p>{formatDate(essay.created_at)}</p>
+          </div>
+        ))
+      ) : (
+        <li>No hay ensayos publicados.</li>
+      )}
+    </ul>
+  </div>
+);
 };
 
 export default PublishedEssays;

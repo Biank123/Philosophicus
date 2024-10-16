@@ -3,7 +3,8 @@ import './UserProfile.css';
 import ChangePasswordForm from './ChangePasswordForm';
 import DeleteAccountForm from './DeleteAccountForm';
 import { useAuth } from './AuthContext';
-
+import EditDraftForm from '../BooksPage/EditDraftForm';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState('config');
@@ -15,6 +16,8 @@ const ProfilePage = () => {
     const [comments, setComments] = useState([]); // Para almacenar los comentarios del usuario
     const [essays, setEssays] = useState([]);
     const { isAuthenticated } = useAuth();
+    const [editingDraft, setEditingDraft] = useState(null); 
+    const navigate = useNavigate();
 
     const fetchUserData = async () => {
         const token = localStorage.getItem('token');
@@ -121,19 +124,15 @@ const ProfilePage = () => {
         }
     };
 
-
     const handleDeleteAccount = async ({ reason, password }) => {
         if (!window.confirm("¿Estás seguro de que deseas eliminar su cuenta?")) {
             return; // Cancelar si el usuario no confirma
         }
-
+    
         try {
-            const requestBody = JSON.stringify({
-                reason,
-                password,
-            });
-
-            const response = await fetch('http://localhost:3001/profile', {
+            const requestBody = JSON.stringify({ reason, password });
+    
+            const response = await fetch('http://localhost:3001/api/users/profile', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -141,18 +140,19 @@ const ProfilePage = () => {
                 },
                 body: requestBody,
             });
-
-            // Maneja la respuesta
+    
             if (!response.ok) {
-                // Lanza un error si la respuesta no es correcta
-                throw new Error(`Error: ${response.statusText}`);
+                const errorMessage = await response.json();
+                throw new Error(`Error: ${errorMessage.error || response.statusText}`);
             }
-
+    
             const result = await response.json();
             console.log('Respuesta del servidor:', result);
-
+            alert('Cuenta eliminada con éxito')
+            navigate('/')
         } catch (error) {
             console.error('Error al eliminar la cuenta:', error);
+            // Maneja el error, por ejemplo, mostrando un mensaje al usuario
         }
     };
 
@@ -216,6 +216,59 @@ const ProfilePage = () => {
         }
     };
 
+    // Función para publicar un borrador
+const handlePublishEssay = async (essayId) => {
+    try {
+        const response = await fetch(`http://localhost:3001/essays/publishdraft/${essayId}`, {
+            method: 'PUT', 
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al publicar el ensayo');
+        }
+
+        // Actualizar los ensayos después de publicar
+        await fetchEssays();
+        fetchDrafts(); // Recargar los borradores
+    } catch (error) {
+        console.error('Error al publicar el ensayo:', error);
+    }
+};
+
+// Función para eliminar un borrador
+const handleDeleteDraft = async (essayId) => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar este borrador?")) {
+        return; // Cancelar si el usuario no confirma
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3001/essays/deletedraft/${essayId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al eliminar el borrador');
+        }
+
+        // Actualizar los borradores después de eliminar
+        fetchDrafts();
+    } catch (error) {
+        console.error('Error al eliminar el borrador:', error);
+    }
+};
+
+const handleEditDraft = (draft) => {
+    setEditingDraft(draft); // Establece el borrador a editar
+};
+
     const renderSection = () => {
         switch (activeSection) {
             case 'config':
@@ -252,7 +305,12 @@ const ProfilePage = () => {
                         {drafts.length > 0 ? (
                             <ul>
                                 {drafts.map(draft => (
-                                    <li key={draft.id}>{draft.title}</li>
+                                    <li key={draft.id}>
+                                        <div>{draft.title}</div>
+                                        <button onClick={() => handlePublishEssay(draft.id)}>Publicar</button>
+                                        <button onClick={() => handleEditDraft(draft)}>Editar</button>
+                                        <button onClick={() => handleDeleteDraft(draft.id)}>Eliminar</button>
+                                    </li>
                                 ))}
                             </ul>
                         ) : (
@@ -375,6 +433,12 @@ const ProfilePage = () => {
             </div>
             <div className="content">
                 {renderSection()}
+                {editingDraft && (
+                    <EditDraftForm
+                        draft={editingDraft}
+                        onClose={() => setEditingDraft(null)} // Función para cerrar el formulario
+                    />
+                )}
             </div>
         </div>
     );
