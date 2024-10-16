@@ -39,4 +39,11 @@ const getDraftsByUser = async (userId) => {
   return result.rows;
 };
 
-module.exports = { saveDraft, publishEssay, getPublishedEssays, getDraftsByUser, getPublishedUserEssays };
+const deleteEssay = async (id) => {
+  const query = 'DELETE FROM essays WHERE id = $1';
+  const result = await pool.query(query, [id]); 
+
+  return result.rowCount > 0; // Retorna true si se eliminó al menos un registro
+};
+
+module.exports = { deleteEssay, saveDraft, publishEssay, getPublishedEssays, getDraftsByUser, getPublishedUserEssays };

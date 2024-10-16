@@ -123,6 +123,10 @@ const ProfilePage = () => {
 
 
     const handleDeleteAccount = async ({ reason, password }) => {
+        if (!window.confirm("¿Estás seguro de que deseas eliminar su cuenta?")) {
+            return; // Cancelar si el usuario no confirma
+        }
+
         try {
             const requestBody = JSON.stringify({
                 reason,
@@ -183,6 +187,32 @@ const ProfilePage = () => {
             }
         } catch (error) {
             console.error('Error al obtener los ensayos:', error);
+        }
+    };
+
+     // Función para eliminar un ensayo
+     const handleDeleteEssay = async (essayId) => {
+        if (!window.confirm("¿Estás seguro de que deseas eliminar este ensayo?")) {
+            return; // Cancelar si el usuario no confirma
+        }
+
+        try {
+            const response = await fetch(`http://localhost:3001/essays/delete/${essayId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al eliminar el ensayo');
+            }
+
+            console.log('Ensayo eliminado con éxito');
+            // Actualizar el estado de ensayos
+            setEssays(essays.filter(essay => essay.id !== essayId));
+        } catch (error) {
+            console.error('Error al eliminar el ensayo:', error);
         }
     };
 
@@ -252,6 +282,7 @@ const ProfilePage = () => {
                                             <li key={essay.id}>{essay.title}</li>
                                             <p>{essay.content}</p>
                                             <p>{essay.created_at}</p>
+                                            <button onClick={() => handleDeleteEssay(essay.id)}>Eliminar</button>
                                         </div>
                                     ))
                                 ) : (

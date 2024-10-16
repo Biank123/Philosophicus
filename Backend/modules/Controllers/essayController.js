@@ -1,4 +1,4 @@
-const { saveDraft, publishEssay, getPublishedEssays, getDraftsByUser, getPublishedUserEssays } = require('../Models/publishModel');
+const { saveDraft, deleteEssay, publishEssay, getPublishedEssays, getDraftsByUser, getPublishedUserEssays } = require('../Models/publishModel');
 const jwt = require('jsonwebtoken'); // Asegúrate de tener jwt importado para decodificar el token
 const { pool } = require('../Models/db');
 
@@ -101,4 +101,23 @@ const fetchPublishedEssaysByUser = async (req, res) => {
   }
 }
 
-module.exports = { saveDraftController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser };
+// Controlador para eliminar un ensayo
+const deleteEssayController = async (req, res) => {
+  const { id } = req.params; // Obtener el id del ensayo de los parámetros
+
+  try {
+      // Eliminar el ensayo usando el id
+      const result = await deleteEssay(id); 
+
+      if (result) {
+          res.status(204).send(); // No content, significa que se eliminó con éxito
+      } else {
+          res.status(404).json({ error: 'Ensayo no encontrado' });
+      }
+  } catch (error) {
+      console.error('Error al eliminar el ensayo:', error);
+      res.status(500).json({ error: 'Error al eliminar el ensayo' });
+  }
+};
+
+module.exports = { deleteEssayController, saveDraftController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser };

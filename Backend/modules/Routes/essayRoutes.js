@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { saveDraftController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser } = require('../Controllers/essayController');
+const { saveDraftController, deleteEssayController, fetchPublishedEssaysByUser, publishEssayController, fetchPublishedEssays, fetchDraftsByUser } = require('../Controllers/essayController');
 const authenticateToken = require('../Middlewares/authMiddleware');
 const TextReview = require('../Controllers/TextReview');
 
@@ -18,6 +18,10 @@ router.get('/published/user', authenticateToken, fetchPublishedEssaysByUser);
 // Ruta para mostrar los borradores guardados
 router.get('/drafts', authenticateToken, fetchDraftsByUser); //Funciona
 
-router.post('/revisar', authenticateToken, TextReview)
+//Ruta para la revisión de la IA
+router.post('/revisar', authenticateToken, TextReview) //Funciona
+
+// Ruta para eliminar un ensayo
+router.delete('/delete/:id', authenticateToken, deleteEssayController);
 
 module.exports = router;
