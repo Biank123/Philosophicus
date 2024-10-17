@@ -1,5 +1,6 @@
 .navbar {
     padding: 0.5rem 1rem; /* Ajusta el espaciado vertical */
+    
   }
   
   .navbar-brand {
@@ -42,7 +43,7 @@
   }
   .btn{
     color: rgb(73, 72, 72);
-    border-color: rgb(76, 75, 75);
+    border-color: rgb(35, 34, 34);
   }
   
   .navbar-nav {

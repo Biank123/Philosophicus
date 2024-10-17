@@ -8,8 +8,8 @@ Philosophicus es una aplicación web diseñada para ayudar a estudiantes de ense
 ![image](https://github.com/user-attachments/assets/251bc578-9f8f-4af0-acde-e64e73c05766)
 ![image](https://github.com/user-attachments/assets/82fe9ae6-1cb0-4009-919d-ab08fb256c28)
 ![image](https://github.com/user-attachments/assets/6a12def8-ba2b-414e-9e5a-3481631714ae)
-![image](https://github.com/user-attachments/assets/30cd006d-b610-42ae-bbd6-b192d90e0393)
-![image](https://github.com/user-attachments/assets/03c2254f-a5d1-4c59-add4-e84e1dd398e1)
+![image](https://github.com/user-attachments/assets/d8899a87-2fbc-4ff8-9966-1dbfb0809c46)
+
 
 
 ## Funcionalidades
@@ -22,21 +22,27 @@ Philosophicus es una aplicación web diseñada para ayudar a estudiantes de ense
 
 ![image](https://github.com/user-attachments/assets/9c8242ba-af64-4001-85c5-a7ab1f18d310)
 ![image](https://github.com/user-attachments/assets/59d65ff8-f6af-4cde-ab66-7032534ca351)
-![image](https://github.com/user-attachments/assets/dfe997b8-29aa-45d9-b990-10e96f97ee25)
-![image](https://github.com/user-attachments/assets/8eeac7a2-9ea2-4e56-8c5c-fa8281e2cd05)
+![image](https://github.com/user-attachments/assets/d9292037-0626-4b6b-87fc-bea83f8c0c55)
+![image](https://github.com/user-attachments/assets/9888d3e6-4e75-4a4a-a4c6-102f4b7a4af6)
+
+
+![image](https://github.com/user-attachments/assets/cf39d62a-209f-4458-b999-e85a5b8c613e)
+
 
 -**Foro:** En la página hay un foro que permite publicar por categorías como "general", "dudas" o "filosofía", permite título, descripción y subir un archivo (de imagen o de texto) y también permite descargarlo en caso de textos word o pdf. Se pueden añadir comentarios, borrar la publicación así como cada comentario. Luego en el perfil del usuario se muestran sus publicaciones del foro.
 
 ![image](https://github.com/user-attachments/assets/716c4350-c906-4a86-adcb-3ebf2e971ba6)
-![image](https://github.com/user-attachments/assets/53b3a9fb-1265-4c4c-a5af-fc15337150e0)
+![image](https://github.com/user-attachments/assets/8878f234-82e3-4213-856d-3bd29351a0ef)
+![image](https://github.com/user-attachments/assets/dca41307-6c25-45f9-903a-51f5d87be413)
 ![image](https://github.com/user-attachments/assets/720021c5-72ad-4aad-a002-7fb49d17fbd0)
-![image](https://github.com/user-attachments/assets/abcb2658-4f1a-4e08-9404-9d847872e418)
-![image](https://github.com/user-attachments/assets/a6f8e406-95fa-4bfc-920f-3e92e968c599)
 
-## Proximamente (en desarrollo):
 -**Página que muestra información detallada de diferentes problemas filosóficos** con su descripción, autores, temáticas y épocas para poder estudiar.
+
+![image](https://github.com/user-attachments/assets/49131b4f-76d3-44e4-b698-bd5a5bc53c5b)
+![image](https://github.com/user-attachments/assets/b14dcc52-6730-4f13-9eb0-ac4a03c83f32)
+
 -**IA que revisa los ensayos** para mejorarlos gramaticalmente.
-- **Sistema de puntuación:** Los estudiantes reciben puntajes a medida que completan cada sección, lo que agrega un elemento de gamificación al proceso de escritura.
+![image](https://github.com/user-attachments/assets/3ac01c18-6ee8-444e-8ba9-a8b0ebf875a7)
 
 ## Instalación
 

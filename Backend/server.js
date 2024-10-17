@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const path = require('path');
-const userRoutes = require('./modules/Routes/userRoutes'); 
+const userRoutes = require('./modules/Routes/userRoutes');
 const postRoutes = require('./modules/Routes/postRoutes');
 const problemRoutes = require('./modules/Routes/PhiRoutes');
 

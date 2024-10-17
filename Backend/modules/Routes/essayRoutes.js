@@ -11,7 +11,7 @@ router.post('/save-draft', authenticateToken, saveDraftController); //Funciona
 router.post('/publish', authenticateToken, publishEssayController); //Funciona
 
 // Ruta para mostrar ensayos publicados
-router.get('/published', authenticateToken, fetchPublishedEssays); //Funciona
+router.get('/published', fetchPublishedEssays); //Funciona
 
 router.get('/published/user', authenticateToken, fetchPublishedEssaysByUser);
 

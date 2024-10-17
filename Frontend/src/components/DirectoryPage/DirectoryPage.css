@@ -1,9 +1,9 @@
 /* Estilo para la página */
 .directory-page {
     max-width: 800px;
-    margin: 0 auto 100px;
+    margin: 100px auto 120px;
     padding: 20px;
-    background-color: #f7f7f7; /* Color de fondo de la página */
+    background: linear-gradient(45deg, #000000, #4a2401); /* Color de fondo de la página */
     border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
@@ -13,9 +13,13 @@ h1, h2 {
     color: #333;
 }
 
+#elh1{
+    color: #fff;
+}
+
 /* Estilo para las secciones */
 section {
-    background-color: #fff; /* Color de fondo de cada sección */
+    background-color: #ffffff; /* Color de fondo de cada sección */
     border: 1px solid #ddd; /* Borde suave */
     border-radius: 8px; /* Bordes redondeados para las secciones */
     padding: 20px;

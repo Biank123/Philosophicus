@@ -4,7 +4,7 @@ import './DirectoryPage.css';
 const DirectoryPage = () => {
     return (
         <div className="directory-page">
-            <h1>Directorio de Enlaces</h1>
+            <h1 id='elh1'>Directorio de Enlaces</h1>
 
             {/* Sección de contenido filosófico */}
             <section>

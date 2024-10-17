@@ -29,18 +29,6 @@ const PostList = () => {
         const data = await response.json();
         setPosts(data);
 
-        // Cargar comentarios para cada publicación
-        const commentsData = {};
-        for (const post of data) {
-          const commentsResponse = await fetch(`http://localhost:3001/api/posts/${post.id}/comments`, {
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            },
-          });
-          const commentsArray = await commentsResponse.json();
-          commentsData[post.id] = commentsArray; // Asigna los comentarios al post correspondiente
-        }
-        setComments(commentsData); // Actualiza el estado de comentarios
       } catch (error) {
         console.error('Error al obtener publicaciones:', error);
       }
@@ -154,8 +142,8 @@ const PostList = () => {
 
                 const data = await response.json();
                 setComments(prevComments => ({
-                    ...prevComments,
-                    [selectedPostId]: data.comments,
+                  ...prevComments,
+                  [selectedPostId]: data.comments,
                 }));
             } catch (error) {
                 console.error('Error al obtener comentarios:', error);
@@ -196,7 +184,7 @@ const PostList = () => {
                       title="PDF Viewer"
                       style={{ marginBottom: '10px' }}
                     />
-                    <a href={`http://localhost:3001/api/posts/download/${post.file}`} download target='_blank'>Descargar archivo</a>
+                    <a href={`http://localhost:3001/api/posts/download/${post.file}`} download rel="noreferrer"target='_blank'>Descargar archivo</a>
                   </div>
                 )}
                 {/\.(doc|docx)$/i.test(post.file) && (

@@ -144,14 +144,15 @@ const handleSubmit = async () => {
 };
 
   const handlePublish = async () => {
-    const cleanedTexts = sectionTexts.map(cleanText).map(text => text.trim()).filter(text => text.length > 0); // Limpiar espacios vacíos y etiquetas
+    const cleanedTexts = sectionTexts.map(cleanText).filter(text => text.length > 0); // Limpiar espacios vacíos y etiquetas
     const combinedText = cleanedTexts.join('\n\n'); // Combinar todas las secciones del ensayo
+    
     const title = draftTitle; // Título que se obtiene del estado
     if (combinedText.length === 0) {
       console.error('No hay contenido para enviar al backend');
       return; // Detener la ejecución si el contenido está vacío
     }
-    console.log('Texto enviado al backend:', combinedText);
+    
     try {
       const response = await fetch('http://localhost:3001/essays/publish', {
         method: 'POST',
@@ -159,7 +160,7 @@ const handleSubmit = async () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
-        body: JSON.stringify({ title, content: combinedText }), // Asegúrate de enviar el contenido limpio
+        body: JSON.stringify({ title, content: combinedText }), 
       });
 
       if (!response.ok) {
@@ -199,9 +200,12 @@ const handleSubmit = async () => {
   };
 
   const cleanText = (text) => {
-    // Elimina todas las etiquetas HTML
-    return text.replace(/<\/?[^>]+(>|$)/g, "");
-  };
+    // Elimina todas las etiquetas HTML pero conserva los saltos de línea
+    return text
+        .replace(/<\/?[^>]+(>|$)/g, "") // Elimina las etiquetas HTML
+        .replace(/\n\s+/g, "\n") // Mantiene saltos de línea y elimina espacios innecesarios después de ellos
+        .trim(); // Elimina espacios al principio y al final
+};
 
   return (
     <div className="essay-template">
@@ -232,7 +236,6 @@ const handleSubmit = async () => {
         />
         <div>
           <h3>Vista previa del contenido:</h3>
-          <h2>Vista previa:</h2>
           <div>
             <p>Sección {currentSection + 1}:</p>
             <div dangerouslySetInnerHTML={{ __html: sectionTexts[currentSection] }}></div>

@@ -17,7 +17,7 @@
     width: 100%;
     max-width: 400px;
     padding: 10px;
-    border: 2px solid #007bff;
+    border: 2px solid #0f0f0f;
     border-radius: 5px;
     margin-bottom: 20px;
     font-size: 16px;
@@ -31,7 +31,8 @@
   }
   
   .filosofia-page .problem-list li {
-    background-color: #007bff;
+    /* background-color: #522e02; */
+    background: linear-gradient(45deg, #4a2401, #000000 );
     color: white;
     padding: 10px;
     margin: 5px 0;
@@ -41,7 +42,8 @@
   }
   
   .filosofia-page .problem-list li:hover {
-    background-color: #0056b3;
+    /* background-color: #ffaf04; */
+    background: linear-gradient(45deg, #923b01, #ff7c02);
   }
   
   /* Estilos para los detalles del problema */
@@ -58,11 +60,15 @@
   }
   
   .filosofia-page .problem-details strong {
-    color: #007bff;
+    color: #ffa600;
   }
   
   /* Estilo para el mensaje cuando no hay problema seleccionado */
   .filosofia-page .no-problem-message {
     font-style: italic;
     color: #777;
+  }
+
+  .botonVolver{
+    background-color: #923b01;
   }

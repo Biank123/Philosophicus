@@ -50,21 +50,24 @@ const cleanContent = (html) => {
 };
 
 return (
+  <div className='bodyGradient'>
   <div className="published-essays">
     <h1>Ensayos Publicados en la página</h1>
     <ul>
       {essays.length > 0 ? (
         essays.map(essay => (
           <div key={essay.id}>
-            <li>{essay.title}</li>
-            <p>{cleanContent(essay.content)}</p> 
-            <p>{formatDate(essay.created_at)}</p>
+            <li><strong>Título: "{essay.title}"</strong></li>
+            <p><em>Fecha de publicación:</em> {formatDate(essay.created_at)}</p>
+            <p><em>Contenido:</em>"{cleanContent(essay.content)}"</p> 
+            <p>________________________________________________________________________________________________________________________________________________________________________________________________________________</p>
           </div>
         ))
       ) : (
         <li>No hay ensayos publicados.</li>
       )}
     </ul>
+  </div>
   </div>
 );
 };

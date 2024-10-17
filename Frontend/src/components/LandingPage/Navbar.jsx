@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -6,10 +6,56 @@ import { useAuth } from '../UserPage/AuthContext';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import SearchResultsPage from '../DirectoryPage/SearchResultsPage';
 
 const Navbar = () => {
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const [essays, setEssays] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+
+  useEffect(() => {
+    // Obtener todos los ensayos
+    const fetchEssays = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/essays/published');
+        const data = await response.json();
+        setEssays(data);
+      } catch (error) {
+        console.error('Error al obtener ensayos:', error);
+      }
+    };
+
+    fetchEssays();
+  }, []);
+
+  const handleSearch = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    setSearchTerm(searchValue);
+
+    // Filtrar ensayos que coincidan con el término de búsqueda
+    const filteredEssays = essays.filter((essay) =>
+      essay.title.toLowerCase().includes(searchValue) ||
+      essay.content.toLowerCase().includes(searchValue)
+    );
+
+    setSearchResults(filteredEssays);
+    setShowSearchResults(true);
+  };
+
+  const handleCloseResults = () => {
+    setShowSearchResults(false); // Oculta los resultados
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Redirigir a la página de resultados de búsqueda o hacer algo con searchResults
+    console.log('Resultados de búsqueda:', searchResults);
+    // Aquí puedes redirigir a otra página si lo deseas, o mostrar los resultados en la misma página
+  };
+
 
   const handleLogout = async () => {
     // Elimina el token del localStorage
@@ -18,7 +64,6 @@ const Navbar = () => {
     navigate('/login');
     logout();
   };
-  console.log('Is Authenticated:', isAuthenticated);
 
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
@@ -114,13 +159,23 @@ const Navbar = () => {
             </ul>
           </li>
         </ul>
-        <form className="form-inline my-2 my-md-0">
-          <input className="form-control mr-sm-2" type="search" placeholder="Buscar..." aria-label="Search" />
+        <form className="form-inline my-2 my-md-0" onSubmit={handleSubmit}>
+          <input
+            className="form-control mr-sm-2"
+            type="search"
+            placeholder="Buscar en ensayos..."
+            aria-label="Search"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
           <button className="btn btn-outline-success my-2 my-sm-0" type="submit">
             <i className="fas fa-search"></i> Buscar
           </button>
         </form>
       </div>
+      {showSearchResults && (
+        <SearchResultsPage results={searchResults} onClose={handleCloseResults} />
+      )}
     </nav>
   );
 }

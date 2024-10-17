@@ -1,9 +1,14 @@
+
+.bodyGradient{
+  background: linear-gradient(45deg, #000000, #4a2401);
+  height: 100vh;
+}
+
 .published-essays {
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    background-color: #ffffffee;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 10vh;
+    margin-top: 9vh;
   }
   
   .published-essays h1 {
@@ -18,7 +23,7 @@
   }
   
   .published-essays li {
-    background-color: #fff;
+    background-color: #c9c9c9;
     margin: 10px 0;
     padding: 10px;
     border-radius: 4px;
