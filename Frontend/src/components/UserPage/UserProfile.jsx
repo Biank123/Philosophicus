@@ -15,10 +15,17 @@ const ProfilePage = () => {
     const [posts, setPosts] = useState([]); // Para almacenar las publicaciones del usuario
     const [comments, setComments] = useState([]); // Para almacenar los comentarios del usuario
     const [essays, setEssays] = useState([]);
-    const { isAuthenticated } = useAuth();
-    const [editingDraft, setEditingDraft] = useState(null); 
+    const { isAuthenticated, userId} = useAuth();
+    const [editingDraft, setEditingDraft] = useState(null);
     const navigate = useNavigate();
-
+    const [receivedMessages, setReceivedMessages] = useState([]);
+    const [users, setUsers] = useState([]); // Estado para almacenar usuarios
+    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [recipient, setRecipient] = useState('');
+    const [recipientName, setRecipientName] = useState('');
+    const [messageContent, setMessageContent] = useState('');
+    const [messages, setMessages] = useState([]);
+    
     const fetchUserData = async () => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -40,9 +47,9 @@ const ProfilePage = () => {
             }
 
             const data = await response.json();
+            console.log('Datos del usuario recibidos:', data);
 
-
-            const userId = Number(data.id);
+            const userId = data.id !== undefined && data.id !== null ? Number(data.id) : null;
             setUserData({ ...data, id: userId });
 
         } catch (error) {
@@ -128,10 +135,10 @@ const ProfilePage = () => {
         if (!window.confirm("¿Estás seguro de que deseas eliminar su cuenta?")) {
             return; // Cancelar si el usuario no confirma
         }
-    
+
         try {
             const requestBody = JSON.stringify({ reason, password });
-    
+
             const response = await fetch('http://localhost:3001/api/users/profile', {
                 method: 'DELETE',
                 headers: {
@@ -140,12 +147,12 @@ const ProfilePage = () => {
                 },
                 body: requestBody,
             });
-    
+
             if (!response.ok) {
                 const errorMessage = await response.json();
                 throw new Error(`Error: ${errorMessage.error || response.statusText}`);
             }
-    
+
             const result = await response.json();
             console.log('Respuesta del servidor:', result);
             alert('Cuenta eliminada con éxito')
@@ -158,7 +165,7 @@ const ProfilePage = () => {
 
     const fetchEssays = async () => {
         const token = localStorage.getItem('token');
-        
+
         if (!token) {
             console.error('No hay token de autenticación disponible');
             return; // Detener la ejecución si no hay token
@@ -190,8 +197,8 @@ const ProfilePage = () => {
         }
     };
 
-     // Función para eliminar un ensayo
-     const handleDeleteEssay = async (essayId) => {
+    // Función para eliminar un ensayo
+    const handleDeleteEssay = async (essayId) => {
         if (!window.confirm("¿Estás seguro de que deseas eliminar este ensayo?")) {
             return; // Cancelar si el usuario no confirma
         }
@@ -217,57 +224,158 @@ const ProfilePage = () => {
     };
 
     // Función para publicar un borrador
-const handlePublishEssay = async (essayId) => {
-    try {
-        const response = await fetch(`http://localhost:3001/essays/publishdraft/${essayId}`, {
-            method: 'PUT', 
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
-            }
-        });
+    const handlePublishEssay = async (essayId) => {
+        try {
+            const response = await fetch(`http://localhost:3001/essays/publishdraft/${essayId}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
 
-        if (!response.ok) {
-            throw new Error('Error al publicar el ensayo');
+            if (!response.ok) {
+                throw new Error('Error al publicar el ensayo');
+            }
+
+            // Actualizar los ensayos después de publicar
+            await fetchEssays();
+            fetchDrafts(); // Recargar los borradores
+        } catch (error) {
+            console.error('Error al publicar el ensayo:', error);
+        }
+    };
+
+    // Función para eliminar un borrador
+    const handleDeleteDraft = async (essayId) => {
+        if (!window.confirm("¿Estás seguro de que deseas eliminar este borrador?")) {
+            return; // Cancelar si el usuario no confirma
         }
 
-        // Actualizar los ensayos después de publicar
-        await fetchEssays();
-        fetchDrafts(); // Recargar los borradores
-    } catch (error) {
-        console.error('Error al publicar el ensayo:', error);
-    }
-};
+        try {
+            const response = await fetch(`http://localhost:3001/essays/deletedraft/${essayId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
 
-// Función para eliminar un borrador
-const handleDeleteDraft = async (essayId) => {
-    if (!window.confirm("¿Estás seguro de que deseas eliminar este borrador?")) {
-        return; // Cancelar si el usuario no confirma
-    }
-
-    try {
-        const response = await fetch(`http://localhost:3001/essays/deletedraft/${essayId}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
+            if (!response.ok) {
+                throw new Error('Error al eliminar el borrador');
             }
-        });
 
-        if (!response.ok) {
-            throw new Error('Error al eliminar el borrador');
+            // Actualizar los borradores después de eliminar
+            fetchDrafts();
+        } catch (error) {
+            console.error('Error al eliminar el borrador:', error);
         }
+    };
 
-        // Actualizar los borradores después de eliminar
-        fetchDrafts();
-    } catch (error) {
-        console.error('Error al eliminar el borrador:', error);
-    }
-};
+    const handleEditDraft = (draft) => {
+        setEditingDraft(draft); // Establece el borrador a editar
+    };
 
-const handleEditDraft = (draft) => {
-    setEditingDraft(draft); // Establece el borrador a editar
-};
+    const fetchMessages = async (userId) => {
+        console.log('ID del usuario objetivo en fetch:', userId);  
+        if (!userId || isNaN(userId)) {
+            console.error('userId no está definido o no es un número válido');
+            return;
+        }
+    
+        try {
+            const response = await fetch(`http://localhost:3001/api/messages/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+    
+            const data = await response.json();
+            console.log('Mensajes recibidos:', data.messages); 
+            setReceivedMessages(data);
+            setMessages(data);
+            
+        } catch (error) {
+            console.error('Error al obtener mensajes:', error);
+        }
+    };
+
+    const handleSendMessage = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:3001/api/messages', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ receiver_id: recipient, content: messageContent })
+            });
+            if (!response.ok) {
+                throw new Error('Error al enviar el mensaje');
+            }
+            alert('Mensaje enviado');
+            setRecipient('');
+            setMessageContent('');
+            fetchMessages(recipient); // Actualiza los mensajes enviados después de enviar uno
+        } catch (error) {
+            console.error('Error al enviar mensaje:', error);
+        }
+    };
+
+    const handleDeleteMessage = async (messageId) => {
+        try {
+            const response = await fetch(`http://localhost:3001/api/messages/${messageId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            if (!response.ok) {
+                throw new Error('Error al eliminar el mensaje');
+            }
+            setMessages(messages.filter(msg => msg.id !== messageId)); // Actualiza la lista de mensajes
+        } catch (error) {
+            console.error('Error al eliminar el mensaje:', error);
+        }
+    };
+
+    // Filtrar usuarios en función del input
+    const handleRecipientChange = (e) => {
+        const value = e.target.value;
+        setRecipient(value);
+        // Filtrar usuarios que coincidan con el texto ingresado
+        setFilteredUsers(users.filter(user => user.username.toLowerCase().includes(value.toLowerCase())));
+    };
+
+    // Manejar la selección de un usuario
+    const handleUserSelect = (selectedUser) => {
+        setRecipient(selectedUser.id); // Establecer el ID del usuario
+        setRecipientName(selectedUser.username); // Establecer el nombre de usuario para mostrar
+        setFilteredUsers([]); // Limpiar la lista filtrada
+    };
+
+    // Efecto para obtener usuarios
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/users');
+                const data = await response.json();
+                setUsers(data);
+            } catch (error) {
+                console.error('Error al obtener usuarios:', error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
+     useEffect(() => {
+        const currentUserId = userId || (userData && userData.id);
+    
+        if (activeSection === 'messages' && currentUserId) {
+            console.log('ID del usuario objetivo en fetch:', currentUserId); // Para depuración
+            fetchMessages(currentUserId);
+        }
+    }, [activeSection, userId, userData]);
 
     const renderSection = () => {
         switch (activeSection) {
@@ -365,11 +473,56 @@ const handleEditDraft = (draft) => {
                         )}
                     </div>
                 );
-            default:
+            case 'messages':
                 return (
                     <div className="section-box">
-                        <h3>Selecciona una sección</h3>
-                        <p>Por favor, selecciona una sección del menú para ver más detalles.</p>
+                        <h3>Mensajes</h3>
+
+                        {/* Mostrar mensajes recibidos y enviados */}
+                        {receivedMessages.length > 0 ? (
+                            <div>
+                                <ul>
+                                    {receivedMessages.map(message => (
+                                        <li key={message.id}>
+                                            <p><strong>De:</strong> {message.sender_id}</p>
+                                            <p><strong>Para:</strong> {message.receiver_id}</p>
+                                            <p>{message.content}</p>
+                                            <button onClick={() => handleDeleteMessage(message.id)}>Eliminar</button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ) : (
+                            <p>No tienes mensajes.</p>
+                        )}
+
+                        {/* Formulario para enviar un nuevo mensaje */}
+                        <form onSubmit={handleSendMessage}>
+                            <input
+                                type="text"
+                                value={recipientName} 
+                                onChange={handleRecipientChange} 
+                                placeholder="Usuario destinatario"
+                                required
+                            />
+                            {/* Mostrar sugerencias de usuarios */}
+                            {filteredUsers.length > 0 && (
+                                <ul className="suggestions">
+                                    {filteredUsers.map(user => (
+                                        <li key={user.id} onClick={() => handleUserSelect(user)}> 
+                                            {user.username}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                            <textarea
+                                value={messageContent}
+                                onChange={e => setMessageContent(e.target.value)}
+                                placeholder="Escribe tu mensaje aquí"
+                                required
+                            />
+                            <button type="submit">Enviar</button>
+                        </form>
                     </div>
                 );
         }
@@ -387,19 +540,19 @@ const handleEditDraft = (draft) => {
             fetchUserDataAndEssays();
         }
     }, [isAuthenticated]);
-    
+
     useEffect(() => {
-        if (userData) { 
-            console.log("userData:", userData); 
-            
+        if (userData) {
+            console.log("userData:", userData);
+
             const fetchData = async () => {
                 try {
-                    await Promise.all([fetchDrafts(), fetchComments(), fetchPosts(), fetchEssays()]);
+                    await Promise.all([fetchDrafts(), fetchComments(), fetchPosts(), fetchEssays(), fetchMessages(userData.id)]);
                 } catch (error) {
                     console.error('Error al obtener los demás datos:', error);
                 }
             };
-            
+
             fetchData();
         }
     }, [userData]);
@@ -428,6 +581,9 @@ const handleEditDraft = (draft) => {
                     </li>
                     <li>
                         <a href="#comments" onClick={() => setActiveSection('comments')}>Comentarios</a>
+                    </li>
+                    <li>
+                        <a href="#messages" onClick={() => setActiveSection('messages')}>Mensajes</a>
                     </li>
                 </ul>
             </div>

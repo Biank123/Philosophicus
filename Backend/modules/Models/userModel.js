@@ -54,6 +54,11 @@ const updateUserPassword = async (userId, newPassword) => {
     return result.rows[0]; // Devuelve el usuario con la contraseña actualizada
 };
 
+const getAllUsers = async () => {
+    const query = 'SELECT * FROM users';
+    const { rows } = await db.query(query);
+    return rows;
+};
 
 module.exports = {
     createUser,
@@ -61,5 +66,6 @@ module.exports = {
     createToken,
     getUserById,
     deleteUserById,
-    updateUserPassword
+    updateUserPassword,
+    getAllUsers
 };

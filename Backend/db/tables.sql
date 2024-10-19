@@ -217,3 +217,14 @@ ADD COLUMN user_id INT REFERENCES users(id) ON DELETE CASCADE;
 
 ALTER TABLE comments
 ADD COLUMN user_id INT REFERENCES users(id) ON DELETE CASCADE;
+
+-- ------------------------------------------------------------------------------
+
+CREATE TABLE messages (
+   id SERIAL PRIMARY KEY,
+   sender_id INTEGER REFERENCES users(id),
+   receiver_id INTEGER REFERENCES users(id),
+   content TEXT NOT NULL,
+   sent_at TIMESTAMP DEFAULT NOW(),
+   is_read BOOLEAN DEFAULT FALSE
+);

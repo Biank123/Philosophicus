@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../Middlewares/uploadMiddleware');
-const { registerUser, loginUser, getUserProfile, deleteUserAccount, changeUserPassword } = require('../Controllers/userController');
+const { registerUser, loginUser, getAllUsersController, getUserProfile, deleteUserAccount, changeUserPassword } = require('../Controllers/userController');
 const authenticate = require('../Middlewares/authMiddleware');
+
+// Ruta para obtener la lista de todos los usuarios
+router.get('/', getAllUsersController);
 
 // Ruta de registro de usuario
 router.post('/register', registerUser); //Funciona

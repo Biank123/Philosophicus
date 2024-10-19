@@ -63,42 +63,36 @@ const Login = () => {
       alert('Ocurrió un error, por favor intente nuevamente.');
     }
   };
-
+  
 const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    const endpoint = 'http://localhost:3001/api/users/login';
+  e.preventDefault();
+  const endpoint = 'http://localhost:3001/api/users/login';
 
-    try {
+  try {
       const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              email: formData.email,
+              password: formData.password,
+          }),
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok');
       }
 
       const data = await response.json();
-      console.log(data); 
-      login(); // Llama a la función de login del contexto
-      localStorage.setItem('token', data.token);
-      setSuccessMessage('Login successful!');
-      alert('Ingreso realizado con éxito.');
+      localStorage.setItem('token', data.token);   // Guarda el token
+      localStorage.setItem('userId', data.userId); // Guarda el userId correctamente
       window.location.href = '/profile'; 
-      setError('');
-    } catch (error) {
+  } catch (error) {
       console.error('Error:', error);
-      setError('An error occurred, please try again.');
-      alert('Ocurrió un error, por favor intente nuevamente.');
-    }
-  };
-  
+  }
+};
+
   return (
     <div className="main">
       <input className='input' type="checkbox" id="chk" aria-hidden="true" checked={isSignup} onChange={toggleForm} />

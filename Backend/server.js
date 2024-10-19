@@ -5,7 +5,7 @@ const path = require('path');
 const userRoutes = require('./modules/Routes/userRoutes');
 const postRoutes = require('./modules/Routes/postRoutes');
 const problemRoutes = require('./modules/Routes/PhiRoutes');
-
+const messagesRoutes = require('./modules/Routes/messagesRoutes');
 const essayRoutes = require('./modules/Routes/essayRoutes');
 const contentRoutes = require('./modules/Routes/contentRoutes');
 
@@ -33,6 +33,9 @@ app.use('/essays', essayRoutes);
 
 // Rutas para mostrar contenido filtrado de estudio
 app.use('/api/filter', contentRoutes);
+
+// Rutas para el sistema de mensajería entre usuarios
+app.use('/api/messages', messagesRoutes);
 
 // Iniciar el servidor
 const PORT = process.env.PORT;

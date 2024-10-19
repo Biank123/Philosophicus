@@ -23,6 +23,7 @@ const registerUser = async (req, res) => {
 // Login de usuario
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
+    
 
     try {
         const user = await userModel.getUserByEmail(email);
@@ -32,7 +33,8 @@ const loginUser = async (req, res) => {
         }
 
         const token = userModel.createToken(user);
-        res.json({ token });
+        
+        res.json({ token, userId: user.id });
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -100,10 +102,22 @@ const changeUserPassword = async (req, res) => {
     }
 };
 
+const getAllUsersController = async (req, res) => {
+        try {
+            const users = await userModel.getAllUsers();
+            res.json(users);
+        } catch (error) {
+            console.error('Error al obtener usuarios:', error);
+            res.status(500).json({ error: 'Error al obtener usuarios' });
+        }
+};
+
+
 module.exports = {
     registerUser,
     loginUser,
     getUserProfile,
     deleteUserAccount,
-    changeUserPassword
+    changeUserPassword,
+    getAllUsersController
 };

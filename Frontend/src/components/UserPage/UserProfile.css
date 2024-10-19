@@ -115,3 +115,52 @@
   .delete-account-btn:hover{
     background-color: #3e2708;
   }
+
+  .section-box form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-box input[type="text"], textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    resize: none; /* Evitar que el textarea se redimensione */
+}
+
+.section-box input[type="text"] {
+    width: 100%;
+}
+
+.section-box textarea {
+    height: 100px;
+}
+
+.section-box input[type="text"]:focus,
+textarea:focus {
+    border-color: #ffcc00;
+    outline: none;
+}
+
+.suggestions {
+    list-style-type: none;
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 150px; /* Limitar la altura de las sugerencias */
+    overflow-y: auto; /* Habilitar scroll si es necesario */
+    background-color: white;
+    position: absolute; /* Posicionamiento relativo al input */
+    z-index: 1000; /* Asegura que las sugerencias se muestren sobre otros elementos */
+}
+
+.suggestions li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestions li:hover {
+    background-color: #f0f0f0; /* Resaltar al pasar el mouse */
+}
