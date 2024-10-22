@@ -21,8 +21,9 @@ const getMessagesBetweenUsers = async (user1, user2) => {
     `;
     const values = [user1, user2];
     const result = await db.query(query, values);
+    console.log('Resultados de la consulta a la base de datos:', result);
     return result.rows;
-};
+}; 
 
 // Función para eliminar un mensaje por su ID y por usuario (para asegurar que solo el remitente o receptor lo pueda eliminar)
 const deleteMessage = async (messageId, userId) => {

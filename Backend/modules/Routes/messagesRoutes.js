@@ -13,3 +13,4 @@ router.get('/:userId', authenticate, messagesController.getMessagesBetweenUsers)
 router.delete('/:messageId', authenticate, messagesController.deleteMessageController);
 
 module.exports = router;
+ 

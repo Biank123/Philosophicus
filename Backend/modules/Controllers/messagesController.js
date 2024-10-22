@@ -5,6 +5,10 @@ const sendMessage = async (req, res) => {
     const { receiver_id, content } = req.body;
     const sender_id = req.user.id;  // ID del usuario autenticado
 
+    if (sender_id === receiver_id) {
+        return res.status(400).json({ error: 'El remitente y el receptor no pueden ser el mismo usuario.' });
+    }
+
     try {
         const newMessage = await messagesModel.sendMessage(sender_id, receiver_id, content);
         res.status(201).json(newMessage);
@@ -16,12 +20,17 @@ const sendMessage = async (req, res) => {
 
 // Controlador para obtener mensajes entre dos usuarios
 const getMessagesBetweenUsers = async (req, res) => {
-    const userId = req.params.userId;
+    const userId = parseInt(req.params.userId, 10);
     const currentUserId = req.user.id;
+
+    console.log('ID del usuario actual:', currentUserId);
+    console.log('ID del usuario objetivo:', userId);
 
     try {
         const messages = await messagesModel.getMessagesBetweenUsers(currentUserId, userId);
-        console.log('Mensajes obtenidos desde el modelo:', messages);
+        if (!messages || messages.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron mensajes para los usuarios dados.' });
+        }
         res.status(200).json(messages);
     } catch (error) {
         console.error('Error al obtener mensajes:', error);

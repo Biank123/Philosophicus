@@ -15,7 +15,7 @@ const ProfilePage = () => {
     const [posts, setPosts] = useState([]); // Para almacenar las publicaciones del usuario
     const [comments, setComments] = useState([]); // Para almacenar los comentarios del usuario
     const [essays, setEssays] = useState([]);
-    const { isAuthenticated, userId} = useAuth();
+    const { isAuthenticated, userId } = useAuth();
     const [editingDraft, setEditingDraft] = useState(null);
     const navigate = useNavigate();
     const [receivedMessages, setReceivedMessages] = useState([]);
@@ -25,9 +25,14 @@ const ProfilePage = () => {
     const [recipientName, setRecipientName] = useState('');
     const [messageContent, setMessageContent] = useState('');
     const [messages, setMessages] = useState([]);
-    
+
+
     const fetchUserData = async () => {
         const token = localStorage.getItem('token');
+        if (token) {
+            const decodedToken = JSON.parse(atob(token.split('.')[1]));
+            console.log('Datos del token:', decodedToken);
+        }
         if (!token) {
             console.error('No hay token de autenticación disponible');
             return;
@@ -49,7 +54,7 @@ const ProfilePage = () => {
             const data = await response.json();
             console.log('Datos del usuario recibidos:', data);
 
-            const userId = data.id !== undefined && data.id !== null ? Number(data.id) : null;
+            const userId = data.id ? Number(data.id) : null;
             setUserData({ ...data, id: userId });
 
         } catch (error) {
@@ -276,29 +281,43 @@ const ProfilePage = () => {
         setEditingDraft(draft); // Establece el borrador a editar
     };
 
-    const fetchMessages = async (userId) => {
-        console.log('ID del usuario objetivo en fetch:', userId);  
-        if (!userId || isNaN(userId)) {
-            console.error('userId no está definido o no es un número válido');
+    // MANEJO DE ENVÍO DE MENSAJERÍA
+
+    const fetchMessages = async (targetUserId) => {
+        const currentUserId = userData.id; // Suponiendo que userData tiene el ID del usuario autenticado
+        console.log('ID del usuario objetivo en fetch:', targetUserId);
+        
+        if (!targetUserId || isNaN(targetUserId) || targetUserId === currentUserId) {
+            console.error('targetUserId no es válido o es el ID del usuario actual');
             return;
         }
     
         try {
-            const response = await fetch(`http://localhost:3001/api/messages/${userId}`, {
+            const response = await fetch(`http://localhost:3001/api/messages/${targetUserId}`, {
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
                 }
             });
     
+            if (!response.ok) {
+                throw new Error('Error en la respuesta de la API');
+            }
+    
             const data = await response.json();
-            console.log('Mensajes recibidos:', data.messages); 
-            setReceivedMessages(data);
-            setMessages(data);
-            
+            console.log('Mensajes recibidos:', data);
+            setReceivedMessages(data || []);
+            setMessages(data || []);
+            console.log('Estado de receivedMessages:', receivedMessages);
         } catch (error) {
             console.error('Error al obtener mensajes:', error);
         }
     };
+  
+
+    useEffect(() => {
+        console.log('Mensajes recibidos actualizados:', receivedMessages);
+    }, [receivedMessages]);
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
@@ -318,10 +337,12 @@ const ProfilePage = () => {
             setRecipient('');
             setMessageContent('');
             fetchMessages(recipient); // Actualiza los mensajes enviados después de enviar uno
+
         } catch (error) {
             console.error('Error al enviar mensaje:', error);
         }
     };
+
 
     const handleDeleteMessage = async (messageId) => {
         try {
@@ -332,7 +353,9 @@ const ProfilePage = () => {
             if (!response.ok) {
                 throw new Error('Error al eliminar el mensaje');
             }
-            setMessages(messages.filter(msg => msg.id !== messageId)); // Actualiza la lista de mensajes
+            setMessages(messages.filter(msg => msg.id !== messageId)); 
+            alert('Mensaje eliminado con éxito');
+            fetchMessages(userId);
         } catch (error) {
             console.error('Error al eliminar el mensaje:', error);
         }
@@ -351,6 +374,7 @@ const ProfilePage = () => {
         setRecipient(selectedUser.id); // Establecer el ID del usuario
         setRecipientName(selectedUser.username); // Establecer el nombre de usuario para mostrar
         setFilteredUsers([]); // Limpiar la lista filtrada
+        fetchMessages(selectedUser.id);
     };
 
     // Efecto para obtener usuarios
@@ -366,16 +390,21 @@ const ProfilePage = () => {
         };
 
         fetchUsers();
+
     }, []);
 
-     useEffect(() => {
-        const currentUserId = userId || (userData && userData.id);
-    
-        if (activeSection === 'messages' && currentUserId) {
-            console.log('ID del usuario objetivo en fetch:', currentUserId); // Para depuración
-            fetchMessages(currentUserId);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const tokenData = JSON.parse(atob(token.split('.')[1]));
+            setUserData({
+                id: tokenData.id,
+                username: tokenData.username,
+                email: tokenData.email,
+            });
         }
-    }, [activeSection, userId, userData]);
+    }, []);
+
 
     const renderSection = () => {
         switch (activeSection) {
@@ -482,14 +511,19 @@ const ProfilePage = () => {
                         {receivedMessages.length > 0 ? (
                             <div>
                                 <ul>
-                                    {receivedMessages.map(message => (
-                                        <li key={message.id}>
-                                            <p><strong>De:</strong> {message.sender_id}</p>
-                                            <p><strong>Para:</strong> {message.receiver_id}</p>
-                                            <p>{message.content}</p>
-                                            <button onClick={() => handleDeleteMessage(message.id)}>Eliminar</button>
-                                        </li>
-                                    ))}
+                                    {receivedMessages.map(message => {
+                                        const sender = users.find(user => user.id === message.sender_id);
+                                        const receiver = users.find(user => user.id === message.receiver_id);
+
+                                        return (
+                                            <li key={message.id}>
+                                                <p><strong>De:</strong> {sender ? sender.username : message.sender_id}</p>
+                                                <p><strong>Para:</strong> {receiver ? receiver.username : message.receiver_id}</p>
+                                                <p>{message.content}</p>
+                                                <button onClick={() => handleDeleteMessage(message.id)}>Eliminar</button>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             </div>
                         ) : (
@@ -500,8 +534,8 @@ const ProfilePage = () => {
                         <form onSubmit={handleSendMessage}>
                             <input
                                 type="text"
-                                value={recipientName} 
-                                onChange={handleRecipientChange} 
+                                value={recipientName}
+                                onChange={handleRecipientChange}
                                 placeholder="Usuario destinatario"
                                 required
                             />
@@ -509,7 +543,7 @@ const ProfilePage = () => {
                             {filteredUsers.length > 0 && (
                                 <ul className="suggestions">
                                     {filteredUsers.map(user => (
-                                        <li key={user.id} onClick={() => handleUserSelect(user)}> 
+                                        <li key={user.id} onClick={() => handleUserSelect(user)}>
                                             {user.username}
                                         </li>
                                     ))}
