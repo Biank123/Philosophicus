@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link  } from 'react-router-dom';
 import './SearchResultsPage.css'; 
 
 const SearchResults = ({ results, onClose }) => {
@@ -12,7 +13,8 @@ const SearchResults = ({ results, onClose }) => {
         {results.length > 0 ? (
           results.map((result, index) => (
             <li key={index}>
-              <strong>{result.type}</strong>: {result.title || result.content}
+              <strong>{result.type}</strong>
+              <Link className='link' to={'/essays/published'}>Ensayo: {result.title || result.content}</Link>
             </li>
           ))
         ) : (

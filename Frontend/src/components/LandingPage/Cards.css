@@ -74,6 +74,8 @@ h1 {
 /* Estilo del contenido interno de las cartas */
 .inner {
   transform: translateY(-50%) translateZ(60px) scale(0.94);
+  background-color: rgba(1, 1, 1, 0.558);
+  border-radius: 100px;
   position: absolute;
   top: 50%;
   left: 0;

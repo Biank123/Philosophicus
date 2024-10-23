@@ -4,7 +4,7 @@ import ChangePasswordForm from './ChangePasswordForm';
 import DeleteAccountForm from './DeleteAccountForm';
 import { useAuth } from './AuthContext';
 import EditDraftForm from '../BooksPage/EditDraftForm';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState('config');
@@ -26,6 +26,7 @@ const ProfilePage = () => {
     const [messageContent, setMessageContent] = useState('');
     const [messages, setMessages] = useState([]);
     const maxLength = 500;
+    const [showSendMessageForm, setShowSendMessageForm] = useState(false);
 
     // Función para obtener los datos del usuario
     const fetchUserData = async () => {
@@ -286,6 +287,7 @@ const ProfilePage = () => {
 
     // MANEJO DE ENVÍO DE MENSAJERÍA
 
+
     const fetchMessages = async (targetUserId) => {
         const currentUserId = userData.id;
         console.log('ID del usuario objetivo en fetch:', targetUserId);
@@ -418,8 +420,11 @@ const ProfilePage = () => {
             case 'config':
                 return (
                     <div className="section-box">
+                        <h3>Información de usuario:</h3>
+                        <p><strong>Nombre de usuario: </strong>{userData ? userData.username : 'Cargando...'}</p>
+                        <p><strong>Correo electrónico: </strong>{userData ? userData.email : 'Cargando...'}</p>
                         <h3>Configuración</h3>
-                        <p>Aquí está la información de configuración del usuario. Seleccione una acción a realizar:</p>
+                        <p>Seleccione una acción a realizar:</p>
                         <button
                             className="change-password-btn"
                             onClick={() => setShowPasswordForm(!showPasswordForm)}
@@ -464,24 +469,30 @@ const ProfilePage = () => {
                 );
             case 'posts':
                 return (
+                    <div className="message-container">
                     <div className="section-box">
                         <h3>Publicaciones del foro</h3>
                         {posts.length > 0 ? (
                             <ul>
                                 {posts.map(post => (
-                                    <li key={post.id}>{post.title}</li>
+                                    <li key={post.id}>
+                                         <Link to={`/forum`}>{post.title}</Link>
+                                        </li>
                                 ))}
                             </ul>
                         ) : (
                             <p>No hay publicaciones.</p>
                         )}
-                        <div className="section-box">
+                        </div>
+                        <div className="section-box2">
                             <h3>Publicaciones de ensayos</h3>
                             <ul>
                                 {essays.length > 0 ? (
                                     essays.map(essay => (
                                         <div>
-                                            <li key={essay.id}>{essay.title}</li>
+                                            <li key={essay.id}>
+                                            <Link to={`/essays/published`}>{essay.title}</Link>
+                                                </li>
                                             <p>{essay.content}</p>
                                             <p>{essay.created_at}</p>
                                             <button onClick={() => handleDeleteEssay(essay.id)}>Eliminar</button>
@@ -492,8 +503,10 @@ const ProfilePage = () => {
                                 )}
                             </ul>
                         </div>
+                    
                     </div>
                 );
+                
             case 'comments':
                 return (
                     <div className="section-box">
@@ -501,7 +514,12 @@ const ProfilePage = () => {
                         {comments.length > 0 ? (
                             <ul>
                                 {comments.map(comment => (
-                                    <li key={comment.id}>{comment.content}</li>
+                                    <li key={comment.id}>
+                                        <Link to={`/forum`}>{comment.content}</Link>
+                                        <p>Fecha: {new Date(comment.created_at).toLocaleString()}</p>
+                                        <p>________________________________________________</p>
+                                        </li>
+                                        
                                 ))}
                             </ul>
                         ) : (
@@ -511,9 +529,26 @@ const ProfilePage = () => {
                 );
             case 'messages':
                 return (
-                    <>
+                    <div className="message-container">
                         <div className="section-box">
-                            <h3>Mensajes</h3>
+                            <h3>Ver Mensajes</h3>
+                            <input
+                                type="text"
+                                value={recipientName}
+                                onChange={handleRecipientChange}
+                                placeholder="Buscar usuarios"
+                                required
+                            />
+                            {/* Mostrar sugerencias de usuarios */}
+                            {filteredUsers.length > 0 && (
+                                <ul className="suggestions">
+                                    {filteredUsers.map(user => (
+                                        <li key={user.id} onClick={() => handleUserSelect(user)}>
+                                            {user.username}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                             {/* Mostrar mensajes recibidos y enviados */}
                             {receivedMessages.length > 0 ? (
                                 <div>
@@ -526,51 +561,58 @@ const ProfilePage = () => {
                                                 <li key={message.id}>
                                                     <p><strong>De:</strong> {sender ? sender.username : message.sender_id}</p>
                                                     <p><strong>Para:</strong> {receiver ? receiver.username : message.receiver_id}</p>
-                                                    <p>____________________________</p>
                                                     <p><strong>Contenido: </strong>{message.content}</p>
                                                     <button onClick={() => handleDeleteMessage(message.id)}>Eliminar mensaje</button>
+                                                    <p>_________________________________________________________</p>
                                                 </li>
                                             );
                                         })}
                                     </ul>
                                 </div>
                             ) : (
-                                <p>No tienes mensajes.</p>
+                                <p><em>Selecciona un usuario para ver los mensajes. <br />
+                                    <br />
+                                    Si ya lo has seleccionado, significa que no tienes mensajes recibidos ni enviados con ese usuario.</em></p>
                             )}
                         </div>
                         {/* Formulario para enviar un nuevo mensaje */}
-                        <div className="section-box">
-                            <form onSubmit={handleSendMessage}>
-                                <h3>Escribir mensaje</h3>
-                                <input
-                                    type="text"
-                                    value={recipientName}
-                                    onChange={handleRecipientChange}
-                                    placeholder="Usuario destinatario"
-                                    required
-                                />
-                                {/* Mostrar sugerencias de usuarios */}
-                                {filteredUsers.length > 0 && (
-                                    <ul className="suggestions">
-                                        {filteredUsers.map(user => (
-                                            <li key={user.id} onClick={() => handleUserSelect(user)}>
-                                                {user.username}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                                <textarea
-                                    value={messageContent}
-                                    onChange={e => setMessageContent(e.target.value)}
-                                    placeholder="Escribe tu mensaje aquí..."
-                                    required
-                                    maxLength={maxLength}
-                                />
-                                <p>{maxLength - messageContent.length} caracteres restantes</p>
-                                <button type="submit">Enviar mensaje</button>
-                            </form>
+                        <div className="section-box2">
+                            <button onClick={() => setShowSendMessageForm(!showSendMessageForm)}>
+                                {showSendMessageForm ? 'Cerrar formulario' : 'Enviar un mensaje'}
+                            </button>
+                            {showSendMessageForm && (
+                                <form onSubmit={handleSendMessage}>
+                                    <h3>Escribir mensaje</h3>
+                                    <input
+                                        type="text"
+                                        value={recipientName}
+                                        onChange={handleRecipientChange}
+                                        placeholder="Usuario destinatario"
+                                        required
+                                    />
+                                    {/* Mostrar sugerencias de usuarios */}
+                                    {filteredUsers.length > 0 && (
+                                        <ul className="suggestions">
+                                            {filteredUsers.map(user => (
+                                                <li key={user.id} onClick={() => handleUserSelect(user)}>
+                                                    {user.username}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                    <textarea
+                                        value={messageContent}
+                                        onChange={e => setMessageContent(e.target.value)}
+                                        placeholder="Escribe tu mensaje aquí..."
+                                        required
+                                        maxLength={maxLength}
+                                    />
+                                    <p>{maxLength - messageContent.length} caracteres restantes</p>
+                                    <button type="submit">Enviar mensaje</button>
+                                </form>
+                            )}
                         </div>
-                    </>
+                    </div>
                 );
         }
     };

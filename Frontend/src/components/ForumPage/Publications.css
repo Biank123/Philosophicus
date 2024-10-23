@@ -44,7 +44,7 @@
   
   .publication-list-container li a {
     display: inline-block;
-    background-color: #28a745;
+    background-color: #a7a128;
     color: white;
     padding: 8px 12px;
     border-radius: 4px;
@@ -54,5 +54,13 @@
   }
   
   .publication-list-container li a:hover {
-    background-color: #218838;
+    background-color: #606017;
+  }
+
+  .publication-list-container button {
+    background-color: #e88103;
+  }
+
+  .publication-list-container button:hover {
+    background-color: #874c03;
   }

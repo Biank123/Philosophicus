@@ -1,3 +1,9 @@
+
+.message-container{
+  display: flex; /* Establece el contenedor como flexbox */
+  flex-direction: column;
+}
+
 /* UserProfile.css */
 .profile-container {
     display: flex;
@@ -84,13 +90,26 @@
     border-radius: 5px;
     padding: 20px;
     background-color: #fff;
+    margin-left: -25vh;
+    max-width: 500px;
+    flex: 1;
+    position: absolute;
   }
   
   .section-box h3 {
+    text-align: center;
     margin-top: 2vh;
   }
   
   .section-box p {
+    margin: 5vh;
+  }
+
+  .section-box2 h3 {
+    margin-top: 2vh;
+  }
+  
+  .section-box2 p {
     margin: 5vh;
   }
 
@@ -121,6 +140,13 @@
     display: flex;
     flex-direction: column;
 }
+
+.section-box2 form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
 
 .section-box input[type="text"], textarea {
     padding: 10px;
@@ -163,4 +189,16 @@ textarea:focus {
 
 .suggestions li:hover {
     background-color: #f0f0f0; /* Resaltar al pasar el mouse */
+}
+
+.section-box2{
+  position: relative;
+  margin-left: 50vh;
+  margin-top: 0vh;
+  border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+    z-index: 1000;
+    flex-shrink: 0;
 }

@@ -227,6 +227,7 @@ const handleSubmit = async () => {
       </div>
       {/* Sección de escritura */}
       <div className="section">
+        <p>____________________________________________________________________________________________________________________</p>
         <h2>{sections[currentSection].title}</h2>
         <p>{sections[currentSection].description}</p>
         <ReactQuill

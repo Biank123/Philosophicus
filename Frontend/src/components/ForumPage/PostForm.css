@@ -1,6 +1,6 @@
 /* Estilos para el contenedor del formulario de publicación */
 .post-form-container {
-    background-color: #f4f4f4;
+    background-color: #f7eddf;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -28,7 +28,7 @@
   
   /* Estilos para el botón de envío */
   .post-form-container button {
-    background-color: #007bff;
+    background-color: #c96c02;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -39,5 +39,5 @@
   }
   
   .post-form-container button:hover {
-    background-color: #0056b3;
+    background-color: #7a4402;
   }

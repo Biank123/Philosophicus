@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Cards = () => {
   return (
     <div className="wrapper">
-      <h1>Secciones de la página</h1>
+      <h1><em>Secciones de la página</em></h1>
       <div className="cols">
         {[
           { id: 1, title: 'Comienza a Escribir', imageUrl: 'https://unsplash.it/500/500/', link: '/select-problem' },
@@ -25,7 +25,7 @@ const Cards = () => {
               </div>
               <div className="back">
                 <div>
-                  <p>Explorar más</p>
+                  <p>Explorar la página</p>
                 </div>
               </div>
             </div>
