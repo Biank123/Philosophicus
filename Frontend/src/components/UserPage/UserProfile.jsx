@@ -25,8 +25,9 @@ const ProfilePage = () => {
     const [recipientName, setRecipientName] = useState('');
     const [messageContent, setMessageContent] = useState('');
     const [messages, setMessages] = useState([]);
+    const maxLength = 500;
 
-
+    // Función para obtener los datos del usuario
     const fetchUserData = async () => {
         const token = localStorage.getItem('token');
         if (token) {
@@ -62,7 +63,7 @@ const ProfilePage = () => {
 
         }
     };
-
+    // Función para obtener los borradores del usuario
     const fetchDrafts = async () => {
         try {
             const response = await fetch('http://localhost:3001/essays/drafts', {
@@ -79,7 +80,7 @@ const ProfilePage = () => {
             console.error('Error fetching drafts:', error);
         }
     };
-
+    // Función para obtener las publicaciones en el Foro hechas por el usuario
     const fetchPosts = async () => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -106,6 +107,7 @@ const ProfilePage = () => {
         }
     };
 
+    // Función para mostrar los comentarios hechos por el usuario
     const fetchComments = async () => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -136,6 +138,7 @@ const ProfilePage = () => {
         }
     };
 
+    // Función para eliminar la cuenta del usuario
     const handleDeleteAccount = async ({ reason, password }) => {
         if (!window.confirm("¿Estás seguro de que deseas eliminar su cuenta?")) {
             return; // Cancelar si el usuario no confirma
@@ -164,10 +167,10 @@ const ProfilePage = () => {
             navigate('/')
         } catch (error) {
             console.error('Error al eliminar la cuenta:', error);
-            // Maneja el error, por ejemplo, mostrando un mensaje al usuario
         }
     };
 
+    // Función para mostrar todas las publicaciones de ensayos del usuario
     const fetchEssays = async () => {
         const token = localStorage.getItem('token');
 
@@ -284,14 +287,14 @@ const ProfilePage = () => {
     // MANEJO DE ENVÍO DE MENSAJERÍA
 
     const fetchMessages = async (targetUserId) => {
-        const currentUserId = userData.id; // Suponiendo que userData tiene el ID del usuario autenticado
+        const currentUserId = userData.id;
         console.log('ID del usuario objetivo en fetch:', targetUserId);
-        
+
         if (!targetUserId || isNaN(targetUserId) || targetUserId === currentUserId) {
             console.error('targetUserId no es válido o es el ID del usuario actual');
             return;
         }
-    
+
         try {
             const response = await fetch(`http://localhost:3001/api/messages/${targetUserId}`, {
                 headers: {
@@ -299,11 +302,11 @@ const ProfilePage = () => {
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             if (!response.ok) {
                 throw new Error('Error en la respuesta de la API');
             }
-    
+
             const data = await response.json();
             console.log('Mensajes recibidos:', data);
             setReceivedMessages(data || []);
@@ -313,7 +316,7 @@ const ProfilePage = () => {
             console.error('Error al obtener mensajes:', error);
         }
     };
-  
+
 
     useEffect(() => {
         console.log('Mensajes recibidos actualizados:', receivedMessages);
@@ -353,9 +356,11 @@ const ProfilePage = () => {
             if (!response.ok) {
                 throw new Error('Error al eliminar el mensaje');
             }
-            setMessages(messages.filter(msg => msg.id !== messageId)); 
+            // Actualizar los mensajes después de la eliminación
+            const updatedMessages = messages.filter(msg => msg.id !== messageId);
+            setMessages(updatedMessages);
+            setReceivedMessages(updatedMessages);
             alert('Mensaje eliminado con éxito');
-            fetchMessages(userId);
         } catch (error) {
             console.error('Error al eliminar el mensaje:', error);
         }
@@ -405,6 +410,8 @@ const ProfilePage = () => {
         }
     }, []);
 
+
+    // ------------------------------------------------------------------------
 
     const renderSection = () => {
         switch (activeSection) {
@@ -504,60 +511,66 @@ const ProfilePage = () => {
                 );
             case 'messages':
                 return (
-                    <div className="section-box">
-                        <h3>Mensajes</h3>
+                    <>
+                        <div className="section-box">
+                            <h3>Mensajes</h3>
+                            {/* Mostrar mensajes recibidos y enviados */}
+                            {receivedMessages.length > 0 ? (
+                                <div>
+                                    <ul>
+                                        {receivedMessages.map(message => {
+                                            const sender = users.find(user => user.id === message.sender_id);
+                                            const receiver = users.find(user => user.id === message.receiver_id);
 
-                        {/* Mostrar mensajes recibidos y enviados */}
-                        {receivedMessages.length > 0 ? (
-                            <div>
-                                <ul>
-                                    {receivedMessages.map(message => {
-                                        const sender = users.find(user => user.id === message.sender_id);
-                                        const receiver = users.find(user => user.id === message.receiver_id);
-
-                                        return (
-                                            <li key={message.id}>
-                                                <p><strong>De:</strong> {sender ? sender.username : message.sender_id}</p>
-                                                <p><strong>Para:</strong> {receiver ? receiver.username : message.receiver_id}</p>
-                                                <p>{message.content}</p>
-                                                <button onClick={() => handleDeleteMessage(message.id)}>Eliminar</button>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </div>
-                        ) : (
-                            <p>No tienes mensajes.</p>
-                        )}
-
-                        {/* Formulario para enviar un nuevo mensaje */}
-                        <form onSubmit={handleSendMessage}>
-                            <input
-                                type="text"
-                                value={recipientName}
-                                onChange={handleRecipientChange}
-                                placeholder="Usuario destinatario"
-                                required
-                            />
-                            {/* Mostrar sugerencias de usuarios */}
-                            {filteredUsers.length > 0 && (
-                                <ul className="suggestions">
-                                    {filteredUsers.map(user => (
-                                        <li key={user.id} onClick={() => handleUserSelect(user)}>
-                                            {user.username}
-                                        </li>
-                                    ))}
-                                </ul>
+                                            return (
+                                                <li key={message.id}>
+                                                    <p><strong>De:</strong> {sender ? sender.username : message.sender_id}</p>
+                                                    <p><strong>Para:</strong> {receiver ? receiver.username : message.receiver_id}</p>
+                                                    <p>____________________________</p>
+                                                    <p><strong>Contenido: </strong>{message.content}</p>
+                                                    <button onClick={() => handleDeleteMessage(message.id)}>Eliminar mensaje</button>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </div>
+                            ) : (
+                                <p>No tienes mensajes.</p>
                             )}
-                            <textarea
-                                value={messageContent}
-                                onChange={e => setMessageContent(e.target.value)}
-                                placeholder="Escribe tu mensaje aquí"
-                                required
-                            />
-                            <button type="submit">Enviar</button>
-                        </form>
-                    </div>
+                        </div>
+                        {/* Formulario para enviar un nuevo mensaje */}
+                        <div className="section-box">
+                            <form onSubmit={handleSendMessage}>
+                                <h3>Escribir mensaje</h3>
+                                <input
+                                    type="text"
+                                    value={recipientName}
+                                    onChange={handleRecipientChange}
+                                    placeholder="Usuario destinatario"
+                                    required
+                                />
+                                {/* Mostrar sugerencias de usuarios */}
+                                {filteredUsers.length > 0 && (
+                                    <ul className="suggestions">
+                                        {filteredUsers.map(user => (
+                                            <li key={user.id} onClick={() => handleUserSelect(user)}>
+                                                {user.username}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                                <textarea
+                                    value={messageContent}
+                                    onChange={e => setMessageContent(e.target.value)}
+                                    placeholder="Escribe tu mensaje aquí..."
+                                    required
+                                    maxLength={maxLength}
+                                />
+                                <p>{maxLength - messageContent.length} caracteres restantes</p>
+                                <button type="submit">Enviar mensaje</button>
+                            </form>
+                        </div>
+                    </>
                 );
         }
     };

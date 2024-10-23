@@ -15,6 +15,9 @@ const PostList = () => {
     if (!isAuthenticated) {
       navigate('/login');
     }
+    if (isAuthenticated){
+      navigate('/forum');
+    }
   }, [isAuthenticated, navigate]);
 
   // Obtener todas las publicaciones
@@ -35,7 +38,7 @@ const PostList = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [posts]);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();

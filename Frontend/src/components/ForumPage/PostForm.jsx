@@ -1,5 +1,6 @@
 // formulario que permite a los usuarios escribir un mensaje, seleccionar una categoría y subir un archivo
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './PostForm.css';
 
 const PostForm = () => {
@@ -7,6 +8,7 @@ const PostForm = () => {
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('General');
   const [file, setFile] = useState(null);
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -40,6 +42,7 @@ const PostForm = () => {
         setContent('');
         setCategory('General');
         setFile(null);
+        navigate('/forum')
       } else {
         alert('Error al publicar. Inténtalo de nuevo.');
       }
