@@ -1,11 +1,13 @@
 /* Estilos del encabezado */
-h1 {
-  font-size: 2.5rem;
-  font-family: 'Montserrat', sans-serif;
+.wrapper h1 {
+  font-size: 2.6rem;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   font-weight: normal;
-  color: #444;
+  color: #ffffff;
   text-align: center;
-  margin: 5rem 2rem 2rem 2rem;
+  margin: 1rem 2rem 2rem 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* Contenedor de las cartas */
@@ -26,15 +28,20 @@ h1 {
 /* Contenedor de las columnas */
 .cols {
   display: flex;
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente fila */
-  gap: 1rem; /* Espacio entre las cartas */
-  justify-content: center; /* Centrar las cartas horizontalmente */
+  flex-wrap: wrap;
+  /* Permite que los elementos se envuelvan a la siguiente fila */
+  gap: 1rem;
+  /* Espacio entre las cartas */
+  justify-content: center;
+  /* Centrar las cartas horizontalmente */
 }
 
 /* Estilo de las columnas (cartas) */
 .col {
-  flex: 1 1 calc(25% - 2rem); /* Ajuste dinámico del ancho */
-  max-width: calc(25% - 2rem); /* Limita el ancho máximo de las cartas */
+  flex: 1 1 calc(25% - 2rem);
+  /* Ajuste dinámico del ancho */
+  max-width: calc(25% - 2rem);
+  /* Limita el ancho máximo de las cartas */
   margin: 1rem;
   position: relative;
 }
@@ -42,7 +49,8 @@ h1 {
 /* Estilo del contenedor de las cartas */
 .container {
   perspective: 1000px;
-  height: 280px; /* Altura fija para la carta */
+  height: 280px;
+  /* Altura fija para la carta */
   position: relative;
 }
 
@@ -55,8 +63,10 @@ h1 {
   border-radius: 10px;
   color: #fff;
   font-size: 1.5rem;
-  height: 100%; /* Asegura que la carta ocupe toda la altura del contenedor */
-  width: 100%; /* Asegura que la carta ocupe todo el ancho del contenedor */
+  height: 100%;
+  /* Asegura que la carta ocupe toda la altura del contenedor */
+  width: 100%;
+  /* Asegura que la carta ocupe todo el ancho del contenedor */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,10 +85,12 @@ h1 {
 .inner {
   transform: translateY(-50%) translateZ(60px) scale(0.94);
   background-color: rgba(1, 1, 1, 0.558);
-  border-radius: 100px;
+  border-radius: 8px;
   position: absolute;
-  top: 50%;
-  left: 0;
+  top: 50%; 
+  left: 0; 
+  right: 0; 
+  bottom: 100;
   width: 100%;
   padding: 2rem;
   box-sizing: border-box;
@@ -96,10 +108,14 @@ h1 {
 
 .container .back {
   transform: rotateY(180deg);
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
 }
 
 /* Estilos específicos para la parte frontal de la carta */
 .front .inner p {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
   font-size: 2rem;
   margin-bottom: 2rem;
   position: relative;

@@ -8,13 +8,15 @@ const Landing = () => {
 
     return (
         <div className='body-landing'>
+            <div className="overlay"></div>
             <main>
-                <header>
-                </header>
                 <section>
-                <BookProject />
+                    <BookProject />
                 </section>
-                <Cards />
+                 
+                <div>
+                    <Cards />
+                </div>
                 <Footer />
             </main>
         </div>

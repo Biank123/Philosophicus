@@ -97,19 +97,27 @@
   }
   
   .section-box h3 {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
     text-align: center;
     margin-top: 2vh;
   }
   
   .section-box p {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
     margin: 5vh;
   }
 
   .section-box2 h3 {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
     margin-top: 2vh;
   }
   
   .section-box2 p {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
     margin: 5vh;
   }
 

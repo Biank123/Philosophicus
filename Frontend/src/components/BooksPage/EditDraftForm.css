@@ -11,12 +11,16 @@
 .edit-draft-form h2 {
     text-align: center; /* Título centrado */
     color: #333; /* Color del texto del título */
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
 }
 
 .edit-draft-form label {
     display: block; /* Hacer que las etiquetas ocupen toda la línea */
     margin-bottom: 8px; /* Espaciado entre etiqueta y campo */
     font-weight: bold; /* Negrita para etiquetas */
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
 }
 
 .edit-draft-form input[type="text"] {

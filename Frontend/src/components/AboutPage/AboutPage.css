@@ -3,7 +3,9 @@
   padding: 20px;
   max-width: 800px;
   margin: auto;
-  font-family: Arial, sans-serif;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  font-size: 1.2rem;
   margin-top: 10vh;
   background-color: #000000; /* Fondo claro para la página */
   border-radius: 10px;
@@ -23,7 +25,8 @@
 
 .about-info h1, h2 {
   color: #9b7a19;
-  font-family: cursive;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
 }
 
 .profile-photo {

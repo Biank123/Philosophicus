@@ -3,10 +3,11 @@
 
 footer {
     background: #2a2116;
-    background: -webkit-linear-gradient(59deg, #73583a, #2a2016);
-    background: linear-gradient(59deg, #73583a, #2a2216);
+    background: -webkit-linear-gradient(59deg, #1d1002, #2a2016);
+    background: linear-gradient(59deg, #221301, #26180b);
     color: white;
     margin-top:100px;
+    position: relative;
     
   }
   

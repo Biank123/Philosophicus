@@ -2,6 +2,8 @@
   max-width: 800px;
   margin: 13vh auto; /* Centra el contenido verticalmente y horizontalmente */
   padding: 1rem;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
 }
 
 .section {
@@ -65,12 +67,16 @@ button:hover {
 .review-section h2 {
   color: #333; /* Color del texto del título */
   margin-bottom: 0.5rem;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
 }
 
 .review-section p {
   font-size: 1rem;
   line-height: 1.5;
   color: #555; /* Color del texto */
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
 }
 
 /* Media Queries para dispositivos más pequeños */

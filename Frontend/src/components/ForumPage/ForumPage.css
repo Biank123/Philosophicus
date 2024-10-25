@@ -1,6 +1,8 @@
 
 /* Estilos para la página del foro */
 .forum-page {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
     padding: 20px;
     max-width: 900px;
     margin: 0 auto;

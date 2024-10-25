@@ -135,6 +135,7 @@
   p {
     margin-top: 0;
     margin-bottom: 10px;
+
   }
   
   a {
@@ -158,7 +159,9 @@
     -ms-flex-align: stretch;
     align-items: stretch;
     border-radius: 10px;
-    background: linear-gradient(45deg, #000000, #4a2401);
+    /* background: linear-gradient(45deg, #000000, #4a2401); */
+    background-image: url('../../images/books1.jpg');
+    background-size: contain;
     -webkit-perspective: 4000px;
     perspective: 4000px;
     -webkit-perspective-origin: 50% 0%;
@@ -257,7 +260,7 @@
     border-top-left-radius: 1%;
     border-bottom-left-radius: 1%;
     background-color: #aca4a4;
-    box-shadow: inset 0 0 26px 2px #d8cccc, -1px 1px 13px 0 rgba(34, 27, 20, .81);
+    box-shadow: inset 0 0 26px 2px #dfd2bc, -1px 1px 13px 0 rgba(34, 27, 20, .81);
   }
   
   .layer-text {
@@ -303,7 +306,7 @@
     flex: 1;
     border-top-left-radius: 18%;
     border-bottom-left-radius: 1%;
-    background-color: #ffffff;
+    background-color: #e3d8c6;
     box-shadow: inset 0 0 7px 4px hsla(0, 13%, 82%, .43), -1px 1px 13px 0 rgba(34, 27, 20, .49);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -366,7 +369,7 @@
   
   .center {
     width: 3%;
-    background-image: -webkit-radial-gradient(circle farthest-corner at 56% -8%, #fff 8%, transparent 0), -webkit-radial-gradient(circle farthest-corner at 50% 108%, #fff 8%, transparent 0), -webkit-linear-gradient(0deg, #635648, #2e1800 21%, #635648 30%, #2e1800 48%, #635648 68%, #2e1800 79%, #635648);
+    background-image: -webkit-radial-gradient(circle farthest-corner at 56% -8%, #ffffff 8%, transparent 0), -webkit-radial-gradient(circle farthest-corner at 50% 108%, #fff 8%, transparent 0), -webkit-linear-gradient(0deg, #635648, #2e1800 21%, #635648 30%, #2e1800 48%, #635648 68%, #2e1800 79%, #635648);
     background-image: radial-gradient(circle farthest-corner at 56% -8%, #fff 8%, transparent 0), radial-gradient(circle farthest-corner at 50% 108%, #fff 8%, transparent 0), linear-gradient(90deg, #635648, #2e1800 21%, #635648 30%, #2e1800 48%, #635648 68%, #2e1800 79%, #635648);
   }
   
@@ -378,8 +381,8 @@
     height: 30px;
     border-right: 1px solid hsla(0, 13%, 82%, .55);
     border-bottom: 1px solid hsla(0, 13%, 82%, .55);
-    background-image: -webkit-linear-gradient(315deg, transparent 47%, #f0f0f0 48%, #fff 55%, #f6f6f6);
-    background-image: linear-gradient(135deg, transparent 47%, #f0f0f0 48%, #fff 55%, #f6f6f6);
+    background-image: -webkit-linear-gradient(315deg, transparent 47%, #e7decd 48%, #e4ded3 55%, #e4dbcc);
+    background-image: linear-gradient(135deg, transparent 47%, #eae0cf 48%, #e1d9cc 55%, #eae2d5);
     box-shadow: 6px 6px 9px -4px hsla(0, 13%, 82%, .53);
   }
   
@@ -389,8 +392,8 @@
     top: 27px;
     width: 5vw;
     height: 5vw;
-    background-image: -webkit-linear-gradient(315deg, #fff 30%, transparent);
-    background-image: linear-gradient(135deg, #fff 30%, transparent);
+    background-image: -webkit-linear-gradient(315deg, #dfd2bc 30%, transparent);
+    background-image: linear-gradient(135deg, #dfd2bc 30%, transparent);
     box-shadow: inset 13px 0 17px -12px hsla(0, 13%, 82%, .43);
   }
   
@@ -400,30 +403,33 @@
     top: 0px;
     width: 5vw;
     height: 5vw;
-    background-image: -webkit-linear-gradient(315deg, #fff 31%, transparent);
-    background-image: linear-gradient(135deg, #fff 31%, transparent);
+    background-image: -webkit-linear-gradient(315deg, #dfd2bc 31%, transparent);
+    background-image: linear-gradient(135deg, #dfd2bc 31%, transparent);
     box-shadow: inset 0 13px 17px -12px hsla(0, 13%, 82%, .43);
   }
   
   .page-text {
     position: relative;
     display: block;
-    width: 80%;
+    width: 70%;
     margin-top: 25px;
     margin-right: auto;
     margin-left: auto;
     font-family: Georgia, Times, 'Times New Roman', serif;
+    font-size: 10px;
   }
   
   .page-text p {
+    margin-top: 10px;
     margin-bottom: 0px;
-    font-size: 0.85vw;
+    font-size: 0.95vw;
     line-height: 1.5;
   }
   
   .page-text h3 {
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
     font-style: italic;
+    font-size: 1.3vw;
   }
   
   .page-text h6 {
@@ -528,7 +534,7 @@
     flex: 1;
     border-top-right-radius: 1%;
     border-bottom-right-radius: 1%;
-    background-color: #fff;
+    background-color: #dfd2bc;
     box-shadow: inset 0 0 7px 4px hsla(0, 13%, 82%, .43), 1px 1px 13px 0 rgba(34, 27, 20, .49);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -557,7 +563,7 @@
     flex: 1;
     border-top-right-radius: 1%;
     border-bottom-right-radius: 1%;
-    background-color: #fff;
+    background-color: #dfd2bc;
     box-shadow: inset 0 0 26px 2px #d8cccc, 1px 1px 13px 0 rgba(34, 27, 20, .81);
   }
   

@@ -9,12 +9,16 @@
     background-color: #ffffffee;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 9vh;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
   }
   
   .published-essays h1 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-style: italic;
   }
   
   .published-essays ul {
