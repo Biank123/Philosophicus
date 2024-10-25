@@ -1,14 +1,17 @@
 {
-  "main": "server.js",
+  "main": "Backend/server.js",
   "scripts": {
-    "start": "node Backend/server.js"
+    "start": "npm run start-backend",
+    "start-backend": "node backend/server.js",
+    "start-frontend": "npm run start --prefix frontend",
+    "build-frontend": "npm run build --prefix frontend",
+    "build": "npm run build-frontend"
   },
   "dependencies": {
     "emailjs-com": "^3.2.0",
     "multer": "^1.4.5-lts.1"
   },
   "engines": {
-    "node": "20.x" 
+    "node": "20.x"
   }
 }
-
