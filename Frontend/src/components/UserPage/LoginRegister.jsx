@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LoginRegister.css'; 
 import { useAuth } from './AuthContext';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const { login } = useAuth();
@@ -163,10 +164,21 @@ const handleLoginSubmit = async (e) => {
             required
           />
           <button className='button' type="submit">Ingresar</button>
+          <div style={{ textAlign: 'center' }}>
+            <Link 
+                to="/reset-password" 
+                style={{ color: 'black', textDecoration: 'none' }}
+                onMouseOver={(e) => e.currentTarget.style.textDecoration = 'underline'} // Subrayado al pasar el cursor
+                onMouseOut={(e) => e.currentTarget.style.textDecoration = 'none'} // Eliminar subrayado al salir
+            >
+                ¿Olvidaste la contraseña?
+            </Link>
+        </div>
         </form>
       </div>
       {error && <p className="error">{error}</p>}
       {successMessage && <p className="success">{successMessage}</p>}
+      
     </div>
   );
 };

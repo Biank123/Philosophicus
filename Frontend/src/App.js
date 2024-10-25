@@ -14,6 +14,8 @@ import ContentPage from './components/StudyPage/ContentPage';
 import AlterPage from './components/StudyPage/AlterPage';
 import ForumPage from './components/ForumPage/ForumPage';
 import DirectoryPage from './components/DirectoryPage/DirectoryPage';
+import ForgotPassword from './components/UserPage/ForgotPassword';
+import ChangePasswordForm from './components/UserPage/ChangePasswordForm';
 
 function App() {
   const [selectedProblem, setSelectedProblem] = useState(null);
@@ -51,6 +53,8 @@ function App() {
         />
         <Route path="/essays/published" element={<PublishedEssays />} />
         <Route path="/forum" element={<ForumPage />} />
+        <Route path="/reset-password" element={<ForgotPassword />} />
+        <Route path="/change-password" element={<ChangePasswordForm />} />
       </Routes>
     </>
   );
