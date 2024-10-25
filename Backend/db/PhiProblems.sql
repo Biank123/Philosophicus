@@ -367,9 +367,9 @@ VALUES
  '¿Cómo debe abordarse el nacionalismo en el contexto de la política global?',
  'Este problema examina las implicaciones del nacionalismo en la política global y cómo puede afectar la cooperación internacional.');
 
- INSERT INTO problemas_filosoficos (titulo, preguntas_relacionadas, descripcion, tema_id) VALUES 
-('¿Qué es la verdad?', '¿Es la verdad objetiva o subjetiva?; ¿Cómo se puede conocer la verdad?', 'Este problema filosófico se centra en la naturaleza de la verdad y su relación con el conocimiento.', 2),
-('¿Es el conocimiento justificado?', '¿Qué significa justificar el conocimiento?; ¿Es suficiente la evidencia?', 'Este problema aborda la justificación del conocimiento y los criterios que la sustentan.', 2),
-('¿Existen verdades absolutas?', '¿Puede algo ser verdaderamente absoluto?; ¿Cómo se definen las verdades?', 'Aquí se examina si las verdades pueden ser absolutas o si son relativas al contexto.', 2),
-('¿Cómo se define lo bueno?', '¿Qué criterios usamos para definir el bien?; ¿Es lo bueno universal?', 'Este problema se centra en la ética y cómo definimos lo que es bueno.', 2),
-('¿Puede el conocimiento ser subjetivo?', '¿Qué implica la subjetividad del conocimiento?; ¿Cómo influye la perspectiva personal?', 'Se investiga la subjetividad en el conocimiento y sus implicaciones.', 2);
+ INSERT INTO problemas_filosoficos (titulo, preguntas_relacionadas, descripcion) VALUES 
+('¿Qué es la verdad?', '¿Es la verdad objetiva o subjetiva?; ¿Cómo se puede conocer la verdad?', 'Este problema filosófico se centra en la naturaleza de la verdad y su relación con el conocimiento.'),
+('¿Es el conocimiento justificado?', '¿Qué significa justificar el conocimiento?; ¿Es suficiente la evidencia?', 'Este problema aborda la justificación del conocimiento y los criterios que la sustentan.'),
+('¿Existen verdades absolutas?', '¿Puede algo ser verdaderamente absoluto?; ¿Cómo se definen las verdades?', 'Aquí se examina si las verdades pueden ser absolutas o si son relativas al contexto.'),
+('¿Cómo se define lo bueno?', '¿Qué criterios usamos para definir el bien?; ¿Es lo bueno universal?', 'Este problema se centra en la ética y cómo definimos lo que es bueno.'),
+('¿Puede el conocimiento ser subjetivo?', '¿Qué implica la subjetividad del conocimiento?; ¿Cómo influye la perspectiva personal?', 'Se investiga la subjetividad en el conocimiento y sus implicaciones.');
