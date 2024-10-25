@@ -1,6 +1,6 @@
 .edit-draft-form {
     max-width: 600px; /* Ancho máximo del formulario */
-    margin: 20px auto; /* Centrar el formulario en la página */
+    margin: 25vh 40px; /* Centrar el formulario en la página */
     padding: 20px; /* Espaciado interno */
     border: 1px solid #ccc; /* Borde ligero */
     border-radius: 8px; /* Bordes redondeados */
