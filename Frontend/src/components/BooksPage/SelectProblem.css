@@ -3,7 +3,7 @@
 	top: -100vh;
 	left: 0;
 	right: 0;
-	bottom: -18vh;
+	bottom: -50vh;
 	backdrop-filter: blur(5px); 
 	background-color: rgba(0, 0, 0, 0.705);
 	z-index: -1; 
@@ -16,7 +16,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    margin-top: 40vh;
+    margin-left: 50vh;
+    min-height: 50vh;
+    border-radius: 10px;
+    width: 50vw;
     background-color: #f9f9f9;
     padding: 20px;
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
@@ -47,7 +51,7 @@
   /* Change border color on focus */
   .select-problem-container select:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #186d07;
   }
   
   /* Option styling */
@@ -61,4 +65,13 @@
     border-color: #b97d03;
   }
   
-  
+  .select-problem-container button{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #186d07;
+    color: white;
+  }
+  .select-problem-container button:hover{
+    background-color: #0c4202;
+    
+  }

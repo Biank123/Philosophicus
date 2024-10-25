@@ -7,6 +7,7 @@ const ForumPage = () => {
  
   return (
     <div className="forum-page">
+      <div className='overlay5'></div>
       <PostForm />
       <PostList />
     </div>

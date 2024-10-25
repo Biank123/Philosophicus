@@ -1,8 +1,18 @@
+.overlay3{
+  position: absolute; 
+	top: -100vh;
+	left: 0;
+	right: 0;
+	bottom: -50vh;
+	backdrop-filter: blur(5px); 
+	background-color: rgba(0, 0, 0, 0.705);
+	z-index: -1; 
+}
+
 /* Estilos para el contenedor principal */
 .filosofia-page {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   font-style: italic;
-    background-color: #f4f4f4;
     padding: 20px;
     margin-top: 10vh;
   }
@@ -12,7 +22,7 @@
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
     font-style: italic;
     text-align: center;
-    color: #333;
+    color: #ffffff;
   }
   
   /* Estilo para el input de búsqueda */
@@ -34,9 +44,9 @@
   }
   
   .filosofia-page .problem-list li {
-    /* background-color: #522e02; */
-    background: linear-gradient(45deg, #4a2401, #000000 );
+    background: linear-gradient(45deg, #ad5502, #000000 );
     color: white;
+    border: 1px solid #ffffff;
     padding: 10px;
     margin: 5px 0;
     border-radius: 5px;
@@ -45,8 +55,7 @@
   }
   
   .filosofia-page .problem-list li:hover {
-    /* background-color: #ffaf04; */
-    background: linear-gradient(45deg, #923b01, #ff7c02);
+    background: linear-gradient(45deg, #321400, #ff7c02);
   }
   
   /* Estilos para los detalles del problema */
@@ -73,5 +82,6 @@
   }
 
   .botonVolver{
-    background-color: #923b01;
+    background-color: #0c5c05;
+    color: white;
   }

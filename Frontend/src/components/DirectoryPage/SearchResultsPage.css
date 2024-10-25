@@ -35,5 +35,9 @@
   }
 
   .search-results-container .link {
-    color: rgb(255, 106, 0);
+    color: rgb(249, 152, 83);
+  }
+
+  .search-results-container .link:hover {
+    color: rgb(250, 250, 250);
   }

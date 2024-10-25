@@ -1,13 +1,36 @@
+
+.overlay2{
+  position: absolute; 
+	top: -100vh;
+	left: 0;
+	right: 0;
+	bottom: -50vh;
+	backdrop-filter: blur(5px); 
+	background-color: rgba(0, 0, 0, 0.705);
+	z-index: -1; 
+}
+
 .essay-template {
   max-width: 800px;
   margin: 13vh auto; /* Centra el contenido verticalmente y horizontalmente */
   padding: 1rem;
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   font-style: italic;
+ background-color: rgb(249, 249, 249);
+ border-radius: 10px;
+}
+
+.essay-template h1{
+  text-align: center;
+}
+
+.problem-section p{
+  text-align: center;
 }
 
 .section {
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 /* Ajustar el contenedor principal de Quill */
@@ -78,6 +101,7 @@
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
     font-style: italic;
 }
+
 
 /* Media Queries para dispositivos más pequeños */
 @media (max-width: 768px) {

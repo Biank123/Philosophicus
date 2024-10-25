@@ -1,4 +1,13 @@
-
+.overlay4{
+  position: absolute; 
+	top: -100vh;
+	left: 0;
+	right: 0;
+	bottom: -150vh;
+	backdrop-filter: blur(5px); 
+	background-color: rgba(0, 0, 0, 0.705);
+	z-index: -1; 
+}
 .message-container{
   display: flex; /* Establece el contenedor como flexbox */
   flex-direction: column;
@@ -44,12 +53,6 @@
     margin-top: 2vh;
   }
 
-  .email{
-    font-size: 12px;
-    font-weight: bold;
-    margin-top: 8vh;
-    margin-left: -10vh;
-  }
   
   .sidebar {
     width: 250px;
@@ -119,6 +122,20 @@
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
     font-style: italic;
     margin: 5vh;
+  }
+
+  .section-box2 button {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+  }
+
+  .section-box2 button:hover {
+ 
+    background-color: rgb(3, 69, 3);
+   
   }
 
   .change-password-btn{
@@ -209,4 +226,106 @@ textarea:focus {
     background-color: #fff;
     z-index: 1000;
     flex-shrink: 0;
+}
+
+.section-box3 {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #fff;
+  margin-left: 0vh;
+  max-width: 500px;
+  flex: 1;
+  position: absolute;
+}
+
+.section-box4 {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #fff;
+  margin-left: -25vh;
+  max-width: 500px;
+  flex: 1;
+  position: absolute;
+}
+
+.section-box3 h3 {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  text-align: center;
+  margin-top: 2vh;
+}
+
+.section-box3 p {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  margin: 5vh;
+}
+
+.section-box3 h3 {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  margin-top: 2vh;
+}
+
+.section-box3 p {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  margin: 5vh;
+}
+
+.section-box3 button {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+.section-box3 button:hover {
+
+  background-color: rgb(3, 69, 3);
+ 
+}
+
+/* _________________________ */
+
+.section-box4 h3 {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  text-align: center;
+  margin-top: 2vh;
+}
+
+.section-box4 p {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  margin: 5vh;
+}
+
+.section-box4 h3 {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  margin-top: 2vh;
+}
+
+.section-box4 p {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-style: italic;
+  margin: 5vh;
+}
+
+.section-box4 button {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+}
+
+.section-box4 button:hover {
+
+  background-color: rgb(3, 69, 3);
+ 
 }

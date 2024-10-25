@@ -28,6 +28,7 @@ function FilosofiaPage() {
 
     return (
       <div className="filosofia-page">
+        <div className='overlay3'></div>
         <h1>Buscar Contenido:</h1>
         {!problemaSeleccionado && (
           <>

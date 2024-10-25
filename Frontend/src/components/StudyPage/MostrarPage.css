@@ -5,13 +5,15 @@
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
     margin-bottom: 20px; /* Espaciado inferior */
+    white-space: pre-line;
   }
   
   /* Estilo para el título del problema */
   .problema-filosofico h3 {
     color: #011700; /* Color azul para el título */
-    font-size: 1.5rem; /* Tamaño de fuente */
+    font-size: 2rem; /* Tamaño de fuente */
     margin-bottom: 10px; /* Espaciado inferior */
+    text-align: center;
   }
   
   /* Estilo para los párrafos */
@@ -19,6 +21,7 @@
     color: #333; /* Color de texto oscuro */
     line-height: 1.6; /* Espaciado entre líneas */
     margin-bottom: 10px; /* Espaciado inferior */
+    font-size: 1.2rem;
   }
   
   /* Estilo para los elementos fuertes (strong) */

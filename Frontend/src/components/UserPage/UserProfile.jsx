@@ -470,7 +470,7 @@ const ProfilePage = () => {
             case 'posts':
                 return (
                     <div className="message-container">
-                    <div className="section-box">
+                    <div className="section-box3">
                         <h3>Publicaciones del foro</h3>
                         {posts.length > 0 ? (
                             <ul>
@@ -530,7 +530,7 @@ const ProfilePage = () => {
             case 'messages':
                 return (
                     <div className="message-container">
-                        <div className="section-box">
+                        <div className="section-box4">
                             <h3>Ver Mensajes</h3>
                             <input
                                 type="text"
@@ -648,6 +648,7 @@ const ProfilePage = () => {
 
     return (
         <div className="profile-container">
+            <div className='overlay4'></div>
             <div className="profile-header">
                 <img
                     src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"
@@ -655,7 +656,6 @@ const ProfilePage = () => {
                     className="profile-image"
                 />
                 <h2 className="username">{userData ? userData.username : 'Cargando...'}</h2>
-                <h3 className="email">{userData ? userData.email : 'Cargando...'}</h3>
             </div>
             <div className="sidebar">
                 <ul>

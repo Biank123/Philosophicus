@@ -15,7 +15,6 @@
   width: 100%;
   margin: 8rem auto;
   max-width: 1200px;
-  /* Aumentar el ancho máximo para pantallas más grandes */
 }
 
 .wrapper .cols .col {
@@ -79,6 +78,7 @@
 /* Estilo de la parte trasera de las cartas */
 .back {
   background: linear-gradient(45deg, #cedce7 0%, #596a72 100%);
+  
 }
 
 /* Estilo del contenido interno de las cartas */
@@ -121,6 +121,8 @@
   position: relative;
   z-index: 1;
   background-size: contain;
+  color: white;
+
 }
 
 .front .inner p::after {
@@ -134,6 +136,7 @@
   right: 0;
   margin: 0 auto;
   bottom: -0.75rem;
+
 }
 
 .front .inner span {

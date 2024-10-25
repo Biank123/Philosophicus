@@ -209,6 +209,7 @@ const handleSubmit = async () => {
 
   return (
     <div className="essay-template">
+      <div className='overlay2'></div>
       <h1>Escribe tu Ensayo</h1>
       {/* Mostrar el problema seleccionado */}
       <div className="problem-section">

@@ -59,6 +59,11 @@
 
   .publication-list-container button {
     background-color: #e88103;
+    padding: 8px;
+    margin-left: 10px;
+    border-radius: 8px;
+    border: none;
+    color: white;
   }
 
   .publication-list-container button:hover {
