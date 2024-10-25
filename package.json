@@ -2,9 +2,9 @@
   "main": "Backend/server.js",
   "scripts": {
     "start": "npm run start-backend",
-    "start-backend": "node backend/server.js",
-    "start-frontend": "npm run start --prefix frontend",
-    "build-frontend": "npm run build --prefix frontend",
+    "start-backend": "node Backend/server.js",
+    "start-frontend": "npm run start --prefix Frontend",
+    "build-frontend": "npm run build --prefix Frontend",
     "build": "npm run build-frontend"
   },
   "dependencies": {
