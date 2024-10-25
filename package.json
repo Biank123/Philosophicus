@@ -2,7 +2,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node Backend/server.js",
-    "build": "npm install && npm run build"
+    "build": "npm run build"
   },
   "dependencies": {
     "emailjs-com": "^3.2.0",
