@@ -31,6 +31,7 @@ const SelectProblem = ({ onSelect }) => {
 
   return (
     <div className='select-problem-container'>
+      <div className="overlayyyy"></div>
       <h1>Selecciona un Problema Filosófico</h1>
       <select onChange={handleSelect} value={selectedProblemId}>
         <option value="">Seleccione un problema</option>

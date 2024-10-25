@@ -95,6 +95,7 @@ const handleLoginSubmit = async (e) => {
 
   return (
     <div className="main">
+      <div className="overlayyy"></div>
       <input className='input' type="checkbox" id="chk" aria-hidden="true" checked={isSignup} onChange={toggleForm} />
 
       <div className="signup">

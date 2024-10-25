@@ -41,7 +41,7 @@
   text-align: center; /* Centra los botones de navegación */
 }
 
-button {
+.essay-template button {
   padding: 0.5rem 1rem;
   margin: 0.5rem;
   border: none;
@@ -51,7 +51,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.essay-template button:hover {
   background-color: #894e00;
 }
 
@@ -85,11 +85,7 @@ button:hover {
     margin: 5vh 2rem; /* Ajusta los márgenes en dispositivos móviles */
   }
 
-  textarea {
-    height: 120px; /* Ajusta la altura del textarea en dispositivos más pequeños */
-  }
-
-  button {
+  .essay-template button {
     padding: 0.5rem; /* Ajusta el padding de los botones en dispositivos más pequeños */
     font-size: 0.9rem; /* Ajusta el tamaño de fuente de los botones */
   }

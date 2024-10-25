@@ -116,29 +116,29 @@
   
   /*-----------------------*/
   
-  h3 {
-    margin-top: 20px;
+  .scene h3 {
+    margin-top: 2px;
     margin-bottom: 10px;
     font-size: 24px;
     line-height: 30px;
     font-weight: bold;
   }
   
-  h6 {
-    margin-top: 10px;
+  .scene h6 {
+    margin-top: 2px;
     margin-bottom: 10px;
     font-size: 12px;
     line-height: 18px;
     font-weight: bold;
   }
   
-  p {
-    margin-top: 0;
-    margin-bottom: 10px;
+  .scene p {
+    margin-top: -10px;
+    margin-bottom: 15px;
 
   }
   
-  a {
+  .scene a {
     text-decoration: underline;
   }
   
@@ -148,8 +148,8 @@
     display: -ms-flexbox;
     display: flex;
     width: 100%;
-    margin-top: 80px;
-    height: 35vw;
+    margin-top: 61px;
+    height: 36vw;
     -webkit-box-pack: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;

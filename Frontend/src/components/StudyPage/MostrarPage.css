@@ -9,7 +9,7 @@
   
   /* Estilo para el título del problema */
   .problema-filosofico h3 {
-    color: #007bff; /* Color azul para el título */
+    color: #011700; /* Color azul para el título */
     font-size: 1.5rem; /* Tamaño de fuente */
     margin-bottom: 10px; /* Espaciado inferior */
   }
@@ -23,7 +23,7 @@
   
   /* Estilo para los elementos fuertes (strong) */
   .problema-filosofico strong {
-    color: #007bff; /* Color azul para el texto fuerte */
+    color: #3a1e02; /* Color azul para el texto fuerte */
   }
   
   /* Estilo para la lista de autores */

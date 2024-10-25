@@ -9,7 +9,7 @@
 }
 
 /* Títulos */
-h1, h2 {
+.directory-page h1, h2 {
     color: #333;
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
     font-style: italic;
@@ -20,7 +20,7 @@ h1, h2 {
 }
 
 /* Estilo para las secciones */
-section {
+.directory-page section {
     background-color: #ffffff; /* Color de fondo de cada sección */
     border: 1px solid #ddd; /* Borde suave */
     border-radius: 8px; /* Bordes redondeados para las secciones */
@@ -30,17 +30,17 @@ section {
 }
 
 /* Listas */
-ul {
+.directory-page ul {
     list-style-type: none;
     padding: 0;
 }
 
-ul li {
+.directory-page ul li {
     margin-bottom: 10px;
 }
 
 /* Links */
-ul li a {
+.directory-page ul li a {
     color: #058c9d;
     text-decoration: none;
     font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
@@ -48,6 +48,6 @@ ul li a {
     font-size: 1.2rem;
 }
 
-ul li a:hover {
+.directory-page ul li a:hover {
     text-decoration: underline;
 }
