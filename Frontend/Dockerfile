@@ -21,4 +21,3 @@ RUN npm install -g serve
 
 # Inicia la aplicación (Railway asigna el puerto automáticamente)
 CMD ["serve", "-s", "build", "-l", "0.0.0.0:$PORT"]
-
