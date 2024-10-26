@@ -38,7 +38,7 @@ app.use('/api/filter', contentRoutes);
 app.use('/api/messages', messagesRoutes);
 
 // Iniciar el servidor
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 17859;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
