@@ -3,12 +3,13 @@ import './PublishEssays.css';
 
 const PublishedEssays = () => {
   const [essays, setEssays] = useState([]);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchEssays = async () => {
       const token = localStorage.getItem('token');
       try {
-        const response = await fetch('http://localhost:3001/essays/published', {
+        const response = await fetch(`${apiUrl}/essays/published`, {
           method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

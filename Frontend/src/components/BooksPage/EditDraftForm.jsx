@@ -6,6 +6,7 @@ import './EditDraftForm.css';
 const EditDraftForm = ({ draft, onClose }) => {
     const [title, setTitle] = useState(draft.title);
     const [content, setContent] = useState(draft.content);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -13,7 +14,7 @@ const EditDraftForm = ({ draft, onClose }) => {
         const updatedDraft = { ...draft, title, content };
 
         try {
-            const response = await fetch(`http://localhost:3001/essays/editdraft/${updatedDraft.id}`, {
+            const response = await fetch(`${apiUrl}/essays/editdraft/${updatedDraft.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,13 +26,10 @@ const EditDraftForm = ({ draft, onClose }) => {
             if (!response.ok) {
                 throw new Error('Error al actualizar el borrador');
             }
-
-            // Aquí puedes agregar lógica adicional si es necesario, como actualizar el estado en el componente padre
             
             onClose(); // Cierra el formulario después de actualizar
         } catch (error) {
             console.error('Error:', error);
-            // Maneja el error, por ejemplo, mostrando un mensaje al usuario
         }
     };
 

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import './LoginRegister.css'; 
-import { useAuth } from './AuthContext';
+// import { useAuth } from './AuthContext';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isSignup, setIsSignup] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -29,7 +30,7 @@ const Login = () => {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    const endpoint = 'http://localhost:3001/api/users/register';
+    const endpoint = `${apiUrl}/api/users/register`;
 
     try {
       if (formData.password !== formData.confirmPassword) {
@@ -67,7 +68,7 @@ const Login = () => {
   
 const handleLoginSubmit = async (e) => {
   e.preventDefault();
-  const endpoint = 'http://localhost:3001/api/users/login';
+  const endpoint = `${apiUrl}/api/users/login`;
 
   try {
       const response = await fetch(endpoint, {

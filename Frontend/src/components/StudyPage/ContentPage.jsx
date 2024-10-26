@@ -5,6 +5,7 @@ function ContentPage() {
   const { tipo, valor: nombre } = useParams(); 
   const [contenido, setContenido] = useState(null);
   const [epocaId, setEpocaId] = useState(null);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchIdAndDetails = async () => {
@@ -12,11 +13,11 @@ function ContentPage() {
       let detailsUrl = '';
 
       if (tipo === 'autor') {
-        idUrl = `http://localhost:3001/api/filter/autores/nombre/${nombre}`;
+        idUrl = `${apiUrl}/api/filter/autores/nombre/${nombre}`;
       } else if (tipo === 'tema') {
-        idUrl = `http://localhost:3001/api/filter/temas/nombre/${nombre}`;
+        idUrl = `${apiUrl}/api/filter/temas/nombre/${nombre}`;
       } else if (tipo === 'epoca') {
-        idUrl = `http://localhost:3001/api/filter/epocas/nombre/${nombre}`;
+        idUrl = `${apiUrl}/api/filter/epocas/nombre/${nombre}`;
       }
 
       try {
@@ -29,9 +30,9 @@ function ContentPage() {
         console.log('Respuesta del servidor para obtener ID:', idData);
 
         if (tipo === 'autor') {
-          detailsUrl = `http://localhost:3001/api/filter/autores/${idData.id}/descripcion`;
+          detailsUrl = `${apiUrl}/api/filter/autores/${idData.id}/descripcion`;
         } else if (tipo === 'tema') {
-          detailsUrl = `http://localhost:3001/api/filter/temas/${idData.temaId}/problemas`;
+          detailsUrl = `${apiUrl}/api/filter/temas/${idData.temaId}/problemas`;
         } else if (tipo === 'epoca') {
           setEpocaId(idData.id);
           return; // Salir aquí ya que los temas se manejarán en otro useEffect
@@ -59,7 +60,7 @@ function ContentPage() {
   useEffect(() => {
     const fetchTemasPorEpoca = async () => {
       if (tipo === 'epoca' && epocaId) {
-        const url = `http://localhost:3001/api/filter/epocas/${epocaId}/temas`;
+        const url = `${apiUrl}/api/filter/epocas/${epocaId}/temas`;
         try {
           const response = await fetch(url);
           if (!response.ok) {

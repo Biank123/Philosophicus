@@ -10,6 +10,7 @@ const PostList = () => {
   const [selectedPostId, setSelectedPostId] = useState(null);
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -24,7 +25,7 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/posts', {
+        const response = await fetch(`${apiUrl}/api/posts`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },
@@ -45,7 +46,7 @@ const PostList = () => {
     if (!selectedPostId || !newComment) return;
 
     try {
-      const response = await fetch(`http://localhost:3001/api/posts/${selectedPostId}/comments`, {
+      const response = await fetch(`${apiUrl}/api/posts/${selectedPostId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ const PostList = () => {
 
   const handleDeleteComment = async (postId, commentId) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/posts/${postId}/comments/${commentId}`, {
+      const response = await fetch(`${apiUrl}/api/posts/${postId}/comments/${commentId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -104,7 +105,7 @@ const PostList = () => {
 
   const handleDeletePost = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/posts/${id}`, {
+      const response = await fetch(`${apiUrl}/api/posts/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -132,7 +133,7 @@ const PostList = () => {
     if (selectedPostId) {
         const fetchComments = async () => {
             try {
-                const response = await fetch(`http://localhost:3001/api/posts/${selectedPostId}/comments`, {
+                const response = await fetch(`${apiUrl}/api/posts/${selectedPostId}/comments`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -173,7 +174,7 @@ const PostList = () => {
               <div>
                 {/\.(jpeg|jpg|png)$/i.test(post.file) && (
                   <img
-                    src={`http://localhost:3001/uploads/${post.file}`}
+                    src={`${apiUrl}/uploads/${post.file}`}
                     alt={post.title}
                     style={{ width: '200px', height: 'auto', marginBottom: '10px' }}
                   />
@@ -181,19 +182,19 @@ const PostList = () => {
                 {/\.(pdf)$/i.test(post.file) && (
                   <div>
                     <iframe
-                      src={`http://localhost:3001/uploads/${post.file}`}
+                      src={`${apiUrl}/uploads/${post.file}`}
                       width="100%"
                       height="300px"
                       title="PDF Viewer"
                       style={{ marginBottom: '10px' }}
                     />
-                    <a href={`http://localhost:3001/api/posts/download/${post.file}`} download rel="noreferrer"target='_blank'>Descargar archivo</a>
+                    <a href={`${apiUrl}/api/posts/download/${post.file}`} download rel="noreferrer"target='_blank'>Descargar archivo</a>
                   </div>
                 )}
                 {/\.(doc|docx)$/i.test(post.file) && (
                   <div>
                     <p>Este archivo es un documento de Word y no se puede visualizar directamente.</p>
-                    <a href={`http://localhost:3001/api/posts/download/${post.file}`} download>Descargar Documento de Word</a>
+                    <a href={`${apiUrl}/api/posts/download/${post.file}`} download>Descargar Documento de Word</a>
                   </div>
                 )}
               </div>

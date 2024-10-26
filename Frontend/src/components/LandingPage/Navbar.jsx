@@ -15,12 +15,13 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     // Obtener todos los ensayos
     const fetchEssays = async () => {
       try {
-        const response = await fetch('http://localhost:3001/essays/published');
+        const response = await fetch(`${apiUrl}/essays/published`);
         const data = await response.json();
         setEssays(data);
       } catch (error) {
@@ -53,7 +54,6 @@ const Navbar = () => {
     e.preventDefault();
     // Redirigir a la página de resultados de búsqueda o hacer algo con searchResults
     console.log('Resultados de búsqueda:', searchResults);
-    // Aquí puedes redirigir a otra página si lo deseas, o mostrar los resultados en la misma página
   };
 
 

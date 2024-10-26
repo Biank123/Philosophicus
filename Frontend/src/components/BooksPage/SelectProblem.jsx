@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 const SelectProblem = ({ onSelect }) => {
   const [problems, setProblems] = useState([]);
   const [selectedProblemId, setSelectedProblemId] = useState('');
-  const navigate = useNavigate();  // Obtenemos navigate para usarlo más tarde
+  const navigate = useNavigate();  
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
-    fetch('http://localhost:3001/problems')
+    fetch(`${apiUrl}/problems`)
       .then(response => response.json())
       .then(data => {
         console.log('Datos recibidos:', data); 

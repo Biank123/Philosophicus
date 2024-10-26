@@ -27,6 +27,7 @@ const ProfilePage = () => {
     const [messages, setMessages] = useState([]);
     const maxLength = 500;
     const [showSendMessageForm, setShowSendMessageForm] = useState(false);
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     // Función para obtener los datos del usuario
     const fetchUserData = async () => {
@@ -41,7 +42,7 @@ const ProfilePage = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3001/api/users/profile/user', {
+            const response = await fetch(`${apiUrl}/api/users/profile/user`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -67,7 +68,7 @@ const ProfilePage = () => {
     // Función para obtener los borradores del usuario
     const fetchDrafts = async () => {
         try {
-            const response = await fetch('http://localhost:3001/essays/drafts', {
+            const response = await fetch(`${apiUrl}/essays/drafts`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
@@ -91,7 +92,7 @@ const ProfilePage = () => {
 
         try {
             // Solicitar publicaciones
-            const postsResponse = await fetch('http://localhost:3001/api/posts/user/posts', {
+            const postsResponse = await fetch(`${apiUrl}/api/posts/user/posts`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -119,7 +120,7 @@ const ProfilePage = () => {
         try {
 
             // Solicitar comentarios
-            const commentsResponse = await fetch(`http://localhost:3001/api/posts/user/comments`, {
+            const commentsResponse = await fetch(`${apiUrl}/api/posts/user/comments`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -148,7 +149,7 @@ const ProfilePage = () => {
         try {
             const requestBody = JSON.stringify({ reason, password });
 
-            const response = await fetch('http://localhost:3001/api/users/profile', {
+            const response = await fetch(`${apiUrl}/api/users/profile`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -181,7 +182,7 @@ const ProfilePage = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3001/essays/published/user`, {
+            const response = await fetch(`${apiUrl}/essays/published/user`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -213,7 +214,7 @@ const ProfilePage = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3001/essays/delete/${essayId}`, {
+            const response = await fetch(`${apiUrl}/essays/delete/${essayId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -235,7 +236,7 @@ const ProfilePage = () => {
     // Función para publicar un borrador
     const handlePublishEssay = async (essayId) => {
         try {
-            const response = await fetch(`http://localhost:3001/essays/publishdraft/${essayId}`, {
+            const response = await fetch(`${apiUrl}/essays/publishdraft/${essayId}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -262,7 +263,7 @@ const ProfilePage = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3001/essays/deletedraft/${essayId}`, {
+            const response = await fetch(`${apiUrl}/essays/deletedraft/${essayId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -298,7 +299,7 @@ const ProfilePage = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3001/api/messages/${targetUserId}`, {
+            const response = await fetch(`${apiUrl}/api/messages/${targetUserId}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json'
@@ -327,7 +328,7 @@ const ProfilePage = () => {
     const handleSendMessage = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3001/api/messages', {
+            const response = await fetch(`${apiUrl}/api/messages`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -351,7 +352,7 @@ const ProfilePage = () => {
 
     const handleDeleteMessage = async (messageId) => {
         try {
-            const response = await fetch(`http://localhost:3001/api/messages/${messageId}`, {
+            const response = await fetch(`${apiUrl}/api/messages/${messageId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
             });
@@ -388,7 +389,7 @@ const ProfilePage = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/users');
+                const response = await fetch(`${apiUrl}/api/users`);
                 const data = await response.json();
                 setUsers(data);
             } catch (error) {

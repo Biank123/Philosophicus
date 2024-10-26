@@ -9,6 +9,7 @@ const PostForm = () => {
   const [category, setCategory] = useState('General');
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -28,7 +29,7 @@ const PostForm = () => {
 
     // Enviar datos al backend
     try {
-      const response = await fetch('http://localhost:3001/api/posts', {
+      const response = await fetch(`${apiUrl}/api/posts`, {
         method: 'POST',
         body: formData,
         headers: {

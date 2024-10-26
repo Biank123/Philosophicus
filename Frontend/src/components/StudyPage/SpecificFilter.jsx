@@ -5,16 +5,17 @@ function SpecificFilter() {
   const { tipo } = useParams(); // Puede ser 'autor', 'tema' o 'epoca'
   const [opciones, setOpciones] = useState([]);
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const fetchOpciones = async () => {
       let url = '';
       if (tipo === 'autor') {
-        url = 'http://localhost:3001/api/filter/autores'; // Ruta del backend para obtener autores
+        url = `${apiUrl}/api/filter/autores`; // Ruta del backend para obtener autores
       } else if (tipo === 'tema') {
-        url = 'http://localhost:3001/api/filter/temas'; // Ruta del backend para obtener temas
+        url = `${apiUrl}/api/filter/temas`; // Ruta del backend para obtener temas
       } else if (tipo === 'epoca') {
-        url = 'http://localhost:3001/api/filter/epocas'; // Ruta del backend para obtener épocas
+        url = `${apiUrl}/api/filter/epocas`; // Ruta del backend para obtener épocas
       }
 
       try {

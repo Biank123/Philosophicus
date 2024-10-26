@@ -4,6 +4,7 @@ import ReactQuill from 'react-quill';  // Importa el componente Quill
 import 'react-quill/dist/quill.snow.css';  // Importa los estilos de Quill
 
 const EssayTemplate = ({ problem }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   // Definición de las secciones del ensayo
   const sections = [
     {
@@ -109,7 +110,7 @@ const handleSubmit = async () => {
     }
 
     try {
-        const response = await fetch('http://localhost:3001/essays/revisar', {
+        const response = await fetch(`${apiUrl}/essays/revisar`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -154,7 +155,7 @@ const handleSubmit = async () => {
     }
     
     try {
-      const response = await fetch('http://localhost:3001/essays/publish', {
+      const response = await fetch(`${apiUrl}/essays/publish`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -178,7 +179,7 @@ const handleSubmit = async () => {
     const combinedText = sectionTexts.join('\n\n');
 
     try {
-      const response = await fetch('http://localhost:3001/essays/save-draft', {
+      const response = await fetch(`${apiUrl}/essays/save-draft`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

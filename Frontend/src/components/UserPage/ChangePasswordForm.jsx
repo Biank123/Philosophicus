@@ -6,6 +6,7 @@ const ChangePasswordForm = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
+    const apiUrl = process.env.REACT_APP_API_URL;
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -17,7 +18,7 @@ const ChangePasswordForm = () => {
   
       try {
         // Hacer solicitud al backend para cambiar la contraseña
-        const response = await fetch('http://localhost:3001/api/users/profile/change-password', {
+        const response = await fetch(`${apiUrl}/api/users/profile/change-password`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
